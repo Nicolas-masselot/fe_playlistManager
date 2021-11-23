@@ -1,37 +1,27 @@
 #logoYT {
-    position: absolute;
     width: 127.27px;
     height: 28px;
-    left: 96px;
-    top: 72px;
+}
+
+#contenu {
+    display: flex;
+    flex-direction: row;
 }
 
 #formCreation {
-    position: absolute;
     width: 480px;
     height: 686px;
-    left: 96px;
-    top: 160px;
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
     padding: 0px;
 }
 
 #logoSite1{
-    position: absolute;
     width: 365px;
     height: 365px;
-    left: 937px;
-    top: 198px;
 }
 
 #copyrightText{
-    position: absolute;
     width: 369px;
     height: 33px;
-    left: 938px;
-    top: calc(50% - 33px/2 + 109.5px);
     
     font-family: Nunito;
     font-style: normal;
@@ -48,13 +38,8 @@
 }
 
 #logoRemote{
-    position: absolute;
     width: 155.8px;
     height: 164.32px;
-    left: 1031px;
-    top: 769.3px;
-
-    transform: rotate(-82.03deg);
 }
 
 #mail {
@@ -137,14 +122,6 @@
     /* black/2 5 */
 
     color: #444B59;
-
-
-    /* Inside Auto Layout */
-
-    flex: none;
-    order: 0;
-    flex-grow: 0;
-    margin: 24px 0px;
 }
 
 #passConfirm{
@@ -183,13 +160,11 @@
 #creationAccount{
     /* Sign up */
 
-
     /* Auto Layout */
     padding: 0px;
     
     width: 480px;
     height: 70.24px;
-    
     
     /* blue /2 7 */
     
@@ -210,11 +185,16 @@
 
     color: #FFFFFF;
 
-
     /* Inside Auto Layout */
 
     flex: none;
     order: 0;
     flex-grow: 0;
     margin: 0px 10px;
+}
+
+#websiteLogo{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
