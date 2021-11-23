@@ -1,0 +1,220 @@
+#logoYT {
+    position: absolute;
+    width: 127.27px;
+    height: 28px;
+    left: 96px;
+    top: 72px;
+}
+
+#formCreation {
+    position: absolute;
+    width: 480px;
+    height: 686px;
+    left: 96px;
+    top: 160px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 0px;
+}
+
+#logoSite1{
+    position: absolute;
+    width: 365px;
+    height: 365px;
+    left: 937px;
+    top: 198px;
+}
+
+#copyrightText{
+    position: absolute;
+    width: 369px;
+    height: 33px;
+    left: 938px;
+    top: calc(50% - 33px/2 + 109.5px);
+    
+    font-family: Nunito;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 24px;
+    line-height: 33px;
+    /* identical to box height */
+    
+    letter-spacing: 0.1em;
+    
+    /* black/2 5 */
+    
+    color: #444B59;    
+}
+
+#logoRemote{
+    position: absolute;
+    width: 155.8px;
+    height: 164.32px;
+    left: 1031px;
+    top: 769.3px;
+
+    transform: rotate(-82.03deg);
+}
+
+#mail {
+    /* Frame 4 */
+    /* Auto Layout */
+    
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding: 0px 0px 0px 32px;
+
+    width: 480px;
+    height: 72px;
+
+    
+    /* white */
+    
+    background: #FFFFFF;
+    /* dark blue /1 8 */
+    
+    border: 2px solid #789ADE;
+    box-sizing: border-box;
+    border-radius: 80px;
+    
+    /* Inside Auto Layout */
+    
+    flex: none;
+    order: 1;
+    align-self: stretch;
+    flex-grow: 0;
+    margin: 24px 0px;
+}
+
+#password {
+    /* Frame 4 */
+
+    /* Auto Layout */
+    
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0px 32px;
+    
+    width: 480px;
+    height: 72px;
+    
+    /* white */
+    
+    background: #FFFFFF;
+    /* dark blue /1 8 */
+    
+    border: 2px solid #789ADE;
+    box-sizing: border-box;
+    border-radius: 80px;
+    
+    /* Inside Auto Layout */
+    
+    flex: none;
+    order: 1;
+    align-self: stretch;
+    flex-grow: 0;
+    margin: 24px 0px;
+}
+
+
+.labelCreation{
+    /* Confirm password */
+
+    width: 273px;
+    height: 38px;
+
+    font-family: Nunito;
+    font-style: normal;
+    font-weight: 600;
+    font-size: 28px;
+    line-height: 38px;
+    letter-spacing: 0.1em;
+
+    /* black/2 5 */
+
+    color: #444B59;
+
+
+    /* Inside Auto Layout */
+
+    flex: none;
+    order: 0;
+    flex-grow: 0;
+    margin: 24px 0px;
+}
+
+#passConfirm{
+    /* Frame 4 */
+
+
+    /* Auto Layout */
+    
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0px 32px;
+    
+    width: 480px;
+    height: 72px;
+    
+    /* white */
+    
+    background: #FFFFFF;
+    /* dark blue /1 8 */
+    
+    border: 2px solid #789ADE;
+    box-sizing: border-box;
+    border-radius: 80px;
+    
+    /* Inside Auto Layout */
+    
+    flex: none;
+    order: 1;
+    align-self: stretch;
+    flex-grow: 0;
+    margin: 24px 0px;
+}
+
+#creationAccount{
+    /* Sign up */
+
+
+    /* Auto Layout */
+    padding: 0px;
+    
+    width: 480px;
+    height: 70.24px;
+    
+    
+    /* blue /2 7 */
+    
+    background: #8699DA;
+    box-shadow: 4px 8px 12px rgba(78, 99, 141, 0.06), inset 0px 4px 12px rgba(200, 211, 249, 0.6);
+    border-radius: 80px;
+
+    /* Sign Up */
+
+    font-family: Nunito;
+    font-style: normal;
+    font-weight: 800;
+    font-size: 28px;
+    line-height: 38px;
+    letter-spacing: 0.1em;
+
+    /* white */
+
+    color: #FFFFFF;
+
+
+    /* Inside Auto Layout */
+
+    flex: none;
+    order: 0;
+    flex-grow: 0;
+    margin: 0px 10px;
+}
