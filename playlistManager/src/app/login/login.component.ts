@@ -2,9 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { faFacebookF, faGoogle, faApple } from '@fortawesome/free-brands-svg-icons';
 import { ToastrService } from 'ngx-toastr';
-import { AuthService } from '../auth.service';
-import { MessageService } from '../message.service';
+
 import { BlockUI, NgBlockUI } from 'ng-block-ui';
+import { AuthService } from '../services/auth.service';
+import { MessageService } from '../services/message.service';
 
 @Component({
   selector: 'app-login',

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { AuthService } from '../auth.service';
-import { MessageService } from '../message.service';
+import { AuthService } from '../services/auth.service';
+import { MessageService } from '../services/message.service';
 
 export interface Playlists{
   nom:string,
