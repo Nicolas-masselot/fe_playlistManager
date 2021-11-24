@@ -11,6 +11,8 @@ import { ToastrModule } from 'ngx-toastr';
 import { ForgetPasswordComponent } from './forget-password/forget-password.component';
 import { BlockUIModule } from 'ng-block-ui';
 import { RouterModule } from '@angular/router';
+import { DashboardUserComponent } from './dashboard-user/dashboard-user.component';
+import { CommonModule } from "@angular/common";
 
 @NgModule({
   declarations: [
@@ -18,6 +20,7 @@ import { RouterModule } from '@angular/router';
     LoginComponent,
     NavbarComponent,
     ForgetPasswordComponent,
+    DashboardUserComponent,
   ],
   imports: [
     BrowserModule,
@@ -29,6 +32,7 @@ import { RouterModule } from '@angular/router';
     HttpClientModule,
     BlockUIModule.forRoot(), 
     RouterModule,
+    CommonModule
   ],
   providers: [],
   bootstrap: [AppComponent]

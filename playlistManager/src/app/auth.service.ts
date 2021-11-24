@@ -9,6 +9,7 @@ export class AuthService {
   
   LoggedIn: boolean | undefined ;
   role: string | undefined ;
+  userID: number | undefined;
 
   constructor(private service: MessageService) { }
 
@@ -24,6 +25,7 @@ export class AuthService {
     if (reponse.status === 'ok'){
       this.LoggedIn = true ;
       this.role = reponse.data.role ;
+      this.userID = reponse.data.userID ;
     } else {
       this.LoggedIn = false ;
       this.role = undefined ;

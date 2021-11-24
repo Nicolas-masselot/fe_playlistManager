@@ -1,0 +1,9 @@
+<app-navbar></app-navbar>
+<p id="Allplaylists">All playlists</p>
+
+<div id="playlistsList">
+    <div *ngFor="let playlist of AllPlaylists" class="cardPlaylist">
+        <p class="title">{{ playlist.nom }}</p>
+        <p class="description">{{ playlist.description }}</p>
+    </div>
+</div>
