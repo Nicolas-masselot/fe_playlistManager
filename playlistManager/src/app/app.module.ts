@@ -8,6 +8,8 @@ import { LoginComponent } from './login/login.component';
 import { NavbarComponent } from './navbar/navbar.component';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { CreateAccountComponent } from './create-account/create-account.component';
+import { ToastrModule } from 'ngx-toastr';
+import { ForgetPasswordComponent } from './forget-password/forget-password.component';
 
 @NgModule({
   declarations: [
@@ -15,13 +17,15 @@ import { CreateAccountComponent } from './create-account/create-account.componen
     LoginComponent,
     NavbarComponent,
     CreateAccountComponent,
+    ForgetPasswordComponent,
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     FormsModule,
     FontAwesomeModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    ToastrModule.forRoot(),
   ],
   providers: [],
   bootstrap: [AppComponent]

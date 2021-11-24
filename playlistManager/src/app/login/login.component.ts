@@ -1,5 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { faFacebookF, faGoogle, faApple } from '@fortawesome/free-brands-svg-icons';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-login',
@@ -17,7 +18,9 @@ export class LoginComponent implements OnInit {
   login: string = "";
   password: string = "";
 
-  constructor() { }
+  constructor(
+    private toastrService: ToastrService,
+  ) { }
 
   ngOnInit(): void {
   }

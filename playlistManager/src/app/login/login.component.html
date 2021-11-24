@@ -26,7 +26,7 @@
 			<span>or use your account</span>
 			<input type="email" placeholder="Email" />
 			<input type="password" placeholder="Password" />
-			<a href="#">Forgot your password?</a>
+			<a [routerLink]="['/forget-password']" routerLinkActive="active">Forgot your password?</a>
 			<button (click)="signIn()">Sign In</button>
 		</form>
 	</div>
