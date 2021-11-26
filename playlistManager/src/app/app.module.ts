@@ -13,6 +13,8 @@ import { BlockUIModule } from 'ng-block-ui';
 import { RouterModule } from '@angular/router';
 import { DashboardUserComponent } from './dashboard-user/dashboard-user.component';
 import { CommonModule } from "@angular/common";
+import { UserSettingsComponent } from './user-settings/user-settings.component';
+import { DeleteAccountComponent } from './delete-account/delete-account.component';
 
 @NgModule({
   declarations: [
@@ -21,6 +23,8 @@ import { CommonModule } from "@angular/common";
     NavbarComponent,
     ForgetPasswordComponent,
     DashboardUserComponent,
+    UserSettingsComponent,
+    DeleteAccountComponent,
   ],
   imports: [
     BrowserModule,
