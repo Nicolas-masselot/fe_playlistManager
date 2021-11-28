@@ -19,7 +19,8 @@ export class DeleteAccountComponent implements OnInit {
 
   // executer la fonction après confirmation dans une boîte de dialogue
   deleteAccount():void{
-    this.blockUI.start('Loading...');
+    if (confirm("Are you sure you want to delete your account ? (this action is irreversible)")) {
+      this.blockUI.start('Loading...');
       this.message.sendMessage('deleteAccount',{account: this.service.userID}).subscribe(
         (response) => {
           console.log(response);
@@ -30,5 +31,6 @@ export class DeleteAccountComponent implements OnInit {
           this.blockUI.stop();
         }
       )
+    }
   }
 }

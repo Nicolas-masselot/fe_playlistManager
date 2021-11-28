@@ -1,0 +1,52 @@
+#ChangePasswordContent{
+    display: flex;
+
+    background: #FFFFFF;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25), inset 0px 4px 4px rgba(0, 0, 0, 0.25);
+    width: 95%;
+    height: 95%;
+    margin: 2%;
+}
+
+#options{
+    display: flex;
+    flex-direction: column;
+    margin: 28px;
+    margin-right: 45px;
+    gap: 20px;
+}
+
+#changePassForm{
+    display: flex;
+    flex-direction: column;
+    margin-top: 110px;
+    margin-left: 45px;
+}
+
+#separationbar{
+    height: 506.02px;
+    border: 2px solid rgba(0, 0, 0, 0.25);
+    margin-top: 110px;
+    margin-bottom: 110px;
+}
+
+.linksOptions{
+    font-family: Nunito;
+    font-style: normal;
+    font-weight: 600;
+    font-size: 24px;
+    line-height: 33px;
+    letter-spacing: 0.1em;
+}
+
+.linksOptions:hover{
+    text-decoration: underline;
+}
+
+h3{
+    font-family: Overpass;
+    font-style: normal;
+    font-weight: 800;
+    font-size: 36px;
+    line-height: 55px;
+}

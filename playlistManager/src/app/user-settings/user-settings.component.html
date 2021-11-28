@@ -1,3 +1,14 @@
 <app-navbar></app-navbar>
-<p>user-settings works!</p>
-<a routerLink="/deleteAccount">delete account</a> <!-- utilisation des routerLink pour le bouton cancel , et deleteaccount et changepassword-->
+<div id="ChangePasswordContent">
+    <div id="options">
+        <h3> Settings</h3>
+
+        <p [routerLink]="['/userSettings']" class="linksOptions">Change password</p>
+        <p [routerLink]="['/deleteAccount']" class="linksOptions">Delete account </p>
+    </div>
+    <div id="separationbar"></div>
+    <div id="changePassForm">
+        <p>Change password form</p>
+    </div>
+
+</div>
