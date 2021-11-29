@@ -5,6 +5,7 @@ import { LoginComponent } from './login/login.component';
 import { DashboardUserComponent } from './dashboard-user/dashboard-user.component';
 import { UserSettingsComponent } from './user-settings/user-settings.component';
 import { DeleteAccountComponent } from './delete-account/delete-account.component';
+import { NavbarComponent } from './navbar/navbar.component';
 
 const routes: Routes = [
   {
@@ -26,7 +27,7 @@ const routes: Routes = [
   {
     path:'deleteAccount',
     component: DeleteAccountComponent
-  }
+  },
 
 ]
 @NgModule({
