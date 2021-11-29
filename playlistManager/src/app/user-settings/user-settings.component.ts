@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { BlockUI, NgBlockUI } from 'ng-block-ui';
 import { AuthService } from '../services/auth.service';
 import { MessageService } from '../services/message.service';
+import { faEye , faEyeSlash} from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'app-user-settings',
@@ -15,6 +16,11 @@ export class UserSettingsComponent implements OnInit {
   currentpassword:string | undefined;
   newpassword:string | undefined;
   newconfirm:string | undefined;
+  faEye = faEye ;
+  faEyeSlash = faEyeSlash ;
+  showCurrent = false;
+  showNewPass = false ;
+  showNewConfirm = false; 
 
   constructor(private message: MessageService, private service: AuthService ) { }
 
@@ -33,5 +39,21 @@ export class UserSettingsComponent implements OnInit {
           this.blockUI.stop();
         }
       )
+  }
+
+  showPasswords(champMdp: number):void {
+    switch (champMdp) {
+      case 1:
+        this.showCurrent = !this.showCurrent;
+        break;
+      case 2:
+        this.showNewPass = !this.showNewPass;  
+        break;
+      case 3:
+        this.showNewConfirm = !this.showNewConfirm ;
+        break;
+      default:
+        break;
+    }
   }
 }
