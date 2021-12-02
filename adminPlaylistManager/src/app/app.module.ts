@@ -15,6 +15,7 @@ import { MatTableModule } from '@angular/material/table';
 import { MatPaginatorModule , MatPaginatorIntl } from '@angular/material/paginator';
 import { CustomPaginator } from './customPaginator';
 import {MatIconModule} from '@angular/material/icon';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 @NgModule({
   declarations: [
@@ -33,7 +34,8 @@ import {MatIconModule} from '@angular/material/icon';
     MatTableModule,
     HttpClientModule,
     MatPaginatorModule,
-    MatIconModule
+    MatIconModule,
+    FontAwesomeModule
   ],
   providers: [
     {provide: MatPaginatorIntl, useValue: CustomPaginator()}

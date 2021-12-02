@@ -4,6 +4,7 @@ import {MatTableDataSource} from '@angular/material/table';
 import { MessageService } from '../services/message.service';
 import {ToastrService} from "ngx-toastr";
 import { CustomPaginator } from '../customPaginator';
+import { faSearch } from '@fortawesome/free-solid-svg-icons';
 
 export interface Utilisateur{
   idUser:number,
@@ -23,6 +24,7 @@ export interface Utilisateur{
 })
 export class ManageUsersComponent implements AfterViewInit {
   
+  faSearch = faSearch ;
   colonnes: string[] = ["infosUser","ItemsUser","options"];
   datasource = new MatTableDataSource<Utilisateur>(DATA_TEST) ;
 
@@ -32,7 +34,7 @@ export class ManageUsersComponent implements AfterViewInit {
 paginator!: MatPaginator;
 
   ngAfterViewInit(): void {
-    this.paginator._intl.itemsPerPageLabel = "Clients per page :"
+    this.paginator._intl.itemsPerPageLabel = "Users per page :"
     this.datasource.paginator = this.paginator ;
     this.service.sendMessage('recupAllUsers',{}).subscribe(
       (response)=>{
@@ -45,10 +47,9 @@ paginator!: MatPaginator;
     );
   }
 
-  filtrerUsers(nomUser:string){
-    nomUser = nomUser.trim();
-    nomUser = nomUser.toLowerCase() ;
-    this.datasource.filter = nomUser ;
+  filtrerUsers(event:Event){
+    const nomUser = (event.target as HTMLInputElement).value;
+    this.datasource.filter = nomUser.trim().toLowerCase() ;
   }
 
   openDialogUser(idUser:number,typeDialog:number){
@@ -65,14 +66,14 @@ const DATA_TEST: Utilisateur[] = [
   {idUser: 420, email: "mail@test2.com",role: "Advertiser", nbplaylist:undefined, nbads:69},
   {idUser: 420, email: "mail@test.com",role: "User", nbplaylist:69, nbads:undefined},
   {idUser: 420, email: "mail@test2.com",role: "Advertiser", nbplaylist:undefined, nbads:69},
-  {idUser: 420, email: "mail@test.com",role: "User", nbplaylist:69, nbads:undefined},
+  {idUser: 420, email: "mail@test3.com",role: "User", nbplaylist:69, nbads:undefined},
+  {idUser: 420, email: "mail@test2.com",role: "Advertiser", nbplaylist:undefined, nbads:69},
+  {idUser: 420, email: "mail@test3.com",role: "User", nbplaylist:69, nbads:undefined},
   {idUser: 420, email: "mail@test2.com",role: "Advertiser", nbplaylist:undefined, nbads:69},
   {idUser: 420, email: "mail@test.com",role: "User", nbplaylist:69, nbads:undefined},
   {idUser: 420, email: "mail@test2.com",role: "Advertiser", nbplaylist:undefined, nbads:69},
-  {idUser: 420, email: "mail@test.com",role: "User", nbplaylist:69, nbads:undefined},
-  {idUser: 420, email: "mail@test2.com",role: "Advertiser", nbplaylist:undefined, nbads:69},
-  {idUser: 420, email: "mail@test.com",role: "User", nbplaylist:69, nbads:undefined},
-  {idUser: 420, email: "mail@test2.com",role: "Advertiser", nbplaylist:undefined, nbads:69},
+  {idUser: 420, email: "mail@test4.com",role: "User", nbplaylist:69, nbads:undefined},
+  {idUser: 420, email: "mail@test4.com",role: "Advertiser", nbplaylist:undefined, nbads:69},
   {idUser: 420, email: "mail@test.com",role: "User", nbplaylist:69, nbads:undefined},
   {idUser: 420, email: "mail@test2.com",role: "Advertiser", nbplaylist:undefined, nbads:69},
   {idUser: 420, email: "mail@test.com",role: "User", nbplaylist:69, nbads:undefined},
