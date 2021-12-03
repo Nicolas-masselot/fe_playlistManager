@@ -16,6 +16,8 @@ import { MatPaginatorModule , MatPaginatorIntl } from '@angular/material/paginat
 import { CustomPaginator } from './customPaginator';
 import {MatIconModule} from '@angular/material/icon';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { BlockUIModule } from 'ng-block-ui';
+import {MatDialogModule} from '@angular/material/dialog';
 
 @NgModule({
   declarations: [
@@ -35,7 +37,9 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
     HttpClientModule,
     MatPaginatorModule,
     MatIconModule,
-    FontAwesomeModule
+    FontAwesomeModule,
+    BlockUIModule.forRoot(), 
+    MatDialogModule
   ],
   providers: [
     {provide: MatPaginatorIntl, useValue: CustomPaginator()}

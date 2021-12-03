@@ -6,6 +6,9 @@ import { MessageService } from '../services/message.service';
 import {ToastrService} from "ngx-toastr";
 import { faSearch } from '@fortawesome/free-solid-svg-icons';
 import { AuthService } from '../services/auth.service';
+import {MatDialog} from '@angular/material/dialog';
+import { ConfirmDeleteDialogComponent } from '../confirm-delete-dialog/confirm-delete-dialog.component';
+import { BlockUI, NgBlockUI } from 'ng-block-ui';
 
 export interface Advertisement{
   idAd:number,
@@ -23,13 +26,14 @@ export interface Advertisement{
 })
 export class ManageAdsComponent implements AfterViewInit {
 
+  @BlockUI() blockUI!: NgBlockUI;
   faSearch = faSearch ;
   colonnes: string[] = ["infosAd","options"];
   datasource = new MatTableDataSource<Advertisement>(DATA_TEST) ;
   roleUser: string | undefined ;
   idUser: number | undefined ;
 
-  constructor(private service:MessageService,private toastr: ToastrService,private authserv:AuthService) { } // recherche ads = filtre dans la liste des ads à afficher
+  constructor(private service:MessageService,private toastr: ToastrService,private authserv:AuthService,private dialog: MatDialog) { }
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
 
@@ -39,7 +43,7 @@ export class ManageAdsComponent implements AfterViewInit {
     this.datasource.paginator = this.paginator ;
     this.idUser = this.authserv.userID;
     this.roleUser = this.authserv.role ;
-    // this.roleUser = "admin";
+    //this.roleUser = "admin";
 
     if (this.roleUser == "admin") {
       this.service.sendMessage('recupAllAds',{}).subscribe(
@@ -74,7 +78,33 @@ export class ManageAdsComponent implements AfterViewInit {
     if (typeDialog == 1) {
       console.log("modifs pour ad "+idAd)
     } else {
-      console.log("delete ad "+idAd) ;
+      const dialogRef = this.dialog.open(ConfirmDeleteDialogComponent,{
+        data : {
+          message: "Once you delete this advertise, there is no going back. Please be certain.",
+          buttonText: {
+            deleteconfirmed: "Delete advertise",
+            canceldelete: "Cancel"
+          }
+        }
+      });
+
+      dialogRef.afterClosed().subscribe((confirmedDelete:boolean) => {
+        if (confirmedDelete) {
+          this.blockUI.start('Loading...');
+          this.service.sendMessage('deleteAd',{idAnnonce: idAd}).subscribe(
+            (response)=>{
+              this.toastr.success("Ad deleted successfully");
+              console.log(response);
+              this.blockUI.stop();
+            },
+            (error) => {
+              this.toastr.error("Une erreur s'est produite");
+              console.log(error) ;
+              this.blockUI.stop();
+            }
+          );
+        }
+      });
     }
   }
 

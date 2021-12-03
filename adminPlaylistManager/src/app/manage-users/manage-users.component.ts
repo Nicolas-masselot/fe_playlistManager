@@ -5,6 +5,9 @@ import { MessageService } from '../services/message.service';
 import {ToastrService} from "ngx-toastr";
 import { CustomPaginator } from '../customPaginator';
 import { faSearch } from '@fortawesome/free-solid-svg-icons';
+import {MatDialog} from '@angular/material/dialog';
+import { ConfirmDeleteDialogComponent } from '../confirm-delete-dialog/confirm-delete-dialog.component';
+import { BlockUI, NgBlockUI } from 'ng-block-ui';
 
 export interface Utilisateur{
   idUser:number,
@@ -24,14 +27,14 @@ export interface Utilisateur{
 })
 export class ManageUsersComponent implements AfterViewInit {
   
+  @BlockUI() blockUI!: NgBlockUI;
   faSearch = faSearch ;
   colonnes: string[] = ["infosUser","ItemsUser","options"];
   datasource = new MatTableDataSource<Utilisateur>(DATA_TEST) ;
 
-  constructor(private service:MessageService,private toastr: ToastrService) { } // recherche users = filtre dans la liste des users à afficher
+  constructor(private service:MessageService,private toastr: ToastrService,private dialog: MatDialog) { }
 
-  @ViewChild(MatPaginator)
-paginator!: MatPaginator;
+  @ViewChild(MatPaginator) paginator!: MatPaginator;
 
   ngAfterViewInit(): void {
     this.paginator._intl.itemsPerPageLabel = "Users per page :"
@@ -56,7 +59,33 @@ paginator!: MatPaginator;
     if (typeDialog == 1) {
       console.log("modifs pour user"+idUser)
     } else {
-      console.log("delete User"+idUser) ;
+      const dialogRef = this.dialog.open(ConfirmDeleteDialogComponent,{
+        data : {
+          message: "Once you delete this account, there is no going back. Please be certain.",
+          buttonText: {
+            deleteconfirmed: "Delete Account",
+            canceldelete: "Cancel"
+          }
+        }
+      });
+
+      dialogRef.afterClosed().subscribe((confirmedDelete:boolean) => {
+        if (confirmedDelete) {
+          this.blockUI.start('Loading...');
+          this.service.sendMessage('deleteUser',{idUtilisateur: idUser}).subscribe(
+            (response)=>{
+              this.toastr.success("User deleted successfully");
+              console.log(response);
+              this.blockUI.stop();
+            },
+            (error) => {
+              this.toastr.error("Une erreur s'est produite");
+              console.log(error) ;
+              this.blockUI.stop();
+            }
+          );
+        }
+      });
     }
   }
 }
