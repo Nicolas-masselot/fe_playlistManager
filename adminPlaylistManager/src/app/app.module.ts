@@ -18,6 +18,8 @@ import {MatIconModule} from '@angular/material/icon';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { BlockUIModule } from 'ng-block-ui';
 import {MatDialogModule} from '@angular/material/dialog';
+import {MatSelectModule} from '@angular/material/select';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -39,7 +41,9 @@ import {MatDialogModule} from '@angular/material/dialog';
     MatIconModule,
     FontAwesomeModule,
     BlockUIModule.forRoot(), 
-    MatDialogModule
+    MatDialogModule,
+    MatSelectModule,
+    FormsModule
   ],
   providers: [
     {provide: MatPaginatorIntl, useValue: CustomPaginator()}

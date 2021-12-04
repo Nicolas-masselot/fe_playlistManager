@@ -29,7 +29,8 @@ export class ManageAdsComponent implements AfterViewInit {
   @BlockUI() blockUI!: NgBlockUI;
   faSearch = faSearch ;
   colonnes: string[] = ["infosAd","options"];
-  datasource = new MatTableDataSource<Advertisement>(DATA_TEST) ;
+  annonces: Advertisement[] = DATA_TEST;
+  datasource = new MatTableDataSource<Advertisement>(this.annonces) ;
   roleUser: string | undefined ;
   idUser: number | undefined ;
 
@@ -48,7 +49,7 @@ export class ManageAdsComponent implements AfterViewInit {
     if (this.roleUser == "admin") {
       this.service.sendMessage('recupAllAds',{}).subscribe(
         (response)=>{
-          this.datasource.data = response.data ;
+          this.annonces = response.data;
         },
         (error) => {
           this.toastr.error("Une erreur s'est produite");
@@ -94,6 +95,9 @@ export class ManageAdsComponent implements AfterViewInit {
           this.service.sendMessage('deleteAd',{idAnnonce: idAd}).subscribe(
             (response)=>{
               this.toastr.success("Ad deleted successfully");
+              let index_todel = this.datasource.data.findIndex(annonce => annonce.idAd == idAd);
+              this.annonces.splice(index_todel,1);
+              this.datasource = new MatTableDataSource<Advertisement>(this.annonces) ;
               console.log(response);
               this.blockUI.stop();
             },
@@ -113,22 +117,22 @@ export class ManageAdsComponent implements AfterViewInit {
 const DATA_TEST: Advertisement[] = [
   {idAd:1,emailAdvertiser:"mail1@test.com", adName: "ad1"},
   {idAd:2,emailAdvertiser:"mail2@test.com", adName: "ad2"},
-  {idAd:69,emailAdvertiser:"mail69@test.com", adName: "ad69"},
-  {idAd:420,emailAdvertiser:"mail420@test.com", adName: "ad420"},
-  {idAd:1,emailAdvertiser:"mail1@test.com", adName: "ad1"},
-  {idAd:2,emailAdvertiser:"mail2@test.com", adName: "ad2"},
-  {idAd:69,emailAdvertiser:"mail69@test.com", adName: "ad69"},
-  {idAd:420,emailAdvertiser:"mail420@test.com", adName: "ad420"},
-  {idAd:1,emailAdvertiser:"mail1@test.com", adName: "ad1"},
-  {idAd:2,emailAdvertiser:"mail2@test.com", adName: "ad2"},
-  {idAd:69,emailAdvertiser:"mail69@test.com", adName: "ad69"},
-  {idAd:420,emailAdvertiser:"mail420@test.com", adName: "ad420"},
-  {idAd:1,emailAdvertiser:"mail1@test.com", adName: "ad1"},
-  {idAd:2,emailAdvertiser:"mail2@test.com", adName: "ad2"},
-  {idAd:69,emailAdvertiser:"mail69@test.com", adName: "ad69"},
-  {idAd:420,emailAdvertiser:"mail420@test.com", adName: "ad420"},
-  {idAd:1,emailAdvertiser:"mail1@test.com", adName: "ad1"},
-  {idAd:2,emailAdvertiser:"mail2@test.com", adName: "ad2"},
-  {idAd:69,emailAdvertiser:"mail69@test.com", adName: "ad69"},
-  {idAd:420,emailAdvertiser:"mail420@test.com", adName: "ad420"},
+  {idAd:3,emailAdvertiser:"mail69@test.com", adName: "ad69"},
+  {idAd:4,emailAdvertiser:"mail420@test.com", adName: "ad420"},
+  {idAd:5,emailAdvertiser:"mail1@test.com", adName: "ad1"},
+  {idAd:6,emailAdvertiser:"mail2@test.com", adName: "ad2"},
+  {idAd:7,emailAdvertiser:"mail69@test.com", adName: "ad69"},
+  {idAd:8,emailAdvertiser:"mail420@test.com", adName: "ad420"},
+  {idAd:9,emailAdvertiser:"mail1@test.com", adName: "ad1"},
+  {idAd:10,emailAdvertiser:"mail2@test.com", adName: "ad2"},
+  {idAd:11,emailAdvertiser:"mail69@test.com", adName: "ad69"},
+  {idAd:12,emailAdvertiser:"mail420@test.com", adName: "ad420"},
+  {idAd:13,emailAdvertiser:"mail1@test.com", adName: "ad1"},
+  {idAd:14,emailAdvertiser:"mail2@test.com", adName: "ad2"},
+  {idAd:15,emailAdvertiser:"mail69@test.com", adName: "ad69"},
+  {idAd:16,emailAdvertiser:"mail420@test.com", adName: "ad420"},
+  {idAd:17,emailAdvertiser:"mail1@test.com", adName: "ad1"},
+  {idAd:18,emailAdvertiser:"mail2@test.com", adName: "ad2"},
+  {idAd:19,emailAdvertiser:"mail69@test.com", adName: "ad69"},
+  {idAd:20,emailAdvertiser:"mail420@test.com", adName: "ad420"},
 ]
