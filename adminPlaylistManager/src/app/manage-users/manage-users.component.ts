@@ -124,7 +124,7 @@ export class ManageUsersComponent implements AfterViewInit {
               this.blockUI.stop();
             },
             (error) => {
-              this.toastr.error("An error has occured");
+              this.toastr.error("An error has occured while deleting User");
               console.log(error) ;
               this.blockUI.stop();
             }
@@ -158,7 +158,7 @@ export class ManageUsersComponent implements AfterViewInit {
             this.blockUI.stop();
           },
           (error) => {
-            this.toastr.error("An error has occured");
+            this.toastr.error("An error has occured while Adding the User");
             console.log(error) ;
             this.blockUI.stop();
           }

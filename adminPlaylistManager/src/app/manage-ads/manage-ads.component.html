@@ -4,7 +4,7 @@
         <input name="searchAdverts" id="searchAdverts" placeholder="Name..." (keyup)="filtrerAds($event)">
         <fa-icon [icon]="faSearch" class="searchIcon"></fa-icon>
     </div>
-    <button id="addAds">Add ads</button>
+    <button id="addAds" (click)="OpenAddAdvert()" *ngIf="roleUser != 'admin'">Add ads</button>
 </div>
 
 <div class="mat-elevation-z8">

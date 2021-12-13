@@ -9,11 +9,22 @@ import { AuthService } from '../services/auth.service';
 import {MatDialog} from '@angular/material/dialog';
 import { ConfirmDeleteDialogComponent } from '../confirm-delete-dialog/confirm-delete-dialog.component';
 import { BlockUI, NgBlockUI } from 'ng-block-ui';
+import { AdsDialogComponent } from '../ads-dialog/ads-dialog.component';
 
 export interface Advertisement{
   idAd:number,
-  emailAdvertiser:string,
+  emailAdvertiser:string | undefined,
   adName:string
+}
+
+export interface AdvertEdited{
+  idAd:number,
+  nameAdd:string,
+  changed:boolean
+}
+
+export interface AdvertAdded {
+  adName:string //ajouter éléments pour gestion fichiers
 }
 
 @Component({
@@ -75,9 +86,68 @@ export class ManageAdsComponent implements AfterViewInit {
     this.datasource.filter = nomAd.trim().toLowerCase() ;
   }
 
+  OpenAddAdvert():void {
+    const dialogRef = this.dialog.open(AdsDialogComponent,{
+      data:{
+        dialogType: "addAdvert"
+      }
+    });
+
+    dialogRef.afterClosed().subscribe((newAdvert: AdvertAdded)=>{
+      if (newAdvert.adName) {
+        this.blockUI.start('Loading...');
+        this.service.sendMessage('addAdvert', newAdvert).subscribe(
+          (response)=>{
+            this.toastr.success('Advertisement added successfully');
+            let nouvelAnnonce = {idAd:response.data.id,emailAdvertiser:this.authserv.mailUser,adName:newAdvert.adName};
+            this.annonces.push(nouvelAnnonce) ;
+            this.datasource.data = this.annonces ;
+            console.log(response);
+            this.blockUI.stop() ;
+          },
+          (error) => {
+            this.toastr.error("An error has occured while Adding the advertisement");
+            console.log(error) ;
+            this.blockUI.stop();
+          }
+        )
+      }
+    });
+  }
+
   openDialogAds(idAd:number,typeDialog:number){
     if (typeDialog == 1) {
-      console.log("modifs pour ad "+idAd)
+      let indexAdTarget = this.datasource.data.findIndex(advert => advert.idAd == idAd);
+      const dialogRef = this.dialog.open(AdsDialogComponent,{
+        data:{
+          dialogType: "editAds",
+          AdvertID:idAd ,
+          adName: this.annonces[indexAdTarget].adName,
+          advertiserMail: this.annonces[indexAdTarget].emailAdvertiser
+        }
+      });
+
+      dialogRef.afterClosed().subscribe((editedAdd: AdvertEdited)=>{
+        if (editedAdd.changed ) {
+          this.blockUI.start('Loading...');
+          this.service.sendMessage('EditAdvert', editedAdd).subscribe(
+            (response)=>{
+              this.toastr.success('Advertisement edited successfully');
+              let indexEdit = this.datasource.data.findIndex(annonce => annonce.idAd == idAd);
+              this.annonces[indexEdit].adName = editedAdd.nameAdd ;
+              this.datasource.data = this.annonces ;
+              console.log(response);
+              this.blockUI.stop();
+            },
+            (error) => {
+              this.toastr.error("An error has occured while Updating the advertisement");
+              console.log(error) ;
+              this.blockUI.stop();
+            }
+          )
+        }
+      })
+
     } else {
       const dialogRef = this.dialog.open(ConfirmDeleteDialogComponent,{
         data : {

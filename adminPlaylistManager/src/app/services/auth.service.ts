@@ -10,6 +10,7 @@ export class AuthService {
   LoggedIn: boolean | undefined ;
   role: string | undefined ;
   userID: number | undefined;
+  mailUser: string | undefined ;
 
   constructor(private service: MessageService) { }
 
@@ -26,6 +27,7 @@ export class AuthService {
       this.LoggedIn = true ;
       this.role = reponse.data.role ;
       this.userID = reponse.data.userID ;
+      this.mailUser = reponse.data.mail ;
     } else {
       this.LoggedIn = false ;
       this.role = undefined ;
