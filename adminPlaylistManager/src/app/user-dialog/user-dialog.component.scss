@@ -69,6 +69,36 @@ mat-dialog-actions {
     padding: 0px 32px;
 }
 
+.settingInputsError{
+    display: flex;
+    align-items: center;
+    /* white */
+
+    background: #FFFFFF;
+    /* dark blue /1 8 */
+
+    border: 2px solid red;
+    box-sizing: border-box;
+    border-radius: 80px;
+
+    width: 447px;
+    height: 52px;
+    padding: 0px 32px;
+}
+
+.ErrorMessage{
+    font-family: Nunito;
+    font-style: normal;
+    font-weight: 600;
+    font-size: 18px;
+    line-height: 17px;
+    letter-spacing: 0.1em;
+
+    /* black/2 5 */
+
+    color: red;
+}
+
 input {
     border-style: none;
     width: 93%;

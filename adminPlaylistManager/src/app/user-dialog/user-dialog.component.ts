@@ -31,6 +31,17 @@ export class UserDialogComponent implements OnInit {
   faEye = faEye ;
   faEyeSlash = faEyeSlash ;
 
+  emailFieldClass:string = "settingInputs" ;
+  PasswordFieldClass:string = "settingInputs" ;
+  ConfirmFieldClass:string = "settingInputs" ;
+  RoleFieldClass:string = "settingInputs" ;
+
+  emailInvalid:boolean = false ;
+  passwordRequired:boolean = false ;
+  confirmRequired:boolean = false ;
+  roleRequired:boolean = false ;
+  passwordsMatchError:boolean = false ;
+
   constructor(
     @Inject(MAT_DIALOG_DATA) private data: any
   ,private dialogRef: MatDialogRef<UserDialogComponent>
@@ -57,7 +68,7 @@ export class UserDialogComponent implements OnInit {
   }
 
   OnSaveData():void{
-    let errorsInform = false ;
+    
     let emailaddress= new FormControl(this.email,[
       Validators.required,
       Validators.email
@@ -76,28 +87,46 @@ export class UserDialogComponent implements OnInit {
     ]);
 
     if (passwordField.errors != null && this.dialogType === 'addUser') {
-      this.toastr.error("please enter a password") ;
-      errorsInform = true ;
+      this.PasswordFieldClass = "settingInputsError";
+      this.passwordRequired = true ;
+    } else {
+      this.PasswordFieldClass = "settingInputs";
+      this.passwordRequired = false ;
     }
+
     if (ConfirmField.errors != null && this.dialogType === 'addUser') {
-      this.toastr.error("please confirm the password");
-      errorsInform = true ;
+      this.ConfirmFieldClass = "settingInputsError";
+      this.confirmRequired = true ;
+    } else {
+      this.ConfirmFieldClass = "settingInputs";
+      this.confirmRequired = false ;
     }
 
     if (RoleField.errors != null && this.dialogType === 'addUser') {
-      this.toastr.error("please choose a role") ;
-      errorsInform = true ;
+      this.RoleFieldClass = "settingInputsError";
+      this.roleRequired = true ;
+    } else {
+      this.RoleFieldClass = "settingInputs";
+      this.roleRequired = false;
     }
 
     if (emailaddress.errors != null) {
-      this.toastr.error("please choose a valid email address") ;
-      errorsInform = true ;
+      this.emailFieldClass = "settingInputsError";
+      this.emailInvalid = true ;
+    } else {
+      this.emailFieldClass = "settingInputs";
+      this.emailInvalid = false;
     }
 
-    if (this.mdp !== this.ConfirmPass) {
-      this.toastr.error("passwords should match") ;
-      errorsInform = true ;
+    if (this.mdp !== this.ConfirmPass ) {
+      this.ConfirmFieldClass = "settingInputsError";
+      this.passwordsMatchError = true ;
+    } else if (!this.confirmRequired) {
+      this.ConfirmFieldClass = "settingInputs";
+      this.passwordsMatchError = false;
     }
+
+    let errorsInform = this.passwordRequired || this.confirmRequired || this.roleRequired || this.emailInvalid || this.passwordsMatchError ;
 
     if ( !errorsInform && this.dialogType === 'addUser') {
       this.dialogRef.close({email:this.email,mdp:this.mdp,mdpConfirm:this.ConfirmPass,role:this.role});

@@ -4,17 +4,17 @@
     <p *ngIf="dialogType === 'editAds' && accountRole === 'admin'" id="mailAd"> Advertisement from {{ advertiserMail }} </p>
     <div id="AdvertForm">
         <label>Advertisement name :</label>
-        <div class="AdvertInputs" *ngIf="!nameRequired">
-            <input type="text" name="adName" id="NameAd" [(ngModel)]="adName"/>
-        </div>
-
-        <div class="AdvertInputsError" *ngIf="nameRequired">
+        <div class="{{advertInputClass}}">
             <input type="text" name="adName" id="NameAd" [(ngModel)]="adName"/>
         </div>
 
         <p *ngIf="nameRequired" id="requiredError">Please enter a name for your Advertisement</p>
 
-        <input type="file" />
+        <div class="{{fileInputClass}}">
+            <label for="advertFile" id="fileInputLabel">{{labelFileText}}</label>
+            <input id="advertFile" name="advertFile" type="file" (change)="onFileSelected($event)" />
+        </div>
+        
         <button id="uploadButton" (click)="uploadAd()"> Upload file </button>
     </div>
 </mat-dialog-content>

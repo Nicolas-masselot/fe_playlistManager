@@ -22,6 +22,11 @@ export class AdsDialogComponent implements OnInit {
   advertiserMail:string = "";
   accountRole:string = "admin";
   nameRequired:boolean = false ;
+  advertInputClass:string = "AdvertInputs";
+  fileInputClass:string = "AdvertInputs";
+  labelFileText:string = "Choose a file";
+
+  advertFile:any ;
   
   constructor(@Inject(MAT_DIALOG_DATA) private data: any
   ,private dialogRef: MatDialogRef<AdsDialogComponent>
@@ -53,6 +58,15 @@ export class AdsDialogComponent implements OnInit {
   ngOnInit(): void {
   }
 
+
+  onFileSelected(event: Event | any) {
+    if(event.target.files.length > 0) {
+      this.labelFileText = event.target.files[0].name ;
+
+      console.log(event.target.files[0]); // restreindre le type de fichier avec la propriété type
+    } 
+  }
+
   uploadAd():void{
     console.log("upload ad coming soon");
   }
@@ -64,8 +78,10 @@ export class AdsDialogComponent implements OnInit {
 
     if (NameAdForm.errors != null) {
       this.nameRequired = true ;
+      this.advertInputClass = "AdvertInputsError";
     } else {
       this.nameRequired = false ;
+      this.advertInputClass = "AdvertInputs";
     }
 
     if (!this.nameRequired && this.dialogType === 'editAds') {
