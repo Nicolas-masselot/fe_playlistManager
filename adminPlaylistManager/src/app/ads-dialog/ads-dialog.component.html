@@ -8,14 +8,16 @@
             <input type="text" name="adName" id="NameAd" [(ngModel)]="adName"/>
         </div>
 
-        <p *ngIf="nameRequired" id="requiredError">Please enter a name for your Advertisement</p>
+        <p *ngIf="nameRequired" class="ErrorMessage">Please enter a name for your Advertisement</p>
 
         <div class="{{fileInputClass}}">
             <label for="advertFile" id="fileInputLabel">{{labelFileText}}</label>
             <input id="advertFile" name="advertFile" type="file" (change)="onFileSelected($event)" />
         </div>
+
+        <p *ngIf="FileTypeIncorrect" class="ErrorMessage">Please add a video file of the following types : {{ videoFileTypes.toString() }} </p>
+        <p *ngIf="FileRequired" class="ErrorMessage">Please add a file for your advertisement</p>
         
-        <button id="uploadButton" (click)="uploadAd()"> Upload file </button>
     </div>
 </mat-dialog-content>
 <mat-dialog-actions>

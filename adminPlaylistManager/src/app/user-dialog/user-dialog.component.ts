@@ -21,7 +21,7 @@ export class UserDialogComponent implements OnInit {
   mdp:string ="" ;
   ConfirmPass:string = "" ;
   role:string = "";
-  userID:number | undefined ;
+  userID:string | undefined ;
   resetDisable = false;
   titleMessage:string = "Add new User";
   SavebuttonText: string = "Save changes" ;

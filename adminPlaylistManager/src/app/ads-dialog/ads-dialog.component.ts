@@ -16,7 +16,7 @@ export class AdsDialogComponent implements OnInit {
 
   dialogType = "addAdvert";
   adName:string = "";
-  AdvertID:number | undefined ;
+  AdvertID:string | undefined ;
   titleMessage:string = "Add new Advertisement";
   SavebuttonText:string = "Save changes" ;
   advertiserMail:string = "";
@@ -24,9 +24,13 @@ export class AdsDialogComponent implements OnInit {
   nameRequired:boolean = false ;
   advertInputClass:string = "AdvertInputs";
   fileInputClass:string = "AdvertInputs";
+  FileTypeIncorrect:boolean = false ;
+  FileRequired:boolean = false ;
   labelFileText:string = "Choose a file";
 
-  advertFile:any ;
+  videoFileTypes:string[] = ["mp4","ogg","mpg","webm"];
+
+  advertFile:File | undefined = undefined ;
   
   constructor(@Inject(MAT_DIALOG_DATA) private data: any
   ,private dialogRef: MatDialogRef<AdsDialogComponent>
@@ -42,6 +46,10 @@ export class AdsDialogComponent implements OnInit {
 
     if (data.adName) {
       this.adName = data.adName
+    }
+
+    if (data.filename) {
+      this.labelFileText = data.filename;
     }
 
     if ( this.dialogType === 'editAds' ) {
@@ -62,13 +70,20 @@ export class AdsDialogComponent implements OnInit {
   onFileSelected(event: Event | any) {
     if(event.target.files.length > 0) {
       this.labelFileText = event.target.files[0].name ;
+      const uploadedVideoType:string = event.target.files[0].type; 
 
-      console.log(event.target.files[0]); // restreindre le type de fichier avec la propriété type
+      if (!this.videoFileTypes.includes(uploadedVideoType.replace('video/',''))) {
+        this.FileTypeIncorrect = true ;
+        this.FileRequired = false ;
+        this.fileInputClass = "AdvertInputsError";
+      } else {
+        this.FileTypeIncorrect = false ;
+        this.FileRequired = false ;
+        this.fileInputClass = "AdvertInputs";
+        this.advertFile = event.target.files[0];
+        console.log(this.advertFile) ;
+      }
     } 
-  }
-
-  uploadAd():void{
-    console.log("upload ad coming soon");
   }
 
   OnSaveData():void {
@@ -84,10 +99,22 @@ export class AdsDialogComponent implements OnInit {
       this.advertInputClass = "AdvertInputs";
     }
 
+    if ( this.advertFile == undefined && this.dialogType === 'addAdvert' && !this.FileTypeIncorrect ) {
+      this.FileRequired = true ;
+    } else {
+      this.FileRequired = false ;
+    }
+
+    if ( this.FileTypeIncorrect || this.FileRequired ) {
+      this.fileInputClass = "AdvertInputsError" ;
+    } else {
+      this.fileInputClass = "AdvertInputs" ;
+    }
+
     if (!this.nameRequired && this.dialogType === 'editAds') {
-      this.dialogRef.close({idAd:this.AdvertID,nameAdd:this.adName, changed:true});
-    } else if (!this.nameRequired && this.dialogType=== 'addAdvert') {
-      this.dialogRef.close({adName:this.adName});
+      this.dialogRef.close({idAd:this.AdvertID,nameAdd:this.adName, changed:true,FileAdvert:this.advertFile});
+    } else if (!this.nameRequired && !this.FileRequired && !this.FileTypeIncorrect && this.dialogType=== 'addAdvert') {
+      this.dialogRef.close({adName:this.adName,FileAdvert:this.advertFile});
     }
   }
 }

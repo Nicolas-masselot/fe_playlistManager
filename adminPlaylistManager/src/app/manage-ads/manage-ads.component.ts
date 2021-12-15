@@ -12,19 +12,22 @@ import { BlockUI, NgBlockUI } from 'ng-block-ui';
 import { AdsDialogComponent } from '../ads-dialog/ads-dialog.component';
 
 export interface Advertisement{
-  idAd:number,
+  idAd:string,
   emailAdvertiser:string | undefined,
-  adName:string
+  adName:string,
+  fileName:string | undefined
 }
 
 export interface AdvertEdited{
-  idAd:number,
+  idAd:string,
   nameAdd:string,
-  changed:boolean
+  changed:boolean,
+  FileAdvert:File | undefined
 }
 
 export interface AdvertAdded {
-  adName:string //ajouter éléments pour gestion fichiers
+  adName:string ,
+  FileAdvert:File | undefined
 }
 
 @Component({
@@ -43,7 +46,7 @@ export class ManageAdsComponent implements AfterViewInit {
   annonces: Advertisement[] = DATA_TEST;
   datasource = new MatTableDataSource<Advertisement>(this.annonces) ;
   roleUser: string | undefined ;
-  idUser: number | undefined ;
+  idUser: string | undefined ;
 
   constructor(private service:MessageService,private toastr: ToastrService,private authserv:AuthService,private dialog: MatDialog) { }
 
@@ -94,12 +97,12 @@ export class ManageAdsComponent implements AfterViewInit {
     });
 
     dialogRef.afterClosed().subscribe((newAdvert: AdvertAdded)=>{
-      if (newAdvert.adName) {
+      if (newAdvert.adName && newAdvert.FileAdvert) {
         this.blockUI.start('Loading...');
         this.service.sendMessage('addAdvert', newAdvert).subscribe(
           (response)=>{
             this.toastr.success('Advertisement added successfully');
-            let nouvelAnnonce = {idAd:response.data.id,emailAdvertiser:this.authserv.mailUser,adName:newAdvert.adName};
+            let nouvelAnnonce = {idAd:response.data.id,emailAdvertiser:this.authserv.mailUser,adName:newAdvert.adName,fileName:newAdvert.FileAdvert?.name};
             this.annonces.push(nouvelAnnonce) ;
             this.datasource.data = this.annonces ;
             console.log(response);
@@ -115,15 +118,16 @@ export class ManageAdsComponent implements AfterViewInit {
     });
   }
 
-  openDialogAds(idAd:number,typeDialog:number){
+  openDialogAds(idAd:string,typeDialog:number){
     if (typeDialog == 1) {
-      let indexAdTarget = this.datasource.data.findIndex(advert => advert.idAd == idAd);
+      let indexAdTarget = this.datasource.data.findIndex(advert => advert.idAd === idAd);
       const dialogRef = this.dialog.open(AdsDialogComponent,{
         data:{
           dialogType: "editAds",
           AdvertID:idAd ,
           adName: this.annonces[indexAdTarget].adName,
-          advertiserMail: this.annonces[indexAdTarget].emailAdvertiser
+          advertiserMail: this.annonces[indexAdTarget].emailAdvertiser,
+          filename: this.annonces[indexAdTarget].fileName
         }
       });
 
@@ -133,8 +137,9 @@ export class ManageAdsComponent implements AfterViewInit {
           this.service.sendMessage('EditAdvert', editedAdd).subscribe(
             (response)=>{
               this.toastr.success('Advertisement edited successfully');
-              let indexEdit = this.datasource.data.findIndex(annonce => annonce.idAd == idAd);
+              let indexEdit = this.datasource.data.findIndex(annonce => annonce.idAd === idAd);
               this.annonces[indexEdit].adName = editedAdd.nameAdd ;
+              this.annonces[indexEdit].fileName = editedAdd.FileAdvert?.name ;
               this.datasource.data = this.annonces ;
               console.log(response);
               this.blockUI.stop();
@@ -165,7 +170,7 @@ export class ManageAdsComponent implements AfterViewInit {
           this.service.sendMessage('deleteAd',{idAnnonce: idAd}).subscribe(
             (response)=>{
               this.toastr.success("Ad deleted successfully");
-              let index_todel = this.datasource.data.findIndex(annonce => annonce.idAd == idAd);
+              let index_todel = this.datasource.data.findIndex(annonce => annonce.idAd === idAd);
               this.annonces.splice(index_todel,1);
               this.datasource = new MatTableDataSource<Advertisement>(this.annonces) ;
               console.log(response);
@@ -185,24 +190,24 @@ export class ManageAdsComponent implements AfterViewInit {
 }
 
 const DATA_TEST: Advertisement[] = [
-  {idAd:1,emailAdvertiser:"mail1@test.com", adName: "ad1"},
-  {idAd:2,emailAdvertiser:"mail2@test.com", adName: "ad2"},
-  {idAd:3,emailAdvertiser:"mail69@test.com", adName: "ad69"},
-  {idAd:4,emailAdvertiser:"mail420@test.com", adName: "ad420"},
-  {idAd:5,emailAdvertiser:"mail1@test.com", adName: "ad1"},
-  {idAd:6,emailAdvertiser:"mail2@test.com", adName: "ad2"},
-  {idAd:7,emailAdvertiser:"mail69@test.com", adName: "ad69"},
-  {idAd:8,emailAdvertiser:"mail420@test.com", adName: "ad420"},
-  {idAd:9,emailAdvertiser:"mail1@test.com", adName: "ad1"},
-  {idAd:10,emailAdvertiser:"mail2@test.com", adName: "ad2"},
-  {idAd:11,emailAdvertiser:"mail69@test.com", adName: "ad69"},
-  {idAd:12,emailAdvertiser:"mail420@test.com", adName: "ad420"},
-  {idAd:13,emailAdvertiser:"mail1@test.com", adName: "ad1"},
-  {idAd:14,emailAdvertiser:"mail2@test.com", adName: "ad2"},
-  {idAd:15,emailAdvertiser:"mail69@test.com", adName: "ad69"},
-  {idAd:16,emailAdvertiser:"mail420@test.com", adName: "ad420"},
-  {idAd:17,emailAdvertiser:"mail1@test.com", adName: "ad1"},
-  {idAd:18,emailAdvertiser:"mail2@test.com", adName: "ad2"},
-  {idAd:19,emailAdvertiser:"mail69@test.com", adName: "ad69"},
-  {idAd:20,emailAdvertiser:"mail420@test.com", adName: "ad420"},
+  {idAd:'1',emailAdvertiser:"mail1@test.com", adName: "ad1",fileName:"ad.mp4"},
+  {idAd:'2',emailAdvertiser:"mail2@test.com", adName: "ad2",fileName:"ad.mp4"},
+  {idAd:'3',emailAdvertiser:"mail69@test.com", adName: "ad69",fileName:"ad.mp4"},
+  {idAd:'4',emailAdvertiser:"mail420@test.com", adName: "ad420",fileName:"ad.mp4"},
+  {idAd:'5',emailAdvertiser:"mail1@test.com", adName: "ad1",fileName:"ad.mp4"},
+  {idAd:'6',emailAdvertiser:"mail2@test.com", adName: "ad2",fileName:"ad.mp4"},
+  {idAd:'7',emailAdvertiser:"mail69@test.com", adName: "ad69",fileName:"ad.mp4"},
+  {idAd:'8',emailAdvertiser:"mail420@test.com", adName: "ad420",fileName:"ad.mp4"},
+  {idAd:'9',emailAdvertiser:"mail1@test.com", adName: "ad1",fileName:"ad.mp4"},
+  {idAd:'10',emailAdvertiser:"mail2@test.com", adName: "ad2",fileName:"ad.mp4"},
+  {idAd:'11',emailAdvertiser:"mail69@test.com", adName: "ad69",fileName:"ad.mp4"},
+  {idAd:'12',emailAdvertiser:"mail420@test.com", adName: "ad420",fileName:"ad.mp4"},
+  {idAd:'13',emailAdvertiser:"mail1@test.com", adName: "ad1",fileName:"ad.mp4"},
+  {idAd:'14',emailAdvertiser:"mail2@test.com", adName: "ad2",fileName:"ad.mp4"},
+  {idAd:'15',emailAdvertiser:"mail69@test.com", adName: "ad69",fileName:"ad.mp4"},
+  {idAd:'16',emailAdvertiser:"mail420@test.com", adName: "ad420",fileName:"ad.mp4"},
+  {idAd:'17',emailAdvertiser:"mail1@test.com", adName: "ad1",fileName:"ad.mp4"},
+  {idAd:'18',emailAdvertiser:"mail2@test.com", adName: "ad2",fileName:"ad.mp4"},
+  {idAd:'19',emailAdvertiser:"mail69@test.com", adName: "ad69",fileName:"ad.mp4"},
+  {idAd:'20',emailAdvertiser:"mail420@test.com", adName: "ad420",fileName:"ad.mp4"},
 ]

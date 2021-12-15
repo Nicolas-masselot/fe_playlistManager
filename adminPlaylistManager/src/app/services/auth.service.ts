@@ -9,7 +9,7 @@ export class AuthService {
   
   LoggedIn: boolean | undefined ;
   role: string | undefined ;
-  userID: number | undefined;
+  userID: string | undefined;
   mailUser: string | undefined ;
 
   constructor(private service: MessageService) { }

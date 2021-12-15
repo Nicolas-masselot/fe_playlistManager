@@ -11,7 +11,7 @@ mat-dialog-actions {
     gap: 10px;
 }
 
-#saveButton , #uploadButton{
+#saveButton {
     width: 447px;
     height: 52px;
     background: #789ADE;
@@ -100,17 +100,20 @@ label , mat-label, #mailAd{
     color: #444B59;
 }
 
-#requiredError{
+.ErrorMessage{
     font-family: Nunito;
     font-style: normal;
     font-weight: 600;
     font-size: 18px;
-    line-height: 17px;
+    line-height: 25px;
     letter-spacing: 0.1em;
 
     /* black/2 5 */
 
     color: red;
+
+    width: 447px;
+    word-wrap: break-word;
 }
 
 h3{
