@@ -2,14 +2,7 @@
     <li><i class="fas fa-bars"></i></li>
     <li [routerLink]="['/']" routerLinkActive="active"><i class="fab fa-youtube"></i>Youtube Playlist</li>
     <li class="youtube-search">
-        <form class="input-group mb-3 search-form">
-            <input type="text" id="search-city" class="form-control" placeholder="Search">
-            <div class="input-group-append">
-                <button style="background:white"class="btn btn-outline-secondary" type="submit">
-                    <span class="fa fa-search form-control-feedback"></span>
-                </button>
-            </div>
-        </form>
+        <app-search-input></app-search-input>
         
     </li>
     <li>Username    <i class="fa fa-user-circle"></i></li>

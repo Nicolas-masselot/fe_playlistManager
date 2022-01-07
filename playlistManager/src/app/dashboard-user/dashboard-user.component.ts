@@ -20,7 +20,7 @@ export class DashboardUserComponent implements OnInit {
   constructor(private message: MessageService, private service:AuthService) { }
 
   ngOnInit(): void {
-    this.message.sendMessage('/getUserPlaylists', {id:this.service.userID }).subscribe(
+    this.message.sendMessage('getUserPlaylists', {id:this.service.userID }).subscribe(
       (reponse) => { this.AllPlaylists = reponse.data ;},
       (err)=> { console.log(err) ;}
     );

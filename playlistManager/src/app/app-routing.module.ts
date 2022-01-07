@@ -1,3 +1,4 @@
+import { SearchListComponent } from './search-list/search-list.component';
 import { ForgetPasswordComponent } from './forget-password/forget-password.component';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
@@ -27,6 +28,10 @@ const routes: Routes = [
   {
     path:'deleteAccount',
     component: DeleteAccountComponent
+  },
+  {
+    path:'searchList',
+    component: SearchListComponent
   },
 
 ]

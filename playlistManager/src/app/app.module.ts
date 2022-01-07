@@ -15,6 +15,8 @@ import { DashboardUserComponent } from './dashboard-user/dashboard-user.componen
 import { CommonModule } from "@angular/common";
 import { UserSettingsComponent } from './user-settings/user-settings.component';
 import { DeleteAccountComponent } from './delete-account/delete-account.component';
+import { SearchInputComponent } from './search-input/search-input.component';
+import { SearchListComponent } from './search-list/search-list.component';
 
 @NgModule({
   declarations: [
@@ -25,6 +27,8 @@ import { DeleteAccountComponent } from './delete-account/delete-account.componen
     DashboardUserComponent,
     UserSettingsComponent,
     DeleteAccountComponent,
+    SearchInputComponent,
+    SearchListComponent,
   ],
   imports: [
     BrowserModule,
