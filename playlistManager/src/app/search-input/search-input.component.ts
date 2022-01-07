@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { NavigationExtras, Router } from '@angular/router';
 
 @Component({
@@ -9,6 +9,7 @@ import { NavigationExtras, Router } from '@angular/router';
 export class SearchInputComponent implements OnInit {
 
   searchInput: string  = "";
+  @Output() search: EventEmitter<string> = new EventEmitter<string>();
 
   constructor(private router: Router) { }
 
@@ -17,8 +18,9 @@ export class SearchInputComponent implements OnInit {
 
   onSearch(): void {
     console.log("Search input: ", this.searchInput);
+    this.search.emit(this.searchInput);
     const navigationExtras: NavigationExtras = {state: {searchInput: this.searchInput}};
-    this.router.navigate(['/searchList'], navigationExtras)
+    this.router.navigate(['/search'], navigationExtras)
     this.searchInput = "";
   }
 

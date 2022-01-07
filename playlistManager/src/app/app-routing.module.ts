@@ -1,3 +1,4 @@
+import { SearchContainerComponent } from './search-container/search-container.component';
 import { SearchListComponent } from './search-list/search-list.component';
 import { ForgetPasswordComponent } from './forget-password/forget-password.component';
 import { NgModule } from '@angular/core';
@@ -30,8 +31,8 @@ const routes: Routes = [
     component: DeleteAccountComponent
   },
   {
-    path:'searchList',
-    component: SearchListComponent
+    path:'search',
+    component: SearchContainerComponent
   },
 
 ]

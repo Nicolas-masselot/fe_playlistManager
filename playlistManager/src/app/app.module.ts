@@ -17,6 +17,7 @@ import { UserSettingsComponent } from './user-settings/user-settings.component';
 import { DeleteAccountComponent } from './delete-account/delete-account.component';
 import { SearchInputComponent } from './search-input/search-input.component';
 import { SearchListComponent } from './search-list/search-list.component';
+import { SearchContainerComponent } from './search-container/search-container.component';
 
 @NgModule({
   declarations: [
@@ -29,6 +30,7 @@ import { SearchListComponent } from './search-list/search-list.component';
     DeleteAccountComponent,
     SearchInputComponent,
     SearchListComponent,
+    SearchContainerComponent,
   ],
   imports: [
     BrowserModule,

@@ -1,9 +1,37 @@
 <app-navbar></app-navbar>
 <p id="Allplaylists">All playlists</p>
 
-<div id="playlistsList">
+<!-- <div id="playlistsList">
     <div *ngFor="let playlist of AllPlaylists" class="cardPlaylist">
         <p class="title">{{ playlist.nom }}</p>
         <p class="description">{{ playlist.description }}</p>
     </div>
+</div> -->
+
+<div class="ui four column grid" style="margin-left: 1rem;">
+    <div class="column" *ngFor="let playlist of AllPlaylistsTest">
+      <div class="ui card">
+        <div class="image">
+          <img [src]="playlist.thumbnail">
+        </div>
+        <div class="content">
+          <a class="header" style="margin: 1em 0 1em 0;">{{ playlist.title }}</a>
+          <div class="meta">
+            <span class="date" style="font-weight: bolder;">
+              <a [href]="playlist.channelUrl" target="_blank">{{ playlist.channelTitle }}</a>
+            </span>
+            <span class="ui right floated date" style="font-weight: bolder;">{{ playlist.publishedAt | date:'mediumDate' }}</span>
+          </div>
+          <div class="description">
+            {{ playlist.description?.slice(0,50) }}...
+          </div>
+        </div>
+        <a [href]="playlist.playlistUrl" target="_blank" class="extra content">
+          <button class="ui right floated tiny red right labeled icon button">
+            <i class="external alternate icon"></i>
+            Watch
+          </button>
+        </a>
+      </div>
+    </div> 
 </div>

@@ -1,0 +1,18 @@
+<div>
+    <ul class="youtube">
+        <li><i class="fas fa-bars"></i></li>
+        <li [routerLink]="['/']" routerLinkActive="active"><i class="fab fa-youtube"></i>Youtube Playlist</li>
+        <li class="youtube-search">
+            <app-search-input (search)="onSearch($event)"></app-search-input>
+            
+        </li>
+        <li>Username    <i class="fa fa-user-circle"></i></li>
+    </ul>
+    <div *ngIf="!videos.length" class="ui four wide column centered grid" style="margin: 3rem;">
+        <div class="ui raised aligned segment red warning message">
+        <i class="warning icon"></i>
+        <span class="ui centered" style="margin: 0 auto;">No Video Found</span>
+        </div>
+    </div>
+    <app-search-list [videos]="videos"></app-search-list>
+</div>
