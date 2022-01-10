@@ -1,5 +1,5 @@
 <div class="ui four column grid" style="margin-left: 1rem;">
-    <div class="column" *ngFor="let video of videos">
+    <div class="column" *ngFor="let video of videos" (click)="watchVideo(video.videoUrl)">
       <div class="ui card">
         <div class="image">
           <img [src]="video.thumbnail">
@@ -16,12 +16,12 @@
             {{ video.description?.slice(0,50) }}...
           </div>
         </div>
-        <a [href]="video.videoUrl" target="_blank" class="extra content">
+        <!-- <a [href]="video.videoUrl" target="_blank" class="extra content">
           <button class="ui right floated tiny red right labeled icon button">
             <i class="external alternate icon"></i>
             Watch
           </button>
-        </a>
+        </a> -->
       </div>
     </div>
 </div>

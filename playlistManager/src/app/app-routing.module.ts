@@ -1,3 +1,4 @@
+import { WatchComponent } from './watch/watch.component';
 import { SearchContainerComponent } from './search-container/search-container.component';
 import { SearchListComponent } from './search-list/search-list.component';
 import { ForgetPasswordComponent } from './forget-password/forget-password.component';
@@ -34,6 +35,9 @@ const routes: Routes = [
     path:'search',
     component: SearchContainerComponent
   },
+  { path: 'watch/:id', 
+    component: WatchComponent 
+  }
 
 ]
 @NgModule({

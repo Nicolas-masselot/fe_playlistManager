@@ -12,9 +12,15 @@ export class SearchListComponent implements OnInit {
 
   @Input() videos: Video[] = [];
 
-  constructor() { 
+  constructor(private router: Router) { 
  }
 
   ngOnInit(): void {
+  }
+
+  watchVideo(videoUrl: string){
+    console.log("video: ",videoUrl);
+    const url = "watch/" + videoUrl;
+    this.router.navigateByUrl(url);
   }
 }

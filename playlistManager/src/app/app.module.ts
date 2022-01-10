@@ -18,6 +18,8 @@ import { DeleteAccountComponent } from './delete-account/delete-account.componen
 import { SearchInputComponent } from './search-input/search-input.component';
 import { SearchListComponent } from './search-list/search-list.component';
 import { SearchContainerComponent } from './search-container/search-container.component';
+import { WatchComponent } from './watch/watch.component';
+import { YouTubePlayerModule } from "@angular/youtube-player";
 
 @NgModule({
   declarations: [
@@ -31,6 +33,7 @@ import { SearchContainerComponent } from './search-container/search-container.co
     SearchInputComponent,
     SearchListComponent,
     SearchContainerComponent,
+    WatchComponent,
   ],
   imports: [
     BrowserModule,
@@ -42,7 +45,8 @@ import { SearchContainerComponent } from './search-container/search-container.co
     HttpClientModule,
     BlockUIModule.forRoot(), 
     RouterModule,
-    CommonModule
+    CommonModule,
+    YouTubePlayerModule,
   ],
   providers: [],
   bootstrap: [AppComponent]
