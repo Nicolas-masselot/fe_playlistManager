@@ -1,0 +1,41 @@
+
+.modify-block{
+    align-items: center;
+    margin-top: 1rem;
+}
+
+.modify{
+    margin-top: 1rem;
+    background: #4DCC5E;
+    border-radius: 15px;
+    width: 351px;
+    height: 50px;
+    font-size: 20px;
+    color: #fff;
+}
+
+.col{
+    margin-bottom: 1rem;
+}
+
+.modal-header{
+    display: flex;
+    flex-direction: column-reverse;
+    align-items: center;
+    text-align: center;
+    letter-spacing: 0.12em;
+    .title{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        letter-spacing: 0.12em;
+        flex-grow: 4;
+    }
+}
+
+.modal-title{
+    font-weight: 500;
+    line-height: 40px;
+    letter-spacing: 0.12em;
+}
