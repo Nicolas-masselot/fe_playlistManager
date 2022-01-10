@@ -1,60 +1,18 @@
-import { PlaylistCreateComponent } from './../playlist-create/playlist-create.component';
-import { Playlist } from './../interface/playlist';
 import { Component, OnInit } from '@angular/core';
-import { AuthService } from '../services/auth.service';
-import { MessageService } from '../services/message.service';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { Router } from '@angular/router';
-
-export interface Playlists{
-  nom:string,
-  description:string
-}
+import { Playlist } from '../interface/playlist';
 
 @Component({
-  selector: 'app-dashboard-user',
-  templateUrl: './dashboard-user.component.html',
-  styleUrls: ['./dashboard-user.component.scss']
+  selector: 'app-history',
+  templateUrl: './history.component.html',
+  styleUrls: ['./history.component.scss']
 })
+export class HistoryComponent implements OnInit {
 
-export class DashboardUserComponent implements OnInit {
-
-  AllPlaylists: Array<Playlists> = [];
   AllPlaylistsTest: Playlist[] = [];
 
-  constructor(private message: MessageService, 
-    private service:AuthService,
-    private newPlaylistModalService: NgbModal ,
-    private router: Router
-    ) { }
+  constructor() { }
 
   ngOnInit(): void {
-    // this.message.sendMessage('getUserPlaylists', {id:this.service.userID }).subscribe(
-    //   (reponse) => { this.AllPlaylists = reponse.data ;},
-    //   (err)=> { console.log(err) ;}
-    // );
-
-    // fake data /////
-    // this.AllPlaylists = [{nom:"playlist1",description:"description1"},{nom:"playlist2",description:"description2"},{nom:"playlist3",description:"description3"}]
-    ///////////////
-    this.getAllPlaylist();
-  }
-
-  createPlaylist():void{
-    console.log("request");
-    const modalRef = this.newPlaylistModalService.open(PlaylistCreateComponent);
-    // modalRef.componentInstance.id = user.id;
-		// modalRef.componentInstance.role = this.role;
-		modalRef.result.then((result) => {
-			this.getAllPlaylist();
-		// console.log(`Closed with: ${result}`);
-		}, (reason) => {
-			this.getAllPlaylist();
-		// console.log(`Dismissed ${this.getDismissReason(reason)}`);
-		});
-  }
-
-  getAllPlaylist(): void {
     this.AllPlaylistsTest = [
       {
           title: "Adele - Easy On Me (Live at the NRJ Awards 2021)",
@@ -145,12 +103,6 @@ export class DashboardUserComponent implements OnInit {
           thumbnail: "https://i.ytimg.com/vi/xq0taGNb-CQ/hqdefault.jpg"
       },
   ];
-
   }
 
-  openPlaylist(playlistId: string){
-    console.log("playlist: ",playlistId);
-    const url = "playlist/" + playlistId;
-    this.router.navigateByUrl(url);
-  }
 }

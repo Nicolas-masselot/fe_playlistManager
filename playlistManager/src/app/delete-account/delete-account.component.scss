@@ -2,10 +2,12 @@
     display: flex;
 
     background: #FFFFFF;
-    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25), inset 0px 4px 4px rgba(0, 0, 0, 0.25);
-    width: 95%;
-    height: 95%;
-    margin: 2%;
+    border: 1px solid;
+    // box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25), inset 0px 4px 4px rgba(0, 0, 0, 0.25);
+    // width: 95%;
+    // height: 95%;
+    // margin: 2%;
+    margin: 1rem;
 }
 
 #options{
@@ -14,6 +16,8 @@
     margin: 28px;
     margin-right: 45px;
     gap: 20px;
+    width: 248px;
+
 }
 
 #deleteButton{
@@ -27,7 +31,7 @@
     width: 447px;
     height: 52px;
     background: #FF0000;
-    box-shadow: 4px 8px 12px rgba(78, 99, 141, 0.06), inset 0px 4px 12px rgba(200, 211, 249, 0.6);
+    // box-shadow: 4px 8px 12px rgba(78, 99, 141, 0.06), inset 0px 4px 12px rgba(200, 211, 249, 0.6);
     border-radius: 80px;
 
     font-family: Nunito;

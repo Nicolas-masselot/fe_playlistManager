@@ -1,0 +1,28 @@
+<!-- Header -->
+<div class="modal-header">
+    <div class="title">
+        <h2 class="modal-title" >Create playlist</h2>
+    </div>
+    <button type="button" class="close" aria-label="Close" (click)="activeModal.dismiss('Cross click')">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+<!-- Body -->
+<div class="modal-body d-flex flex-column ">
+    <div class="info-modify">
+        <div class="container">
+            <!-- Fields -->
+            <div class="row">
+                <div class="col">
+                    <label for="playlistName" class="form-label required">Playlist name</label>
+                    <input type="text" class="form-control" id="playlistName" [(ngModel)] = "this.playlistName">
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-12 d-flex flex-column modify-block">
+        <button class="modify" (click) = "addPlaylist()">
+            Add playlist
+        </button>
+    </div>
+</div>

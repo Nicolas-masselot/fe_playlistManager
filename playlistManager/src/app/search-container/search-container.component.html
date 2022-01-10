@@ -1,12 +1,17 @@
 <div>
     <ul class="youtube">
-        <li><i class="fas fa-bars"></i></li>
-        <li [routerLink]="['/']" routerLinkActive="active"><i class="fab fa-youtube"></i>Youtube Playlist</li>
+        <!-- <li><i class="fas fa-bars"></i></li> -->
+        <li [routerLink]="['/']" routerLinkActive="active"><i class="fab fa-youtube" aria-hidden="true"></i>Youtube Playlist</li>
         <li class="youtube-search">
             <app-search-input (search)="onSearch($event)"></app-search-input>
             
         </li>
-        <li>Username    <i class="fa fa-user-circle"></i></li>
+        <!-- if role = admin -->
+        <li [routerLink]="['/']" routerLinkActive="active"><i class="fa fa-users" aria-hidden="true"></i>Manager</li>
+        <li [routerLink]="['/dashboardUser']" routerLinkActive="active"><i class="fa fa-stream" aria-hidden="true"></i>Playlists</li>
+        <li [routerLink]="['/history']" routerLinkActive="active"><i class="fa fa-history" aria-hidden="true"></i>History</li>
+        <li [routerLink]="['/userSettings']" routerLinkActive="active"><i class="fa fa-cog" aria-hidden="true"></i>Settings</li>
+        <li>Username    <i class="fa fa-user-circle" aria-hidden="true"></i></li>
     </ul>
     <div *ngIf="!videos.length" class="ui four wide column centered grid" style="margin: 3rem;">
         <div class="ui raised aligned segment red warning message">

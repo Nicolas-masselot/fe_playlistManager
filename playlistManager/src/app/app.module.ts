@@ -20,6 +20,10 @@ import { SearchListComponent } from './search-list/search-list.component';
 import { SearchContainerComponent } from './search-container/search-container.component';
 import { WatchComponent } from './watch/watch.component';
 import { YouTubePlayerModule } from "@angular/youtube-player";
+import { HistoryComponent } from './history/history.component';
+import { PlaylistDetailComponent } from './playlist-detail/playlist-detail.component';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { PlaylistCreateComponent } from './playlist-create/playlist-create.component';
 
 @NgModule({
   declarations: [
@@ -34,6 +38,9 @@ import { YouTubePlayerModule } from "@angular/youtube-player";
     SearchListComponent,
     SearchContainerComponent,
     WatchComponent,
+    HistoryComponent,
+    PlaylistDetailComponent,
+    PlaylistCreateComponent,
   ],
   imports: [
     BrowserModule,
@@ -47,6 +54,7 @@ import { YouTubePlayerModule } from "@angular/youtube-player";
     RouterModule,
     CommonModule,
     YouTubePlayerModule,
+    NgbModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

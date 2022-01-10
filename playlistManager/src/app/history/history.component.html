@@ -1,8 +1,8 @@
 <app-navbar></app-navbar>
 <div style="margin: 1rem 2rem; display: flex; justify-content: space-between">
-  <div id="Allplaylists">All playlists</div>
+  <div id="Allplaylists">History</div>
   <div>
-    <button type="button" class="btn btn-outline-success" (click)="createPlaylist()">Create playlist</button>
+    <button type="button" class="btn btn-outline-danger">Clear history</button>
   </div>
 </div>
 
@@ -15,7 +15,7 @@
 </div> -->
 
 <div class="ui four column grid" style="margin-left: 1rem;">
-    <div class="column" *ngFor="let playlist of AllPlaylistsTest" (click)="openPlaylist(playlist.playlistId)"> 
+    <div class="column" *ngFor="let playlist of AllPlaylistsTest">
       <div class="ui card">
         <div class="image">
           <img [src]="playlist.thumbnail">
@@ -32,12 +32,12 @@
             {{ playlist.description?.slice(0,50) }}...
           </div>
         </div>
-        <a [href]="playlist.playlistUrl" target="_blank" class="extra content">
+        <!-- <a [href]="playlist.playlistUrl" target="_blank" class="extra content">
           <button class="ui right floated tiny red right labeled icon button">
             <i class="external alternate icon"></i>
-            Delete playlist
+            Watch
           </button>
-        </a>
+        </a> -->
       </div>
     </div> 
 </div>

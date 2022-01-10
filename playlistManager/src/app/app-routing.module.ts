@@ -1,3 +1,5 @@
+import { PlaylistDetailComponent } from './playlist-detail/playlist-detail.component';
+import { HistoryComponent } from './history/history.component';
 import { WatchComponent } from './watch/watch.component';
 import { SearchContainerComponent } from './search-container/search-container.component';
 import { SearchListComponent } from './search-list/search-list.component';
@@ -37,7 +39,13 @@ const routes: Routes = [
   },
   { path: 'watch/:id', 
     component: WatchComponent 
-  }
+  },
+  { path: 'history', 
+    component: HistoryComponent 
+  },
+  { path: 'playlist/:id', 
+    component: PlaylistDetailComponent 
+  },
 
 ]
 @NgModule({
