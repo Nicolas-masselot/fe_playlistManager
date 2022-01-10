@@ -13,12 +13,12 @@ export class AuthService {
 
   constructor(private service: MessageService) { }
 
-  sendAuthentification(login: string , password: string): Observable<BackendData> {
+  sendAuthentification(email: string , password: string): Observable<BackendData> {
     const requete = {
-      login,
+      email,
       password
     };
-    return this.service.sendMessage('checkLogin', requete); //url temporaire
+    return this.service.sendMessage('user/authenticate', requete); //url temporaire
   }
 
   finalizeAuthentification(reponse: BackendData): void {

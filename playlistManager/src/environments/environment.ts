@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  server: 'http://127.0.0.1:8080/',    //URL temporaire du serveur
+  server: 'http://127.0.0.1:3000/',    //URL temporaire du serveur
   YOUTUBE_URL: 'https://www.googleapis.com/youtube/v3/',
   YOUTUBE_API_TOKEN: 'AIzaSyBLptPwNpXHVUcPn7WFmeBrSHY_bUyil0E',
 };
