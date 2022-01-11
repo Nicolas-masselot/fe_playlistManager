@@ -1,3 +1,4 @@
+import { FormControl } from '@angular/forms';
 import { Component, OnInit } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { BlockUI, NgBlockUI } from 'ng-block-ui';
@@ -13,6 +14,16 @@ export class VideoSaveComponent implements OnInit {
   blockUI!: NgBlockUI;
 
   // playlistName: string = "";
+  selectedValue: string = "";
+  playlistList:string[] = [
+    "1","2","3"
+  ];
+
+  foods = [
+    {value: 'steak-0', viewValue: 'Steak'},
+    {value: 'pizza-1', viewValue: 'Pizza'},
+    {value: 'tacos-2', viewValue: 'Tacos'},
+  ];
 
   options = [
     { value: '1', label: 'Playlist 1' },

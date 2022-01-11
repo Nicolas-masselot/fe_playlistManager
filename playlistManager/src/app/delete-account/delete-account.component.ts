@@ -1,3 +1,4 @@
+import { Router } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 import { BlockUI, NgBlockUI } from 'ng-block-ui';
 import { AuthService } from '../services/auth.service';
@@ -12,7 +13,7 @@ export class DeleteAccountComponent implements OnInit {
 
   @BlockUI() blockUI!: NgBlockUI;
 
-  constructor(private message: MessageService, private service: AuthService) { }
+  constructor(private message: MessageService, private service: AuthService, private router : Router) { }
 
   ngOnInit(): void {
   }
@@ -21,9 +22,11 @@ export class DeleteAccountComponent implements OnInit {
   deleteAccount():void{
     if (confirm("Are you sure you want to delete your account ? (this action is irreversible)")) {
       this.blockUI.start('Loading...');
-      this.message.sendMessage('deleteAccount',{account: this.service.userID}).subscribe(
+      this.message.sendMessage('user/deleteAccount',{_id: this.service.userID}).subscribe(
         (response) => {
           console.log(response);
+          this.service.logOut();
+          this.router.navigate(['login']);
           this.blockUI.stop();
         },
         (err) => {

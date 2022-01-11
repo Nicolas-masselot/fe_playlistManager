@@ -7,9 +7,10 @@ import {MessageService, BackendData} from './message.service';
 })
 export class AuthService {
   
-  LoggedIn: boolean | undefined ;
+  LoggedIn: boolean = false ;
   role: string | undefined ;
-  userID: number | undefined;
+  userID: string | undefined;
+  userEmail: string | undefined;
 
   constructor(private service: MessageService) { }
 
@@ -30,5 +31,12 @@ export class AuthService {
       this.LoggedIn = false ;
       this.role = undefined ;
     }
+  }
+
+  logOut(): void {
+    this.userEmail = undefined;
+    this.userID = undefined;
+    this.LoggedIn = false;
+    this.role = undefined;
   }
 }

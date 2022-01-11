@@ -25,7 +25,10 @@ import { PlaylistDetailComponent } from './playlist-detail/playlist-detail.compo
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { PlaylistCreateComponent } from './playlist-create/playlist-create.component';
 import { VideoSaveComponent } from './video-save/video-save.component';
-import { MDBBootstrapModule } from 'angular-bootstrap-md';
+import { MatSelectModule } from "@angular/material/select";
+import { MatOptionModule } from "@angular/material/core";
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
 
 @NgModule({
   declarations: [
@@ -58,8 +61,10 @@ import { MDBBootstrapModule } from 'angular-bootstrap-md';
     CommonModule,
     YouTubePlayerModule,
     NgbModule,
-    MDBBootstrapModule.forRoot(),
-
+    MatSelectModule,
+    MatOptionModule,
+    MatFormFieldModule,
+    MatInputModule
   ],
   providers: [],
   bootstrap: [AppComponent]

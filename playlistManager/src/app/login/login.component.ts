@@ -24,8 +24,8 @@ export class LoginComponent implements OnInit {
 
   login: string = "";
   password: string = "";
-  errorMessageLogin: string | undefined ;
-  errorMessageSignup: string | undefined ;
+
+  isAdvertiser: boolean | undefined ; 
 
   constructor(
     private toastrService: ToastrService,
@@ -46,20 +46,29 @@ export class LoginComponent implements OnInit {
     }
   }
 
-  signIn(email:string,password:string): void{
-    this.errorMessageLogin = undefined;
+  selectRole(event: any): void{
+    this.isAdvertiser = event.target.value;
+  }
 
+  signIn(email:string,password:string): void{
     if (email === '' || password === '') {
-      this.errorMessageLogin = 'Veuillez entrer un login et un mot de passe' ;
+      this.toastrService.error('Enter email and password');
     } else {
       this.blockUI.start('Loading...');
       this.service.sendAuthentification(email,password).subscribe(
-        (response) => {
+        (response:any) => {
+          console.log(response) ;
           this.service.finalizeAuthentification(response);
           if (this.service.LoggedIn) {
+            this.service.userEmail = email;
             this.router.navigateByUrl("dashboardUser").then(()=>{}) ;
           } else {
-            this.errorMessageLogin = response.data.reason ;
+            if (response.errorSet.includes('AUTHENTICATION_FAILED')) {
+              this.toastrService.error('Wrong password');
+            }
+            else if (response.errorSet.includes('EMAIL_NOT_FOUND')) {
+              this.toastrService.error('Email not found');
+            }
           }
           this.blockUI.stop();
         },
@@ -72,25 +81,40 @@ export class LoginComponent implements OnInit {
     }
   }
 
-  signUp(email:string,password:string,passconfirm:string): void{
-    const creationData = {
-      email,
-      password,
-      ads:false
-    }
-    this.blockUI.start('Loading...');
-    this.errorMessageLogin = undefined;
-    this.message.sendMessage('user/createAccount',creationData).subscribe(
-      (reponse) => {
-        console.log(reponse) ;
-        this.router.navigateByUrl('').then(()=>{}) ;
-        this.blockUI.stop();
-      },
-      (err)=>{ 
-        console.log(err); // message d'erreur
-        this.blockUI.stop();
+  signUp(email:string,password:string,passConfirm:string): void{
+    if (email === '' || password === '') {
+      this.toastrService.error('Enter email and password');
+    } else {
+      if (password !== passConfirm) {
+        this.toastrService.error('Password does not match');
       }
-    ) ;
+      else{
+        if (this.isAdvertiser === undefined){
+          this.toastrService.error('Please choose role');
+        }
+        else{
+          const creationData = {
+            email,
+            password,
+            ads:this.isAdvertiser
+          }
+          // console.log("isAdvertiser: ", this.isAdvertiser);
+          this.blockUI.start('Loading...');
+          this.message.sendMessage('user/createAccount',creationData).subscribe(
+            (response) => {
+              console.log(response) ;
+              this.router.navigateByUrl('').then(()=>{}) ;
+              this.blockUI.stop();
+            },
+            (err)=>{ 
+              console.log(err); // message d'erreur
+              this.blockUI.stop();
+            }
+          ) ;
+        }
+      }
+    }
+    
 
   }
 

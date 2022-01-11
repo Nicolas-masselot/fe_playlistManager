@@ -11,10 +11,11 @@ import { DashboardUserComponent } from './dashboard-user/dashboard-user.componen
 import { UserSettingsComponent } from './user-settings/user-settings.component';
 import { DeleteAccountComponent } from './delete-account/delete-account.component';
 import { NavbarComponent } from './navbar/navbar.component';
+import { AuthGuard } from './auth/auth.guard';
 
 const routes: Routes = [
   {
-    path: '',
+    path: 'login',
     component: LoginComponent,
   },
   {
@@ -22,31 +23,37 @@ const routes: Routes = [
     component: ForgetPasswordComponent,
   },
   {
-    path: 'dashboardUser',
-    component: DashboardUserComponent
+    path: '',
+    canActivate: [AuthGuard],
+    canActivateChild: [AuthGuard],
+    children: [
+      {
+        path: 'dashboardUser',
+        component: DashboardUserComponent
+      },
+      {
+        path: 'userSettings',
+        component: UserSettingsComponent
+      },
+      {
+        path:'deleteAccount',
+        component: DeleteAccountComponent
+      },
+      {
+        path:'search',
+        component: SearchContainerComponent
+      },
+      { path: 'watch/:id', 
+        component: WatchComponent 
+      },
+      { path: 'history', 
+        component: HistoryComponent 
+      },
+      { path: 'playlist/:id', 
+        component: PlaylistDetailComponent 
+      },
+    ]
   },
-  {
-    path: 'userSettings',
-    component: UserSettingsComponent
-  },
-  {
-    path:'deleteAccount',
-    component: DeleteAccountComponent
-  },
-  {
-    path:'search',
-    component: SearchContainerComponent
-  },
-  { path: 'watch/:id', 
-    component: WatchComponent 
-  },
-  { path: 'history', 
-    component: HistoryComponent 
-  },
-  { path: 'playlist/:id', 
-    component: PlaylistDetailComponent 
-  },
-
 ]
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
