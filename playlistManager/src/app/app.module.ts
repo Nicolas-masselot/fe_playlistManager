@@ -24,6 +24,8 @@ import { HistoryComponent } from './history/history.component';
 import { PlaylistDetailComponent } from './playlist-detail/playlist-detail.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { PlaylistCreateComponent } from './playlist-create/playlist-create.component';
+import { VideoSaveComponent } from './video-save/video-save.component';
+import { MDBBootstrapModule } from 'angular-bootstrap-md';
 
 @NgModule({
   declarations: [
@@ -41,6 +43,7 @@ import { PlaylistCreateComponent } from './playlist-create/playlist-create.compo
     HistoryComponent,
     PlaylistDetailComponent,
     PlaylistCreateComponent,
+    VideoSaveComponent,
   ],
   imports: [
     BrowserModule,
@@ -55,6 +58,8 @@ import { PlaylistCreateComponent } from './playlist-create/playlist-create.compo
     CommonModule,
     YouTubePlayerModule,
     NgbModule,
+    MDBBootstrapModule.forRoot(),
+
   ],
   providers: [],
   bootstrap: [AppComponent]
