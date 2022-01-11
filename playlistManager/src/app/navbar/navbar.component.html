@@ -10,7 +10,7 @@
         <div class="" id="dropdownBasic1" ngbDropdownToggle><i class="fa fa-users" aria-hidden="true"></i>Manager</div>
         <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
           <button ngbDropdownItem [routerLink]="['/dashboardUser']" >Manager user</button>
-          <button ngbDropdownItem [routerLink]="['/dashboardUser']" >Manager advertisers</button>  
+          <button ngbDropdownItem [routerLink]="['/dashboardUser']" >Manager ads</button>  
         </div>
     </li>
     <li ngbDropdown class="d-inline-block" *ngIf="this.role === 'advertiser'">

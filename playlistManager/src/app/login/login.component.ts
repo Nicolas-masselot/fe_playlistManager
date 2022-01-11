@@ -104,6 +104,8 @@ export class LoginComponent implements OnInit {
             (response) => {
               console.log(response) ;
               this.router.navigateByUrl('').then(()=>{}) ;
+              /// TODO : check if email exists -> create successfully or failed
+              this.toastrService.success('Create successfully');
               this.blockUI.stop();
             },
             (err)=>{ 
