@@ -12,7 +12,9 @@
         <ng-container matColumnDef="infosUser">
             <td mat-cell *matCellDef="let user">
                 <p class="UserInfo">{{ user.email }}</p>
-                <p class="UserInfo">{{ user.role }}</p>
+                <p class="UserInfo" *ngIf="user.role === env.ADVERTISER_ROLE">Advertiser</p>
+                <p class="UserInfo" *ngIf="user.role === env.USER_ROLE">User</p>
+                <p class="UserInfo" *ngIf="user.role === env.ADMIN_ROLE">Administrator</p>
             </td>
         </ng-container>
 

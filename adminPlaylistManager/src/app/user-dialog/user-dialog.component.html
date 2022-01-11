@@ -32,8 +32,8 @@
         <mat-label *ngIf="dialogType === 'addUser'">Select a role</mat-label>
         <div class="{{RoleFieldClass}}" *ngIf="dialogType === 'addUser'">
             <mat-select [(ngModel)]="role" >
-                <mat-option value="User">User</mat-option>
-                <mat-option value="Advertiser">Advertiser</mat-option> <!-- ajouter admin ou pas ?-->
+                <mat-option value="{{env.USER_ROLE}}">User</mat-option>
+                <mat-option value=" {{env.ADVERTISER_ROLE}} ">Advertiser</mat-option>
             </mat-select>
         </div>
         <p class="ErrorMessage" *ngIf="roleRequired">please choose a role</p>

@@ -5,7 +5,7 @@ import { ToastrService } from 'ngx-toastr';
 import { MessageService } from '../services/message.service';
 import { faEye , faEyeSlash} from '@fortawesome/free-solid-svg-icons';
 import { FormControl, Validators } from '@angular/forms';
-
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-user-dialog',
@@ -25,6 +25,7 @@ export class UserDialogComponent implements OnInit {
   resetDisable = false;
   titleMessage:string = "Add new User";
   SavebuttonText: string = "Save changes" ;
+  env = environment ;
 
   showNewPass = false ;
   showNewConfirm = false; 
@@ -125,7 +126,8 @@ export class UserDialogComponent implements OnInit {
       this.ConfirmFieldClass = "settingInputs";
       this.passwordsMatchError = false;
     }
-
+    
+    console.log(this.role);
     let errorsInform = this.passwordRequired || this.confirmRequired || this.roleRequired || this.emailInvalid || this.passwordsMatchError ;
 
     if ( !errorsInform && this.dialogType === 'addUser') {
