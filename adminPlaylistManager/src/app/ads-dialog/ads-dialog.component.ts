@@ -4,6 +4,7 @@ import {MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
 import { MessageService } from '../services/message.service';
 import { AuthService } from '../services/auth.service';
 import { FormControl, Validators } from '@angular/forms';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-ads-dialog',
@@ -14,13 +15,14 @@ export class AdsDialogComponent implements OnInit {
 
   @BlockUI() blockUI!: NgBlockUI;
 
+  env = environment ;
   dialogType = "addAdvert";
   adName:string = "";
   AdvertID:string | undefined ;
   titleMessage:string = "Add new Advertisement";
   SavebuttonText:string = "Save changes" ;
   advertiserMail:string = "";
-  accountRole:string = "admin";
+  accountRole:string = environment.ADMIN_ROLE;
   nameRequired:boolean = false ;
   advertInputClass:string = "AdvertInputs";
   fileInputClass:string = "AdvertInputs";
@@ -28,7 +30,7 @@ export class AdsDialogComponent implements OnInit {
   FileRequired:boolean = false ;
   labelFileText:string = "Choose a file";
 
-  videoFileTypes:string[] = ["mp4","ogg","mpg","webm"];
+  videoFileTypes:string[] = ["mp4","ogg","mpg","webm","jpg","png","jpeg"];
 
   advertFile:File | undefined = undefined ;
   

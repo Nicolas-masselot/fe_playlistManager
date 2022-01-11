@@ -1,7 +1,7 @@
 <mat-dialog-content>
     <h3> {{ titleMessage }} </h3>
 
-    <p *ngIf="dialogType === 'editAds' && accountRole === 'admin'" id="mailAd"> Advertisement from {{ advertiserMail }} </p>
+    <p *ngIf="dialogType === 'editAds' && accountRole === env.ADMIN_ROLE" id="mailAd"> Advertisement from {{ advertiserMail }} </p>
     <div id="AdvertForm">
         <label>Advertisement name :</label>
         <div class="{{advertInputClass}}">
