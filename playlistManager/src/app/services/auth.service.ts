@@ -15,17 +15,17 @@ export class AuthService {
 
   sendAuthentification(email: string , password: string): Observable<BackendData> {
     const requete = {
-      email,
-      password
+      email:email,
+      password:password
     };
     return this.service.sendMessage('user/authenticate', requete); //url temporaire
   }
 
   finalizeAuthentification(reponse: BackendData): void {
-    if (reponse.status === 'ok'){
+    if (reponse.success){
       this.LoggedIn = true ;
-      this.role = reponse.data.role ;
-      this.userID = reponse.data.userID ;
+      this.role = reponse.data.id_creator ;
+      this.userID = reponse.data._id ;
     } else {
       this.LoggedIn = false ;
       this.role = undefined ;

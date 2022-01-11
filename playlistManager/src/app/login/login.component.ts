@@ -57,7 +57,7 @@ export class LoginComponent implements OnInit {
         (response) => {
           this.service.finalizeAuthentification(response);
           if (this.service.LoggedIn) {
-            this.router.navigateByUrl(this.service.role+"dashboard").then(()=>{}) ; //route vers les dashboards role renvoyé par le backend + dashboard
+            this.router.navigateByUrl("dashboardUser").then(()=>{}) ;
           } else {
             this.errorMessageLogin = response.data.reason ;
           }
