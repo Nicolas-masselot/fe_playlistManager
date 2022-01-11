@@ -10,6 +10,7 @@ import {MatDialog} from '@angular/material/dialog';
 import { ConfirmDeleteDialogComponent } from '../confirm-delete-dialog/confirm-delete-dialog.component';
 import { BlockUI, NgBlockUI } from 'ng-block-ui';
 import { AdsDialogComponent } from '../ads-dialog/ads-dialog.component';
+import { environment } from 'src/environments/environment';
 
 export interface Advertisement{
   idAd:string,
@@ -47,6 +48,7 @@ export class ManageAdsComponent implements AfterViewInit {
   datasource = new MatTableDataSource<Advertisement>(this.annonces) ;
   roleUser: string | undefined ;
   idUser: string | undefined ;
+  env = environment ;
 
   constructor(private service:MessageService,private toastr: ToastrService,private authserv:AuthService,private dialog: MatDialog) { }
 
@@ -60,7 +62,7 @@ export class ManageAdsComponent implements AfterViewInit {
     this.roleUser = this.authserv.role ;
     //this.roleUser = "admin";
 
-    if (this.roleUser == "admin") {
+    if (this.roleUser == environment.ADMIN_ROLE) {
       this.service.sendMessage('recupAllAds',{}).subscribe(
         (response)=>{
           this.annonces = response.data;
