@@ -23,6 +23,7 @@ export class AuthService {
   }
 
   finalizeAuthentification(reponse: BackendData): void {
+    console.log(reponse);
     if (reponse.success){
       this.LoggedIn = true ;
       this.role = reponse.data.id_creator ;
