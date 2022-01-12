@@ -114,7 +114,7 @@ export class AdsDialogComponent implements OnInit {
     if ( this.dialogType === 'editAds') {
       this.dialogRef.close({idAd:this.AdvertID, changed:true,FileAdvert:this.advertFile});
     } else if ( !this.FileRequired && !this.FileTypeIncorrect && this.dialogType=== 'addAdvert') {
-      this.dialogRef.close({FileAdvert:null});
+      this.dialogRef.close({FileAdvert:this.advertFile});
     }
   }
 }

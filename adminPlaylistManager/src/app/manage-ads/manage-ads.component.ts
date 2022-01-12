@@ -72,7 +72,7 @@ export class ManageAdsComponent implements AfterViewInit {
         }
       );
     } else {
-      this.service.sendMessage('annonceur/getById',{_id: this.idUser}).subscribe(
+      this.service.sendMessage('annonceur/getByAnnonceur',{_idAdvertiser: this.idUser}).subscribe(
         (response)=>{
           this.annonces = response.data;
           this.datasource.data = response.data ;
@@ -100,28 +100,32 @@ export class ManageAdsComponent implements AfterViewInit {
     });
 
     dialogRef.afterClosed().subscribe((newAdvert: AdvertAdded)=>{
+      let added = false ;
       if (newAdvert.FileAdvert) {
         this.blockUI.start('Loading...');
-        this.fileUpload.sendAdFile('annoncesUpload/uploadAd', newAdvert.FileAdvert, String(this.authserv.userID)).subscribe(
+        this.fileUpload.sendAdFile('annoncesUpload/uploadAdvert', newAdvert.FileAdvert, String(this.authserv.userID)).subscribe(
           (reponseUpload)=>{
             //console.log(reponseUpload);
-
-            newAdvert.fileName = this.authserv.userID+'_'+newAdvert.FileAdvert?.name ;
-            this.service.sendMessage('annonceur/createAdvert', {id_user:this.authserv.userID,fileName:newAdvert.fileName}).subscribe(
-              (response)=>{
-                this.toastr.success('Advertisement added successfully');
-                let nouvelAnnonce = {idAd:response.data.id,emailAdvertiser:this.authserv.userEmail,fileName:newAdvert.fileName};
-                this.annonces.push(nouvelAnnonce) ;
-                this.datasource.data = this.annonces ;
-                console.log(response);
-                this.blockUI.stop() ;
-              },
-              (error) => {
-                this.toastr.error("An error has occured while Adding the advertisement");
-                console.log(error) ;
-                this.blockUI.stop();
-              }
-            )
+            if (!added) {
+              newAdvert.fileName = this.authserv.userID+'_'+newAdvert.FileAdvert?.name ;
+              this.service.sendMessage('annonceur/createAdvert', {id_user:this.authserv.userID,fileName:newAdvert.fileName}).subscribe(
+                (response)=>{
+                  this.toastr.success('Advertisement added successfully');
+                  let nouvelAnnonce = {idAd:response.data.id,emailAdvertiser:this.authserv.userEmail,fileName:newAdvert.fileName};
+                  this.annonces.push(nouvelAnnonce) ;
+                  this.datasource.data = this.annonces ;
+                  console.log(response);
+                  this.blockUI.stop() ;
+                },
+                (error) => {
+                  this.toastr.error("An error has occured while Adding the advertisement");
+                  console.log(error) ;
+                  this.blockUI.stop();
+                }
+              )
+              added = true ;
+            }
+            
 
           },
           (error)=>{
@@ -148,30 +152,32 @@ export class ManageAdsComponent implements AfterViewInit {
       });
 
       dialogRef.afterClosed().subscribe((editedAdd: AdvertEdited)=>{
+        let modified = false ;
         if (editedAdd.changed && editedAdd.FileAdvert) {
           this.blockUI.start('Loading...');
 
           this.fileUpload.sendAdFile('annoncesUpload/uploadAdvert', editedAdd.FileAdvert, String(this.authserv.userID)).subscribe(
             (reponseUpload)=>{
               //console.log(reponseUpload);
-  
-              let filename = this.authserv.userID+'_'+editedAdd.FileAdvert?.name ;
-              this.service.sendMessage('annonceur/modifyAdvert', {_id:idAd,filename }).subscribe(
-                (response)=>{
-                  this.toastr.success('Advertisement edited successfully');
-                  let indexEdit = this.datasource.data.findIndex(annonce => annonce.idAd === idAd);
-                  this.annonces[indexEdit].fileName = editedAdd.FileAdvert?.name ;
-                  this.datasource.data = this.annonces ;
-                  console.log(response);
-                  this.blockUI.stop();
-                },
-                (error) => {
-                  this.toastr.error("An error has occured while Updating the advertisement");
-                  console.log(error) ;
-                  this.blockUI.stop();
-                }
-              )
-  
+              if (!modified) {
+                let filename = this.authserv.userID+'_'+editedAdd.FileAdvert?.name ;
+                this.service.sendMessage('annonceur/modifyAdvert', {_id:idAd,filename }).subscribe(
+                  (response)=>{
+                    this.toastr.success('Advertisement edited successfully');
+                    let indexEdit = this.datasource.data.findIndex(annonce => annonce.idAd === idAd);
+                    this.annonces[indexEdit].fileName = filename ;
+                    this.datasource.data = this.annonces ;
+                    console.log(response);
+                    this.blockUI.stop();
+                  },
+                  (error) => {
+                    this.toastr.error("An error has occured while Updating the advertisement");
+                    console.log(error) ;
+                    this.blockUI.stop();
+                  }
+                )
+                modified = true ;
+              }
             },
             (error)=>{
               this.toastr.error("An error has occured while uploading the file");
