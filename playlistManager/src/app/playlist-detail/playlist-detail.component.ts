@@ -7,8 +7,7 @@ import { ToastrService } from 'ngx-toastr';
 import { MessageService } from '../services/message.service';
 import { AuthService } from '../services/auth.service';
 import { BlockUI, NgBlockUI } from 'ng-block-ui';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
+import {MatDialog} from '@angular/material/dialog';
 
 @Component({
   selector: 'app-playlist-detail',
@@ -28,7 +27,6 @@ export class PlaylistDetailComponent implements OnInit {
     private toastrService: ToastrService,
     private authService: AuthService, 
     private message: MessageService, 
-    // private modifyPlaylistModalService: NgbModal ,
     private dialog: MatDialog,
     ) { }
 
@@ -216,7 +214,7 @@ export class PlaylistDetailComponent implements OnInit {
 		// // console.log(`Dismissed ${this.getDismissReason(reason)}`);
 		// });
     const dialogRef = this.dialog.open(PlaylistModifyComponent, {
-      // width: '250px',
+      //width: '250px',
       data: {
         playlistName: this.playlist.title, 
         playlistDescription: this.playlist.description,

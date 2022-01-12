@@ -29,7 +29,6 @@ import { VideoSaveComponent } from './video-save/video-save.component';
 import { MatSelectModule } from "@angular/material/select";
 import { MatOptionModule } from "@angular/material/core";
 import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatInputModule } from '@angular/material/input';
 import { JwPaginationModule } from 'jw-angular-pagination';
 import { PlaylistModifyComponent } from './playlist-modify/playlist-modify.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -68,8 +67,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     NgbModule,
     MatSelectModule,
     MatOptionModule,
-    // MatFormFieldModule,
-    // MatInputModule,
+    MatFormFieldModule,
     JwPaginationModule,
     BrowserAnimationsModule,
     MatDialogModule,

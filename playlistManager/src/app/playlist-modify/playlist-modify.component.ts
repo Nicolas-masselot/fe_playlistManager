@@ -1,10 +1,9 @@
 import { Component, Inject, OnInit } from '@angular/core';
-import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { BlockUI, NgBlockUI } from 'ng-block-ui';
 import { ToastrService } from 'ngx-toastr';
 import { AuthService } from '../services/auth.service';
 import { MessageService } from '../services/message.service';
-import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
+import { MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
 
 @Component({
   selector: 'app-playlist-modify',
