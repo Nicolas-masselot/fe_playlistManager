@@ -1,5 +1,5 @@
-import { PlaylistCreateComponent } from './../playlist-create/playlist-create.component';
-import { Playlist } from './../interface/playlist';
+import { PlaylistCreateComponent } from '../playlist-create/playlist-create.component';
+import { Playlist } from '../interface/playlist';
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../services/auth.service';
 import { MessageService } from '../services/message.service';
@@ -39,12 +39,10 @@ export class DashboardUserComponent implements OnInit {
 
   createPlaylist():void{
     const modalRef = this.newPlaylistModalService.open(PlaylistCreateComponent);
-    // modalRef.componentInstance.id = user.id;
-		// modalRef.componentInstance.role = this.role;
-		modalRef.result.then((result) => {
+		modalRef.result.then((result:any) => {
 			this.getAllPlaylist();
 		// console.log(`Closed with: ${result}`);
-		}, (reason) => {
+		}, (reason:any) => {
 			this.getAllPlaylist();
 		// console.log(`Dismissed ${this.getDismissReason(reason)}`);
 		});
@@ -78,7 +76,7 @@ export class DashboardUserComponent implements OnInit {
           this.blockUI.stop();
         }
       },
-      (err)=>{ 
+      (err:any)=>{ 
         console.log(err); // message d'erreur
         this.blockUI.stop();
       }

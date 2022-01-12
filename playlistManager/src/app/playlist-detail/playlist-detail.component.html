@@ -28,7 +28,7 @@
                 <div class="image" (click)="watchVideo(video)" >
                     <img [src]="video.thumbnail" style="height: 217.5px;width: 290px;">
                 </div>
-                <div class="content" style="margin-left: 1rem;" >
+                <div class="content" style="margin-left: 1rem;" (click)="watchVideo(video)">
                     <h3 class="header" style="margin: 1em 0 1em 0;">{{ video.title }}</h3>
                     <div class="meta" style="display: flex;">
                       <span class="date" style="font-weight: bolder;" >

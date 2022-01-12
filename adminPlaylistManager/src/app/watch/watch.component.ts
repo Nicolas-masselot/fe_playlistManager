@@ -1,4 +1,4 @@
-import { VideoSaveComponent } from './../video-save/video-save.component';
+import { VideoSaveComponent } from '../video-save/video-save.component';
 import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';

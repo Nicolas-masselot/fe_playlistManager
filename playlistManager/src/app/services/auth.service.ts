@@ -7,10 +7,10 @@ import {MessageService, BackendData} from './message.service';
 })
 export class AuthService {
   
-  role: string | undefined ;
+  role: string | null = sessionStorage.getItem("role") ;
   userID: string | null = sessionStorage.getItem("UserID");
   LoggedIn: boolean = (this.userID !== null) ;
-  userEmail: string | undefined;
+  userEmail: string | null = sessionStorage.getItem("mailUser");
 
   constructor(private service: MessageService) { }
 
@@ -19,6 +19,7 @@ export class AuthService {
       email:email,
       password:password
     };
+    this.userEmail = email ;
     return this.service.sendMessage('user/authenticate', requete); //url temporaire
   }
 
@@ -28,17 +29,19 @@ export class AuthService {
       this.role = reponse.data.id_creator ;
       this.userID = reponse.data._id ;
       sessionStorage.setItem("UserID", String(this.userID));
+      sessionStorage.setItem("role",String(this.role)) ; 
+      sessionStorage.setItem("mailUser",String(this.userEmail))
     } else {
       this.LoggedIn = false ;
-      this.role = undefined ;
+      this.role = null ;
     }
   }
 
   logOut(): void {
-    this.userEmail = undefined;
+    this.userEmail = null;
     this.userID = null;
     this.LoggedIn = false;
-    this.role = undefined;
+    this.role = null;
     sessionStorage.clear();
   }
 }

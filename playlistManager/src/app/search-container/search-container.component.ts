@@ -14,7 +14,7 @@ import { SearchService } from '../services/search.service';
 export class SearchContainerComponent implements OnInit {
   @BlockUI() blockUI!: NgBlockUI;
   
-  userEmail: string | undefined;
+  userEmail: string | null = null;
   role: string | undefined;
 
   videos: Video[] = [];

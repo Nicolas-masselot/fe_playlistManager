@@ -39,8 +39,6 @@ export class DashboardUserComponent implements OnInit {
 
   createPlaylist():void{
     const modalRef = this.newPlaylistModalService.open(PlaylistCreateComponent);
-    // modalRef.componentInstance.id = user.id;
-		// modalRef.componentInstance.role = this.role;
 		modalRef.result.then((result) => {
 			this.getAllPlaylist();
 		// console.log(`Closed with: ${result}`);
