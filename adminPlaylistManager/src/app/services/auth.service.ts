@@ -7,30 +7,42 @@ import {MessageService, BackendData} from './message.service';
 })
 export class AuthService {
   
-  LoggedIn: boolean | undefined ;
-  role: string | undefined ;
-  userID: string = "";
-  mailUser: string | undefined ;
+  role: string | null = sessionStorage.getItem("role") ;
+  userID: string | null = sessionStorage.getItem("UserID");
+  LoggedIn: boolean = (this.userID !== null) ;
+  userEmail: string | null = sessionStorage.getItem("mailUser");
 
   constructor(private service: MessageService) { }
 
-  sendAuthentification(login: string , password: string): Observable<BackendData> {
+  sendAuthentification(email: string , password: string): Observable<BackendData> {
     const requete = {
-      email:login,
+      email:email,
       password:password
     };
+    this.userEmail = email ;
     return this.service.sendMessage('user/authenticate', requete); //url temporaire
   }
 
   finalizeAuthentification(reponse: BackendData): void {
+    console.log(reponse);
     if (reponse.success){
       this.LoggedIn = true ;
       this.role = reponse.data.id_creator ;
       this.userID = reponse.data._id ;
-      this.mailUser = reponse.data.mail ;
+      sessionStorage.setItem("UserID", String(this.userID));
+      sessionStorage.setItem("role",String(this.role)) ; 
+      sessionStorage.setItem("mailUser",String(this.userEmail))
     } else {
       this.LoggedIn = false ;
-      this.role = undefined ;
+      this.role = null ;
     }
+  }
+
+  logOut(): void {
+    this.userEmail = null;
+    this.userID = null;
+    this.LoggedIn = false;
+    this.role = null;
+    sessionStorage.clear();
   }
 }

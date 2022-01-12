@@ -15,20 +15,17 @@ import { FileUploadService } from '../services/file-upload.service';
 
 export interface Advertisement{
   idAd:string,
-  emailAdvertiser:string | undefined,
-  adName:string,
+  emailAdvertiser:string | null,
   fileName:string | undefined
 }
 
 export interface AdvertEdited{
   idAd:string,
-  nameAdd:string,
   changed:boolean,
   FileAdvert:File | undefined
 }
 
 export interface AdvertAdded {
-  adName:string ,
   FileAdvert:File | undefined
   fileName: string
 }
@@ -48,8 +45,8 @@ export class ManageAdsComponent implements AfterViewInit {
   colonnes: string[] = ["infosAd","options"];
   annonces: Advertisement[] = DATA_TEST;
   datasource = new MatTableDataSource<Advertisement>(this.annonces) ;
-  roleUser: string | undefined ;
-  idUser: string | undefined ;
+  roleUser: string | null = null ;
+  idUser: string | null = "" ;
   env = environment ;
 
   constructor(private service:MessageService,private toastr: ToastrService,private authserv:AuthService,private dialog: MatDialog, private fileUpload:FileUploadService) { }
@@ -63,11 +60,12 @@ export class ManageAdsComponent implements AfterViewInit {
     this.idUser = this.authserv.userID;
     this.roleUser = this.authserv.role ;
     //this.roleUser = "admin";
-
+    
     if (this.roleUser == environment.ADMIN_ROLE) {
       this.service.sendMessage('recupAllAds',{}).subscribe(
         (response)=>{
           this.annonces = response.data;
+          this.datasource.data = response.data ;
         },
         (error) => {
           this.toastr.error("Une erreur s'est produite");
@@ -101,17 +99,17 @@ export class ManageAdsComponent implements AfterViewInit {
     });
 
     dialogRef.afterClosed().subscribe((newAdvert: AdvertAdded)=>{
-      if (newAdvert.adName && newAdvert.FileAdvert) {
+      if (newAdvert.FileAdvert) {
         this.blockUI.start('Loading...');
-        this.fileUpload.sendAdFile('annoncesUpload/uploadAd', newAdvert.FileAdvert, this.authserv.userID).subscribe(
+        this.fileUpload.sendAdFile('annoncesUpload/uploadAd', newAdvert.FileAdvert, String(this.authserv.userID)).subscribe(
           (reponseUpload)=>{
             //console.log(reponseUpload);
 
             newAdvert.fileName = this.authserv.userID+'_'+newAdvert.FileAdvert?.name ;
-            this.service.sendMessage('addAdvert', newAdvert).subscribe(
+            this.service.sendMessage('addAdvert', {idUser:this.authserv.userID,fileName:newAdvert.fileName}).subscribe(
               (response)=>{
                 this.toastr.success('Advertisement added successfully');
-                let nouvelAnnonce = {idAd:response.data.id,emailAdvertiser:this.authserv.mailUser,adName:newAdvert.adName,fileName:newAdvert.fileName};
+                let nouvelAnnonce = {idAd:response.data.id,emailAdvertiser:this.authserv.userEmail,fileName:newAdvert.fileName};
                 this.annonces.push(nouvelAnnonce) ;
                 this.datasource.data = this.annonces ;
                 console.log(response);
@@ -143,7 +141,6 @@ export class ManageAdsComponent implements AfterViewInit {
         data:{
           dialogType: "editAds",
           AdvertID:idAd ,
-          adName: this.annonces[indexAdTarget].adName,
           advertiserMail: this.annonces[indexAdTarget].emailAdvertiser,
           filename: this.annonces[indexAdTarget].fileName
         }
@@ -156,7 +153,6 @@ export class ManageAdsComponent implements AfterViewInit {
             (response)=>{
               this.toastr.success('Advertisement edited successfully');
               let indexEdit = this.datasource.data.findIndex(annonce => annonce.idAd === idAd);
-              this.annonces[indexEdit].adName = editedAdd.nameAdd ;
               this.annonces[indexEdit].fileName = editedAdd.FileAdvert?.name ;
               this.datasource.data = this.annonces ;
               console.log(response);
@@ -208,24 +204,24 @@ export class ManageAdsComponent implements AfterViewInit {
 }
 
 const DATA_TEST: Advertisement[] = [
-  {idAd:'1',emailAdvertiser:"mail1@test.com", adName: "ad1",fileName:"ad.mp4"},
-  {idAd:'2',emailAdvertiser:"mail2@test.com", adName: "ad2",fileName:"ad.mp4"},
-  {idAd:'3',emailAdvertiser:"mail69@test.com", adName: "ad69",fileName:"ad.mp4"},
-  {idAd:'4',emailAdvertiser:"mail420@test.com", adName: "ad420",fileName:"ad.mp4"},
-  {idAd:'5',emailAdvertiser:"mail1@test.com", adName: "ad1",fileName:"ad.mp4"},
-  {idAd:'6',emailAdvertiser:"mail2@test.com", adName: "ad2",fileName:"ad.mp4"},
-  {idAd:'7',emailAdvertiser:"mail69@test.com", adName: "ad69",fileName:"ad.mp4"},
-  {idAd:'8',emailAdvertiser:"mail420@test.com", adName: "ad420",fileName:"ad.mp4"},
-  {idAd:'9',emailAdvertiser:"mail1@test.com", adName: "ad1",fileName:"ad.mp4"},
-  {idAd:'10',emailAdvertiser:"mail2@test.com", adName: "ad2",fileName:"ad.mp4"},
-  {idAd:'11',emailAdvertiser:"mail69@test.com", adName: "ad69",fileName:"ad.mp4"},
-  {idAd:'12',emailAdvertiser:"mail420@test.com", adName: "ad420",fileName:"ad.mp4"},
-  {idAd:'13',emailAdvertiser:"mail1@test.com", adName: "ad1",fileName:"ad.mp4"},
-  {idAd:'14',emailAdvertiser:"mail2@test.com", adName: "ad2",fileName:"ad.mp4"},
-  {idAd:'15',emailAdvertiser:"mail69@test.com", adName: "ad69",fileName:"ad.mp4"},
-  {idAd:'16',emailAdvertiser:"mail420@test.com", adName: "ad420",fileName:"ad.mp4"},
-  {idAd:'17',emailAdvertiser:"mail1@test.com", adName: "ad1",fileName:"ad.mp4"},
-  {idAd:'18',emailAdvertiser:"mail2@test.com", adName: "ad2",fileName:"ad.mp4"},
-  {idAd:'19',emailAdvertiser:"mail69@test.com", adName: "ad69",fileName:"ad.mp4"},
-  {idAd:'20',emailAdvertiser:"mail420@test.com", adName: "ad420",fileName:"ad.mp4"},
+  {idAd:'1',emailAdvertiser:"mail1@test.com",fileName:"ad.mp4"},
+  {idAd:'2',emailAdvertiser:"mail2@test.com",fileName:"ad.mp4"},
+  {idAd:'3',emailAdvertiser:"mail69@test.com",fileName:"ad.mp4"},
+  {idAd:'4',emailAdvertiser:"mail420@test.com",fileName:"ad.mp4"},
+  {idAd:'5',emailAdvertiser:"mail1@test.com",fileName:"ad.mp4"},
+  {idAd:'6',emailAdvertiser:"mail2@test.com",fileName:"ad.mp4"},
+  {idAd:'7',emailAdvertiser:"mail69@test.com",fileName:"ad.mp4"},
+  {idAd:'8',emailAdvertiser:"mail420@test.com",fileName:"ad.mp4"},
+  {idAd:'9',emailAdvertiser:"mail1@test.com",fileName:"ad.mp4"},
+  {idAd:'10',emailAdvertiser:"mail2@test.com",fileName:"ad.mp4"},
+  {idAd:'11',emailAdvertiser:"mail69@test.com",fileName:"ad.mp4"},
+  {idAd:'12',emailAdvertiser:"mail420@test.com",fileName:"ad.mp4"},
+  {idAd:'13',emailAdvertiser:"mail1@test.com",fileName:"ad.mp4"},
+  {idAd:'14',emailAdvertiser:"mail2@test.com",fileName:"ad.mp4"},
+  {idAd:'15',emailAdvertiser:"mail69@test.com",fileName:"ad.mp4"},
+  {idAd:'16',emailAdvertiser:"mail420@test.com",fileName:"ad.mp4"},
+  {idAd:'17',emailAdvertiser:"mail1@test.com",fileName:"ad.mp4"},
+  {idAd:'18',emailAdvertiser:"mail2@test.com",fileName:"ad.mp4"},
+  {idAd:'19',emailAdvertiser:"mail69@test.com",fileName:"ad.mp4"},
+  {idAd:'20',emailAdvertiser:"mail420@test.com",fileName:"ad.mp4"},
 ]
