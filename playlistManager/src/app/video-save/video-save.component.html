@@ -1,5 +1,4 @@
-<!-- Header -->
-<div class="modal-header">
+<!-- <div class="modal-header">
     <div class="title">
         <h2 class="modal-title" >Save video in...</h2>
     </div>
@@ -7,32 +6,15 @@
         <span aria-hidden="true">&times;</span>
     </button>
 </div>
-<!-- Body -->
 <div class="modal-body d-flex flex-column ">
     <div class="info-modify">
         <div class="container">
-            <!-- Fields -->
-            <!-- <div class="row">
-                <div class="col">
-                    <label for="playlistName" class="form-label required">Playlist name</label>
-                    <input type="text" class="form-control" id="playlistName" [(ngModel)] = "this.playlistName">
-                </div>
-            </div> -->
             <select class="form-select" >
                 <option selected>Open this select menu</option>
                 <option value="1">One</option>
                 <option value="2">Two</option>
                 <option value="3">Three</option>
             </select>
-            <!-- <mat-form-field appearance="fill">
-                <mat-label>Favorite food</mat-label>
-                <mat-select [(ngModel)]="selectedValue" name="food">
-                  <mat-option *ngFor="let food of foods" [value]="food.value">
-                    {{food.viewValue}}
-                  </mat-option>
-                </mat-select>
-              </mat-form-field> -->
-              
         </div>
     </div>
     <div class="col-sm-12 d-flex flex-column modify-block">
@@ -40,4 +22,17 @@
             Add playlist
         </button>
     </div>
-</div>
+</div> -->
+<mat-dialog-content>
+    <h3> Save in </h3>
+    <mat-form-field appearance="fill">
+        <mat-label>Playlist</mat-label>
+        <mat-select [formControl]="playlistList" multiple>
+          <mat-option *ngFor="let playlist of AllPlaylists" [value]="playlist.playlistId">{{playlist.title}}</mat-option>
+        </mat-select>
+      </mat-form-field>
+</mat-dialog-content>
+<mat-dialog-actions>
+<button class="cancel" mat-button mat-dialog-close>Cancel</button>
+<button class="modify" mat-button (click)="addToPlaylist()">Save</button>
+</mat-dialog-actions>

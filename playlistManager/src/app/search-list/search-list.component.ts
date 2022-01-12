@@ -19,10 +19,11 @@ export class SearchListComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  watchVideo(videoUrl: string){
+  watchVideo(video: Video){
+    const videoUrl = video.videoId;
     console.log("video: ",videoUrl);
     const url = "watch/" + videoUrl;
-    this.router.navigateByUrl(url);
+    this.router.navigateByUrl(url, { state: { video: video } });
   }
 
   onChangePage(pageOfItems: Array<any>) {

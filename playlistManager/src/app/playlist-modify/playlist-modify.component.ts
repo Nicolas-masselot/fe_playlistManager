@@ -12,6 +12,7 @@ import { MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
 })
 export class PlaylistModifyComponent implements OnInit {
 
+  playlistId: string = "";
   playlistName: string = "";
   playlistDescription: string = "";
   playlistVisibility: string = "";
@@ -27,6 +28,7 @@ export class PlaylistModifyComponent implements OnInit {
     private dialogRef: MatDialogRef<PlaylistModifyComponent>,
     @Inject(MAT_DIALOG_DATA) private data: any,
     ) { 
+      this.playlistId = data.playlistId;
       this.playlistName = data.playlistName;
       this.playlistDescription = data.playlistDescription;
       this.playlistVisibility = data.playlistVisibility;
@@ -41,7 +43,33 @@ export class PlaylistModifyComponent implements OnInit {
   }
 
   updatePlaylist(): void {
-
+    const request = {
+      _id: this.playlistId,
+      name: this.playlistName,
+      id_user: this.authService.userID,
+      description: this.playlistDescription,
+      status: this.playlistVisibility,
+    };
+    console.log(request);
+    this.blockUI.start('Loading...');
+    this.message.sendMessage('playlist/modifyPlaylist',request).subscribe(
+      (res: any) => {
+        console.log(res);
+          if (res.success){
+            this.toastrService.success('Playlist updated');
+            this.dialogRef.close();
+          }
+          else if (res.errorSet.includes('ID_NOT_FOUND')) {
+            this.toastrService.error('Playlist not exist');
+          }
+          this.blockUI.stop();
+      },
+      (err) => {
+        console.log(err) ; //message d'erreur
+        this.blockUI.stop();
+      }
+    )
+    this.blockUI.stop();
   }
 
 }

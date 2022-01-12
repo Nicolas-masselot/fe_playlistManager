@@ -17,7 +17,6 @@
         <div class="col">
             <mat-form-field appearance="standard">
                 <mat-select [(value)]="playlistVisibility">
-                    <mat-option>None</mat-option>
                     <mat-option value="PUBLIC">Public</mat-option>
                     <mat-option value="PRIVATE">Private</mat-option>
                     <mat-option value="UNLISTED">Unlisted</mat-option>
@@ -28,5 +27,5 @@
 </mat-dialog-content>
 <mat-dialog-actions>
 <button class="cancel" mat-button mat-dialog-close>Cancel</button>
-<button class="modify" mat-button [mat-dialog-close]="true">Update</button>
+<button class="modify" mat-button (click)="updatePlaylist()">Update</button>
 </mat-dialog-actions>

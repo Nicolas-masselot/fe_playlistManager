@@ -170,7 +170,7 @@ export class PlaylistDetailComponent implements OnInit {
     };
     this.message.sendMessage('playlist/getVideos',request).subscribe((res:any) => {
       if (res.success){
-        console.log(res.data);
+        console.log("Video:",res.data);
         // console.log(res.data[0].id_user)
         // this.playlistVideo = res.data.map((video: {date_add:Date | any, description: string, name: string, status:string, thumbnail:string, videos:[], _id: string }) => {
         //   return {
@@ -214,8 +214,8 @@ export class PlaylistDetailComponent implements OnInit {
 		// // console.log(`Dismissed ${this.getDismissReason(reason)}`);
 		// });
     const dialogRef = this.dialog.open(PlaylistModifyComponent, {
-      //width: '250px',
       data: {
+        playlistId: this.playlistId,
         playlistName: this.playlist.title, 
         playlistDescription: this.playlist.description,
         playlistVisibility: this.playlist.status
@@ -224,7 +224,8 @@ export class PlaylistDetailComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(result => {
       console.log('The dialog was closed');
-      // this.animal = result;
+      this.getPlaylistById();
+      this.getVideosOfPlaylist();
     });
   }
 
