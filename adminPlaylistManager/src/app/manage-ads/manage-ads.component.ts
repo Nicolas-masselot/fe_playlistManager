@@ -22,7 +22,7 @@ export interface Advertisement{
 export interface AdvertEdited{
   idAd:string,
   changed:boolean,
-  FileAdvert:File | undefined
+  FileAdvert:File
 }
 
 export interface AdvertAdded {
@@ -147,23 +147,38 @@ export class ManageAdsComponent implements AfterViewInit {
       });
 
       dialogRef.afterClosed().subscribe((editedAdd: AdvertEdited)=>{
-        if (editedAdd.changed ) {
+        if (editedAdd.changed && editedAdd.FileAdvert) {
           this.blockUI.start('Loading...');
-          this.service.sendMessage('EditAdvert', editedAdd).subscribe(
-            (response)=>{
-              this.toastr.success('Advertisement edited successfully');
-              let indexEdit = this.datasource.data.findIndex(annonce => annonce.idAd === idAd);
-              this.annonces[indexEdit].fileName = editedAdd.FileAdvert?.name ;
-              this.datasource.data = this.annonces ;
-              console.log(response);
-              this.blockUI.stop();
+
+          this.fileUpload.sendAdFile('annoncesUpload/uploadAd', editedAdd.FileAdvert, String(this.authserv.userID)).subscribe(
+            (reponseUpload)=>{
+              //console.log(reponseUpload);
+  
+              let filename = this.authserv.userID+'_'+editedAdd.FileAdvert?.name ;
+              this.service.sendMessage('EditAdvert', {idAd:idAd,filename }).subscribe(
+                (response)=>{
+                  this.toastr.success('Advertisement edited successfully');
+                  let indexEdit = this.datasource.data.findIndex(annonce => annonce.idAd === idAd);
+                  this.annonces[indexEdit].fileName = editedAdd.FileAdvert?.name ;
+                  this.datasource.data = this.annonces ;
+                  console.log(response);
+                  this.blockUI.stop();
+                },
+                (error) => {
+                  this.toastr.error("An error has occured while Updating the advertisement");
+                  console.log(error) ;
+                  this.blockUI.stop();
+                }
+              )
+  
             },
-            (error) => {
-              this.toastr.error("An error has occured while Updating the advertisement");
+            (error)=>{
+              this.toastr.error("An error has occured while uploading the file");
               console.log(error) ;
               this.blockUI.stop();
             }
           )
+          
         }
       })
 
