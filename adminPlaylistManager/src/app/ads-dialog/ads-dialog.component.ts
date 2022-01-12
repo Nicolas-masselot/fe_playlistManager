@@ -30,9 +30,11 @@ export class AdsDialogComponent implements OnInit {
   FileRequired:boolean = false ;
   labelFileText:string = "Choose a file";
 
-  videoFileTypes:string[] = ["mp4","ogg","mpg","webm","jpg","png","jpeg"];
+  //"mp4","ogg","mpg","webm"
+  FileTypes:string[] = ["jpg","png","jpeg"];
 
   advertFile:File | undefined = undefined ;
+  FileSizeIncorrect: boolean = false;
   
   constructor(@Inject(MAT_DIALOG_DATA) private data: any
   ,private dialogRef: MatDialogRef<AdsDialogComponent>
@@ -73,9 +75,13 @@ export class AdsDialogComponent implements OnInit {
     if(event.target.files.length > 0) {
       this.labelFileText = event.target.files[0].name ;
       const uploadedVideoType:string = event.target.files[0].type; 
-
-      if (!this.videoFileTypes.includes(uploadedVideoType.replace('video/',''))) {
+      
+      if (!this.FileTypes.includes(uploadedVideoType.replace('image/',''))) {
         this.FileTypeIncorrect = true ;
+        this.FileRequired = false ;
+        this.fileInputClass = "AdvertInputsError";
+      } else if (event.target.files[0].size > 5000000) {
+        this.FileSizeIncorrect = true ;
         this.FileRequired = false ;
         this.fileInputClass = "AdvertInputsError";
       } else {

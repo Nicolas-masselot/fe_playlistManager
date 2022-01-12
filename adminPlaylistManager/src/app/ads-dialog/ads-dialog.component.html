@@ -15,7 +15,8 @@
             <input id="advertFile" name="advertFile" type="file" (change)="onFileSelected($event)" />
         </div>
 
-        <p *ngIf="FileTypeIncorrect" class="ErrorMessage">Please add a video file of the following types : {{ videoFileTypes.toString() }} </p>
+        <p *ngIf="FileSizeIncorrect" class="ErrorMessage">The size of your file is too big (>5 mb)</p>
+        <p *ngIf="FileTypeIncorrect" class="ErrorMessage">Please add a file of the following types : {{ FileTypes.toString() }} </p>
         <p *ngIf="FileRequired" class="ErrorMessage">Please add a file for your advertisement</p>
         
     </div>

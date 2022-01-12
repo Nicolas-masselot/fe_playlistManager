@@ -11,6 +11,7 @@ import { ConfirmDeleteDialogComponent } from '../confirm-delete-dialog/confirm-d
 import { BlockUI, NgBlockUI } from 'ng-block-ui';
 import { AdsDialogComponent } from '../ads-dialog/ads-dialog.component';
 import { environment } from 'src/environments/environment';
+import { FileUploadService } from '../services/file-upload.service';
 
 export interface Advertisement{
   idAd:string,
@@ -29,6 +30,7 @@ export interface AdvertEdited{
 export interface AdvertAdded {
   adName:string ,
   FileAdvert:File | undefined
+  fileName: string
 }
 
 @Component({
@@ -50,7 +52,7 @@ export class ManageAdsComponent implements AfterViewInit {
   idUser: string | undefined ;
   env = environment ;
 
-  constructor(private service:MessageService,private toastr: ToastrService,private authserv:AuthService,private dialog: MatDialog) { }
+  constructor(private service:MessageService,private toastr: ToastrService,private authserv:AuthService,private dialog: MatDialog, private fileUpload:FileUploadService) { }
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
 
@@ -101,21 +103,35 @@ export class ManageAdsComponent implements AfterViewInit {
     dialogRef.afterClosed().subscribe((newAdvert: AdvertAdded)=>{
       if (newAdvert.adName && newAdvert.FileAdvert) {
         this.blockUI.start('Loading...');
-        this.service.sendMessage('addAdvert', newAdvert).subscribe(
-          (response)=>{
-            this.toastr.success('Advertisement added successfully');
-            let nouvelAnnonce = {idAd:response.data.id,emailAdvertiser:this.authserv.mailUser,adName:newAdvert.adName,fileName:newAdvert.FileAdvert?.name};
-            this.annonces.push(nouvelAnnonce) ;
-            this.datasource.data = this.annonces ;
-            console.log(response);
-            this.blockUI.stop() ;
+        this.fileUpload.sendAdFile('annoncesUpload/uploadAd', newAdvert.FileAdvert, this.authserv.userID).subscribe(
+          (reponseUpload)=>{
+            //console.log(reponseUpload);
+
+            newAdvert.fileName = this.authserv.userID+'_'+newAdvert.FileAdvert?.name ;
+            this.service.sendMessage('addAdvert', newAdvert).subscribe(
+              (response)=>{
+                this.toastr.success('Advertisement added successfully');
+                let nouvelAnnonce = {idAd:response.data.id,emailAdvertiser:this.authserv.mailUser,adName:newAdvert.adName,fileName:newAdvert.FileAdvert?.name};
+                this.annonces.push(nouvelAnnonce) ;
+                this.datasource.data = this.annonces ;
+                console.log(response);
+                this.blockUI.stop() ;
+              },
+              (error) => {
+                this.toastr.error("An error has occured while Adding the advertisement");
+                console.log(error) ;
+                this.blockUI.stop();
+              }
+            )
+
           },
-          (error) => {
-            this.toastr.error("An error has occured while Adding the advertisement");
+          (error)=>{
+            this.toastr.error("An error has occured while uploading the file");
             console.log(error) ;
             this.blockUI.stop();
           }
         )
+
       }
     });
   }
