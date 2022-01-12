@@ -7,9 +7,9 @@ import {MessageService, BackendData} from './message.service';
 })
 export class AuthService {
   
-  LoggedIn: boolean = false ;
   role: string | undefined ;
-  userID: string | undefined;
+  userID: string | null = sessionStorage.getItem("UserID");
+  LoggedIn: boolean = (this.userID !== null) ;
   userEmail: string | undefined;
 
   constructor(private service: MessageService) { }
@@ -28,6 +28,7 @@ export class AuthService {
       this.LoggedIn = true ;
       this.role = reponse.data.id_creator ;
       this.userID = reponse.data._id ;
+      sessionStorage.setItem("UserID", String(this.userID));
     } else {
       this.LoggedIn = false ;
       this.role = undefined ;
@@ -36,8 +37,9 @@ export class AuthService {
 
   logOut(): void {
     this.userEmail = undefined;
-    this.userID = undefined;
+    this.userID = null;
     this.LoggedIn = false;
     this.role = undefined;
+    sessionStorage.clear();
   }
 }
