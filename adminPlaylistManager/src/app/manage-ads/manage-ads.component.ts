@@ -62,7 +62,7 @@ export class ManageAdsComponent implements AfterViewInit {
     //this.roleUser = "admin";
     
     if (this.roleUser == environment.ADMIN_ROLE) {
-      this.service.sendMessage('recupAllAds',{}).subscribe(
+      this.service.sendMessage('advertiser/getSet',{}).subscribe(
         (response)=>{
           this.annonces = response.data;
           this.datasource.data = response.data ;
@@ -73,8 +73,9 @@ export class ManageAdsComponent implements AfterViewInit {
         }
       );
     } else {
-      this.service.sendMessage('recupAds',{idAdvertiser: this.idUser}).subscribe(
+      this.service.sendMessage('advertiser/getById',{_id: this.idUser}).subscribe(
         (response)=>{
+          this.annonces = response.data;
           this.datasource.data = response.data ;
         },
         (error) => {
