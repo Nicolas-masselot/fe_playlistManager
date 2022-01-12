@@ -3,7 +3,6 @@ import { BlockUI, NgBlockUI } from 'ng-block-ui';
 import {MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
 import { MessageService } from '../services/message.service';
 import { AuthService } from '../services/auth.service';
-import { FormControl, Validators } from '@angular/forms';
 import { environment } from 'src/environments/environment';
 
 @Component({
@@ -95,9 +94,6 @@ export class AdsDialogComponent implements OnInit {
   }
 
   OnSaveData():void {
-    let NameAdForm = new FormControl(this.adName,[
-      Validators.required
-    ]);
 
     if ( this.advertFile == undefined && this.dialogType === 'addAdvert' && !this.FileTypeIncorrect ) {
       this.FileRequired = true ;
