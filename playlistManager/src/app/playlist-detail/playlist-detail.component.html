@@ -2,7 +2,7 @@
 <div style="display: flex; margin: 1rem;">
     <div style="width: 360;">
         <div class="image" style="margin-bottom: 1rem;">
-            <img [src]="playlist.thumbnail" style="height: 240px; width: 360px;">
+            <img [src]="this.playlist.thumbnail" style="height: 240px; width: 360px;">
         </div>
         <div class="content">
             <div style="display: flex; justify-content: space-between" >
@@ -13,7 +13,7 @@
             
             <div class="meta" style="margin-top: 1rem; display: flex; justify-content: space-between">
                 <span class="date" style="font-weight: bolder;">
-                    <a [href]="playlist.channelUrl" target="_blank">{{ playlist.channelTitle }}</a>
+                    <div>{{ playlist.channelTitle }}</div>
                 </span>
                 <span class="ui right floated date" style="font-weight: bolder;">{{ playlist.publishedAt | date:'mediumDate' }}</span>
             </div>
