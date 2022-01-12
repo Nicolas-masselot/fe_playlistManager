@@ -99,14 +99,6 @@ export class AdsDialogComponent implements OnInit {
       Validators.required
     ]);
 
-    if (NameAdForm.errors != null) {
-      this.nameRequired = true ;
-      this.advertInputClass = "AdvertInputsError";
-    } else {
-      this.nameRequired = false ;
-      this.advertInputClass = "AdvertInputs";
-    }
-
     if ( this.advertFile == undefined && this.dialogType === 'addAdvert' && !this.FileTypeIncorrect ) {
       this.FileRequired = true ;
     } else {
@@ -119,10 +111,10 @@ export class AdsDialogComponent implements OnInit {
       this.fileInputClass = "AdvertInputs" ;
     }
 
-    if (!this.nameRequired && this.dialogType === 'editAds') {
-      this.dialogRef.close({idAd:this.AdvertID,nameAdd:this.adName, changed:true,FileAdvert:this.advertFile});
-    } else if (!this.nameRequired && !this.FileRequired && !this.FileTypeIncorrect && this.dialogType=== 'addAdvert') {
-      this.dialogRef.close({adName:this.adName,FileAdvert:this.advertFile});
+    if ( this.dialogType === 'editAds') {
+      this.dialogRef.close({idAd:this.AdvertID, changed:true,FileAdvert:this.advertFile});
+    } else if ( !this.FileRequired && !this.FileTypeIncorrect && this.dialogType=== 'addAdvert') {
+      this.dialogRef.close({FileAdvert:null});
     }
   }
 }

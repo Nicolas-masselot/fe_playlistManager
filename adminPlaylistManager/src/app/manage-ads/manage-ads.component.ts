@@ -22,7 +22,7 @@ export interface Advertisement{
 export interface AdvertEdited{
   idAd:string,
   changed:boolean,
-  FileAdvert:File
+  FileAdvert:File | null
 }
 
 export interface AdvertAdded {
@@ -43,10 +43,10 @@ export class ManageAdsComponent implements AfterViewInit {
   @BlockUI() blockUI!: NgBlockUI;
   faSearch = faSearch ;
   colonnes: string[] = ["infosAd","options"];
-  annonces: Advertisement[] = DATA_TEST;
+  annonces: Advertisement[] = [];
   datasource = new MatTableDataSource<Advertisement>(this.annonces) ;
-  roleUser: string | null = null ;
-  idUser: string | null = "" ;
+  roleUser: string | null = this.authserv.role ;
+  idUser: string | null = null ;
   env = environment ;
 
   constructor(private service:MessageService,private toastr: ToastrService,private authserv:AuthService,private dialog: MatDialog, private fileUpload:FileUploadService) { }
@@ -58,11 +58,10 @@ export class ManageAdsComponent implements AfterViewInit {
     this.paginator._intl.itemsPerPageLabel = "Ads per page :";
     this.datasource.paginator = this.paginator ;
     this.idUser = this.authserv.userID;
-    this.roleUser = this.authserv.role ;
     //this.roleUser = "admin";
     
     if (this.roleUser == environment.ADMIN_ROLE) {
-      this.service.sendMessage('advertiser/getSet',{}).subscribe(
+      this.service.sendMessage('annonceur/getSet',{}).subscribe(
         (response)=>{
           this.annonces = response.data;
           this.datasource.data = response.data ;
@@ -73,10 +72,11 @@ export class ManageAdsComponent implements AfterViewInit {
         }
       );
     } else {
-      this.service.sendMessage('advertiser/getById',{_id: this.idUser}).subscribe(
+      this.service.sendMessage('annonceur/getById',{_id: this.idUser}).subscribe(
         (response)=>{
           this.annonces = response.data;
           this.datasource.data = response.data ;
+          console.log(response.data);
         },
         (error) => {
           this.toastr.error("Une erreur s'est produite");
@@ -107,7 +107,7 @@ export class ManageAdsComponent implements AfterViewInit {
             //console.log(reponseUpload);
 
             newAdvert.fileName = this.authserv.userID+'_'+newAdvert.FileAdvert?.name ;
-            this.service.sendMessage('addAdvert', {idUser:this.authserv.userID,fileName:newAdvert.fileName}).subscribe(
+            this.service.sendMessage('annonceur/createAdvert', {id_user:this.authserv.userID,fileName:newAdvert.fileName}).subscribe(
               (response)=>{
                 this.toastr.success('Advertisement added successfully');
                 let nouvelAnnonce = {idAd:response.data.id,emailAdvertiser:this.authserv.userEmail,fileName:newAdvert.fileName};
@@ -151,12 +151,12 @@ export class ManageAdsComponent implements AfterViewInit {
         if (editedAdd.changed && editedAdd.FileAdvert) {
           this.blockUI.start('Loading...');
 
-          this.fileUpload.sendAdFile('annoncesUpload/uploadAd', editedAdd.FileAdvert, String(this.authserv.userID)).subscribe(
+          this.fileUpload.sendAdFile('annoncesUpload/uploadAdvert', editedAdd.FileAdvert, String(this.authserv.userID)).subscribe(
             (reponseUpload)=>{
               //console.log(reponseUpload);
   
               let filename = this.authserv.userID+'_'+editedAdd.FileAdvert?.name ;
-              this.service.sendMessage('EditAdvert', {idAd:idAd,filename }).subscribe(
+              this.service.sendMessage('annonceur/modifyAdvert', {_id:idAd,filename }).subscribe(
                 (response)=>{
                   this.toastr.success('Advertisement edited successfully');
                   let indexEdit = this.datasource.data.findIndex(annonce => annonce.idAd === idAd);
@@ -184,6 +184,7 @@ export class ManageAdsComponent implements AfterViewInit {
       })
 
     } else {
+      
       const dialogRef = this.dialog.open(ConfirmDeleteDialogComponent,{
         data : {
           message: "Once you delete this advertise, there is no going back. Please be certain.",
@@ -197,7 +198,8 @@ export class ManageAdsComponent implements AfterViewInit {
       dialogRef.afterClosed().subscribe((confirmedDelete:boolean) => {
         if (confirmedDelete) {
           this.blockUI.start('Loading...');
-          this.service.sendMessage('deleteAd',{idAnnonce: idAd}).subscribe(
+          console.log(idAd);
+          this.service.sendMessage('annonceur/deleteAdvert',{_id: idAd}).subscribe(
             (response)=>{
               this.toastr.success("Ad deleted successfully");
               let index_todel = this.datasource.data.findIndex(annonce => annonce.idAd === idAd);

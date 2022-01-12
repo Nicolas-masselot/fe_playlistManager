@@ -3,12 +3,7 @@
 
     <p *ngIf="dialogType === 'editAds' && accountRole === env.ADMIN_ROLE" id="mailAd"> Advertisement from {{ advertiserMail }} </p>
     <div id="AdvertForm">
-        <label>Advertisement name :</label>
-        <div class="{{advertInputClass}}">
-            <input type="text" name="adName" id="NameAd" [(ngModel)]="adName"/>
-        </div>
-
-        <p *ngIf="nameRequired" class="ErrorMessage">Please enter a name for your Advertisement</p>
+        <label>Advertisement file :</label>
 
         <div class="{{fileInputClass}}">
             <label for="advertFile" id="fileInputLabel">{{labelFileText}}</label>

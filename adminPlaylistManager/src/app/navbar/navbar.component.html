@@ -7,14 +7,14 @@
   <li ngbDropdown class="d-inline-block" *ngIf="this.role === 'admin'">
       <div class="" id="dropdownBasic1" ngbDropdownToggle><i class="fa fa-users" aria-hidden="true"></i>Manager</div>
       <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
-        <button ngbDropdownItem [routerLink]="['/managerUsers']" >Manager user</button>
-        <button ngbDropdownItem [routerLink]="['/managerAds']" >Manager ads</button>  
+        <button ngbDropdownItem [routerLink]="['/manageUsers']" >Manager user</button>
+        <button ngbDropdownItem [routerLink]="['/manageAds']" >Manager ads</button>  
       </div>
   </li>
   <li ngbDropdown class="d-inline-block" *ngIf="this.role === 'advertiser'">
     <div class="" id="dropdownBasic1" ngbDropdownToggle><i class="fa fa-users" aria-hidden="true"></i>Manager</div>
     <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
-      <button ngbDropdownItem [routerLink]="['/managerAds']" >Manager ads</button>
+      <button ngbDropdownItem [routerLink]="['/manageAds']" >Manager ads</button>
     </div>
   </li>
   <li [routerLink]="['/dashboardUser']" routerLinkActive="active"><i class="fa fa-stream" aria-hidden="true"></i>Playlists</li>
