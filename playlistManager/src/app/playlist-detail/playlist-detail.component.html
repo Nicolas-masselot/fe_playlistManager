@@ -7,13 +7,14 @@
         <div class="content">
             <div style="display: flex; justify-content: space-between" >
                 <h3 class="header">{{ playlist.title }}</h3>
-                <div type="button" class="btn btn-outline-dark" (click)="modifyPlaylist()"><i class="fa fa-edit" aria-hidden="true"></i>Modify</div>
-                <div type="button" class="btn btn-outline-danger" (click)="deletePlaylist()"><i class="fa fa-trash" aria-hidden="true"></i>Delete</div>
+                <div mat-button type="button" class="btn btn-outline-dark" (click)="modifyPlaylist()"><i class="fa fa-edit" aria-hidden="true"></i>Modify</div>
+                <div type="button" class="btn btn-outline-danger" (click)="deletePlaylist()"><i class="fa fa-trash" aria-hidden="true" (click)="deletePlaylist()"></i>Delete</div>
             </div>
             
             <div class="meta" style="margin-top: 1rem; display: flex; justify-content: space-between">
                 <span class="date" style="font-weight: bolder;">
-                    <div>{{ playlist.channelTitle }}</div>
+                    <!-- <div>{{ playlist.channelTitle }}</div> -->
+                    <div>{{ playlist.status }}</div>
                 </span>
                 <span class="ui right floated date" style="font-weight: bolder;">{{ playlist.publishedAt | date:'mediumDate' }}</span>
             </div>
@@ -23,6 +24,7 @@
         </div>     
     </div>
     <div style="margin-left: 1rem; border-left: 1px solid;">
+        <!-- <div *ngIf="playlistVideo.length === 0">No video</div> -->
         <div class="" *ngFor="let video of playlistVideo" >
             <div style="margin: 1rem; display: flex;">
                 <div class="image" (click)="watchVideo(video.videoId)">

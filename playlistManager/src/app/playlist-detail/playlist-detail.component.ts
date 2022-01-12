@@ -1,3 +1,4 @@
+import { PlaylistModifyComponent } from './../playlist-modify/playlist-modify.component';
 import { Playlist } from './../interface/playlist';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -6,6 +7,8 @@ import { ToastrService } from 'ngx-toastr';
 import { MessageService } from '../services/message.service';
 import { AuthService } from '../services/auth.service';
 import { BlockUI, NgBlockUI } from 'ng-block-ui';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
 
 @Component({
   selector: 'app-playlist-detail',
@@ -24,7 +27,10 @@ export class PlaylistDetailComponent implements OnInit {
     private router: Router,
     private toastrService: ToastrService,
     private authService: AuthService, 
-    private message: MessageService, ) { }
+    private message: MessageService, 
+    // private modifyPlaylistModalService: NgbModal ,
+    private dialog: MatDialog,
+    ) { }
 
   ngOnInit(): void {
     this.playlistId = this.route.snapshot.params["id"];
@@ -198,11 +204,54 @@ export class PlaylistDetailComponent implements OnInit {
   }
 
   modifyPlaylist():void {
+    // const modalRef = this.modifyPlaylistModalService.open(PlaylistModifyComponent);
+    // modalRef.componentInstance.playlistName = this.playlist.title;
+		// modalRef.componentInstance.playlistDescription = this.playlist.description;
+    // modalRef.componentInstance.playlistVisibility = this.playlist.status;
+		// modalRef.result.then((result) => {
+		// 	this.getPlaylistById();
+		// // console.log(`Closed with: ${result}`);
+		// }, (reason) => {
+		// 	this.getPlaylistById();
+		// // console.log(`Dismissed ${this.getDismissReason(reason)}`);
+		// });
+    const dialogRef = this.dialog.open(PlaylistModifyComponent, {
+      // width: '250px',
+      data: {
+        playlistName: this.playlist.title, 
+        playlistDescription: this.playlist.description,
+        playlistVisibility: this.playlist.status
+      },
+    });
 
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed');
+      // this.animal = result;
+    });
   }
 
   deletePlaylist():void{
-
+    if (confirm("Are you sure you want to delete this playlist ? (this action is irreversible)")) {
+      this.blockUI.start('Loading...');
+      this.message.sendMessage('playlist/deletePlaylist',{_id: this.playlistId}).subscribe(
+        (res:any) => {
+          console.log(res);
+          if (res.success){
+            this.toastrService.success('Playlist deleted');
+            this.router.navigate(['dashboardUser']);
+          }
+          else if (res.errorSet.includes('ID_NOT_FOUND')) {
+            this.toastrService.error('Playlist not exist');
+          }
+          this.blockUI.stop();
+        },
+        (err) => {
+          console.log(err) ; //message d'erreur
+          this.blockUI.stop();
+        }
+      )
+      this.blockUI.stop();
+    }
   }
 
   watchVideo(videoUrl: string):void{

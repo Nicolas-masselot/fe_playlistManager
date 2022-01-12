@@ -1,3 +1,4 @@
+import { MatDialogModule } from '@angular/material/dialog';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
@@ -30,6 +31,8 @@ import { MatOptionModule } from "@angular/material/core";
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { JwPaginationModule } from 'jw-angular-pagination';
+import { PlaylistModifyComponent } from './playlist-modify/playlist-modify.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 @NgModule({
   declarations: [
@@ -48,6 +51,7 @@ import { JwPaginationModule } from 'jw-angular-pagination';
     PlaylistDetailComponent,
     PlaylistCreateComponent,
     VideoSaveComponent,
+    PlaylistModifyComponent,
   ],
   imports: [
     BrowserModule,
@@ -64,9 +68,11 @@ import { JwPaginationModule } from 'jw-angular-pagination';
     NgbModule,
     MatSelectModule,
     MatOptionModule,
-    MatFormFieldModule,
-    MatInputModule,
-    JwPaginationModule
+    // MatFormFieldModule,
+    // MatInputModule,
+    JwPaginationModule,
+    BrowserAnimationsModule,
+    MatDialogModule,
   ],
   providers: [],
   bootstrap: [AppComponent]
