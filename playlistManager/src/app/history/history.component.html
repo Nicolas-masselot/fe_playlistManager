@@ -2,42 +2,27 @@
 <div style="margin: 1rem 2rem; display: flex; justify-content: space-between">
   <div id="Allplaylists">History</div>
   <div>
-    <button type="button" class="btn btn-outline-danger">Clear history</button>
+    <button type="button" class="btn btn-outline-danger" (click)="clearHistory()">Clear history</button>
   </div>
 </div>
-
-
-<!-- <div id="playlistsList">
-    <div *ngFor="let playlist of AllPlaylists" class="cardPlaylist">
-        <p class="title">{{ playlist.nom }}</p>
-        <p class="description">{{ playlist.description }}</p>
-    </div>
-</div> -->
-
 <div class="ui four column grid" style="margin-left: 1rem;">
-    <div class="column" *ngFor="let playlist of AllPlaylistsTest">
-      <div class="ui card">
+    <div class="column" *ngFor="let video of videoList" (click)="watchVideo(video)" >
+      <div class="ui card" style="cursor:pointer;">
         <div class="image">
-          <img [src]="playlist.thumbnail">
+          <img [src]="video.thumbnail">
         </div>
         <div class="content">
-          <a class="header" style="margin: 1em 0 1em 0;">{{ playlist.title }}</a>
+          <a class="header" style="margin: 1em 0 1em 0;">{{ video.title }}</a>
           <div class="meta">
             <span class="date" style="font-weight: bolder;">
-              <div>{{ playlist.channelTitle }}</div>
+              <div>{{ video.channelTitle }}</div>
             </span>
-            <span class="ui right floated date" style="font-weight: bolder;">{{ playlist.publishedAt | date:'mediumDate' }}</span>
+            <span class="ui right floated date" style="font-weight: bolder;">{{ video.publishedAt | date:'mediumDate' }}</span>
           </div>
           <div class="description">
-            {{ playlist.description?.slice(0,50) }}...
+            {{ video.description?.slice(0,50) }}...
           </div>
         </div>
-        <!-- <a [href]="playlist.playlistUrl" target="_blank" class="extra content">
-          <button class="ui right floated tiny red right labeled icon button">
-            <i class="external alternate icon"></i>
-            Watch
-          </button>
-        </a> -->
       </div>
     </div> 
 </div>

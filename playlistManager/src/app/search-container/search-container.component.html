@@ -1,12 +1,10 @@
 <div>
     <ul class="youtube">
-        <!-- <li><i class="fas fa-bars"></i></li> -->
         <li [routerLink]="['/dashboardUser']" routerLinkActive="active"><i class="fab fa-youtube" aria-hidden="true"></i>Youtube Playlist</li>
         <li class="youtube-search">
             <app-search-input (search)="onSearch($event)"></app-search-input>
             
         </li>
-        <!-- if role = admin -->
         <li ngbDropdown class="d-inline-block" *ngIf="this.role === 'admin'">
             <div class="" id="dropdownBasic1" ngbDropdownToggle><i class="fa fa-users" aria-hidden="true"></i>Manager</div>
             <div ngbDropdownMenu aria-labelledby="dropdownBasic1">

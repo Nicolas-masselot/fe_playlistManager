@@ -57,7 +57,6 @@ export class LoginComponent implements OnInit {
       this.blockUI.start('Loading...');
       this.service.sendAuthentification(email,password).subscribe(
         (response:any) => {
-          console.log(response) ;
           this.service.finalizeAuthentification(response);
           if (this.service.LoggedIn) {
             this.service.userEmail = email;
@@ -98,11 +97,9 @@ export class LoginComponent implements OnInit {
             password,
             ads:this.isAdvertiser
           }
-          // console.log("isAdvertiser: ", this.isAdvertiser);
           this.blockUI.start('Loading...');
           this.message.sendMessage('user/createAccount',creationData).subscribe(
             (response) => {
-              console.log(response) ;
               this.router.navigateByUrl('').then(()=>{}) ;
               /// TODO : check if email exists -> create successfully or failed
               this.toastrService.success('Create successfully');

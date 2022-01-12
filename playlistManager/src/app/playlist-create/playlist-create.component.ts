@@ -37,7 +37,6 @@ export class PlaylistCreateComponent implements OnInit {
         description: this.playlistDescription,
         status: this.playlistVisibility,
       };
-      console.log(request);
       this.blockUI.start('Loading...');
       this.message.sendMessage('playlist/createPlaylist',request).subscribe(
         (res) => {

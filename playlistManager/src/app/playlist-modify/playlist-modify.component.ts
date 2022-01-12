@@ -32,7 +32,6 @@ export class PlaylistModifyComponent implements OnInit {
       this.playlistName = data.playlistName;
       this.playlistDescription = data.playlistDescription;
       this.playlistVisibility = data.playlistVisibility;
-      console.log(this.playlistVisibility);
     }
 
   ngOnInit(): void {
@@ -50,11 +49,9 @@ export class PlaylistModifyComponent implements OnInit {
       description: this.playlistDescription,
       status: this.playlistVisibility,
     };
-    console.log(request);
     this.blockUI.start('Loading...');
     this.message.sendMessage('playlist/modifyPlaylist',request).subscribe(
       (res: any) => {
-        console.log(res);
           if (res.success){
             this.toastrService.success('Playlist updated');
             this.dialogRef.close();

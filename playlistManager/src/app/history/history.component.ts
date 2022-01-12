@@ -1,108 +1,106 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, AfterViewInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { BlockUI, NgBlockUI } from 'ng-block-ui';
+import { ToastrService } from 'ngx-toastr';
 import { Playlist } from '../interface/playlist';
+import { Video } from '../interface/video';
+import { AuthService } from '../services/auth.service';
+import { MessageService } from '../services/message.service';
 
 @Component({
   selector: 'app-history',
   templateUrl: './history.component.html',
   styleUrls: ['./history.component.scss']
 })
-export class HistoryComponent implements OnInit {
+export class HistoryComponent implements OnInit, AfterViewInit {
 
   AllPlaylistsTest: Playlist[] = [];
+  videoList: Video[] = [];
 
-  constructor() { }
+  @BlockUI()
+  blockUI!: NgBlockUI;
 
-  ngOnInit(): void {
-//     this.AllPlaylistsTest = [
-//       {
-//           title: "Adele - Easy On Me (Live at the NRJ Awards 2021)",
-//           playlistId: "ffcitRgiNDs",
-//           playlistUrl: "https://www.youtube.com/watch?v=ffcitRgiNDs",
-//           channelId: "UComP_epzeKzvBX156r6pm1Q",
-//           channelUrl: "https://www.youtube.com/channel/UComP_epzeKzvBX156r6pm1Q",
-//           channelTitle: "AdeleVEVO",
-//           description: "\"Easy On Me\" by Adele, Live at the NRJ Awards 2021. Shop the \"Adele\" collection here: http://shop.adele.com Listen to \"30\" here: ...",
-//           publishedAt: new Date("2021-11-23T15:00:17.000Z"),
-//           thumbnail: "https://i.ytimg.com/vi/ffcitRgiNDs/hqdefault.jpg"
-//       },
-//       {
-//           title: "Adele - Hello",
-//           playlistId: "YQHsXMglC9A",
-//           playlistUrl: "https://www.youtube.com/watch?v=YQHsXMglC9A",
-//           channelId: "UComP_epzeKzvBX156r6pm1Q",
-//           channelUrl: "https://www.youtube.com/channel/UComP_epzeKzvBX156r6pm1Q",
-//           channelTitle: "AdeleVEVO",
-//           description: "Listen to \"Easy On Me\" here: http://Adele.lnk.to/EOM Pre-order Adele's new album \"30\" before its release on November 19: ...",
-//           publishedAt: new Date("2015-10-23T06:54:18.000Z"),
-//           thumbnail: "https://i.ytimg.com/vi/YQHsXMglC9A/hqdefault.jpg"
-//       },
-//       {
-//           title: "Billboard hot 100 This Week🍍ADELE, Maroon 5, Bilie Eilish, Taylor Swift, Sam Smith, Rihana🍍🍍Pop Hits",
-//           playlistId: "zwdWWgOTRKI",
-//           playlistUrl: "https://www.youtube.com/watch?v=zwdWWgOTRKI",
-//           channelId: "UCKU0iO0axnimO3b0G-BOO_g",
-//           channelUrl: "https://www.youtube.com/channel/UCKU0iO0axnimO3b0G-BOO_g",
-//           channelTitle: "Music UC",
-//           description: "Billboard hot 100 This Week  ADELE, Maroon 5, Bilie Eilish, Taylor Swift, Sam Smith, Rihana    Pop Hits #TopHits2022 ...",
-//           publishedAt: new Date("2022-01-07T08:32:16.000Z"),
-//           thumbnail: "https://i.ytimg.com/vi/zwdWWgOTRKI/hqdefault_live.jpg"
-//       },
-//       {
-//           title: "Adele - Someone Like You (Official Music Video)",
-//           playlistId: "hLQl3WQQoQ0",
-//           playlistUrl: "https://www.youtube.com/watch?v=hLQl3WQQoQ0",
-//           channelId: "UComP_epzeKzvBX156r6pm1Q",
-//           channelUrl: "https://www.youtube.com/channel/UComP_epzeKzvBX156r6pm1Q",
-//           channelTitle: "AdeleVEVO",
-//           description: "Listen to \"Easy On Me\" here: http://Adele.lnk.to/EOM Pre-order Adele's new album \"30\" before its release on November 19: ...",
-//           publishedAt: new Date("2011-09-29T23:56:00.000Z"),
-//           thumbnail: "https://i.ytimg.com/vi/hLQl3WQQoQ0/hqdefault.jpg"
-//       },
-//       {
-//           title: "Adele - Rolling in the Deep (Official Music Video)",
-//           playlistId: "rYEDA3JcQqw",
-//           playlistUrl: "https://www.youtube.com/watch?v=rYEDA3JcQqw",
-//           channelId: "UComP_epzeKzvBX156r6pm1Q",
-//           channelUrl: "https://www.youtube.com/channel/UComP_epzeKzvBX156r6pm1Q",
-//           channelTitle: "AdeleVEVO",
-//           description: "Listen to \"Easy On Me\" here: http://Adele.lnk.to/EOM Pre-order Adele's new album \"30\" before its release on November 19: ...",
-//           publishedAt: new Date("2010-11-30T23:29:12.000Z"),
-//           thumbnail: "https://i.ytimg.com/vi/rYEDA3JcQqw/hqdefault.jpg"
-//       },
-//       {
-//           title: "Adele - Easy On Me (Official Lyric Video)",
-//           playlistId: "X-yIEMduRXk",
-//           playlistUrl: "https://www.youtube.com/watch?v=X-yIEMduRXk",
-//           channelId: "UComP_epzeKzvBX156r6pm1Q",
-//           channelUrl: "https://www.youtube.com/channel/UComP_epzeKzvBX156r6pm1Q",
-//           channelTitle: "AdeleVEVO",
-//           description: "Lyric Video for \"Easy On Me\" by Adele. Shop the \"Adele\" collection here: http://shop.adele.com Listen to \"30\" here: ...",
-//           publishedAt: new Date("2021-11-19T05:00:21.000Z"),
-//           thumbnail: "https://i.ytimg.com/vi/X-yIEMduRXk/hqdefault.jpg"
-//       },
-//       {
-//           title: "A.d.e.l.e Songs Playlist 2021 - Top Tracks 2021 Playlist - Billboard Best Singer A.d.e.l.e GREATEST",
-//           playlistId: "pwMzcjHizCM",
-//           playlistUrl: "https://www.youtube.com/watch?v=pwMzcjHizCM",
-//           channelId: "UCeZbb8LD2nUCO2fd-FguWfw",
-//           channelUrl: "https://www.youtube.com/channel/UCeZbb8LD2nUCO2fd-FguWfw",
-//           channelTitle: "Time Songs",
-//           description: "A.d.e.l.e Songs Playlist 2021 - Top Tracks 2021 Playlist - Billboard Best Singer A.d.e.l.e GREATEST.",
-//           publishedAt: new Date("2021-11-03T08:38:19.000Z"),
-//           thumbnail: "https://i.ytimg.com/vi/pwMzcjHizCM/hqdefault.jpg"
-//       },
-//       {
-//           title: "adele songs 2021 - Best Of Adele Greatest Hits Full Album 2021",
-//           playlistId: "xq0taGNb-CQ",
-//           playlistUrl: "https://www.youtube.com/watch?v=xq0taGNb-CQ",
-//           channelId: "UCeZbb8LD2nUCO2fd-FguWfw",
-//           channelUrl: "https://www.youtube.com/channel/UCeZbb8LD2nUCO2fd-FguWfw",
-//           channelTitle: "Time Songs",
-//           description: "adele songs 2021 - Best Of Adele Greatest Hits Full Album 2021.",
-//           publishedAt: new Date("2021-10-17T13:09:25.000Z"),
-//           thumbnail: "https://i.ytimg.com/vi/xq0taGNb-CQ/hqdefault.jpg"
-//       },
-//   ];
+  constructor(
+    private router: Router,
+    private toastrService: ToastrService,
+    private authService: AuthService, 
+    private message: MessageService, 
+  ) { }
+  ngAfterViewInit(): void {
+    this.getVideoHistoryByUserId();
   }
 
+  ngOnInit(): void {
+    this.getVideoHistoryByUserId();
+  }
+
+  getVideoHistoryByUserId(): void{
+    const request = {
+      id_user: this.authService.userID,
+    };
+    this.blockUI.start('Loading...');
+    this.message.sendMessage('history/getByUserId',request).subscribe((res:any) => {
+      if (res.success){
+        this.videoList = res.data.map((video: {channelId: string, channelTitle: string, channelUrl: string, description: string, publishedAt: Date | any, thumbnail: string, title: string, _id: string, videoId: string, videoUrl: string, }) => {
+          return {
+            title: video.title,
+            videoId: video.videoId,
+            videoUrl: video.videoUrl,
+            channelId: video.channelId,
+            channelUrl: video.channelUrl,
+            channelTitle: video.channelTitle,
+            description: video.description,
+            publishedAt: new Date(video.publishedAt),
+            thumbnail: video.thumbnail
+          };
+        });
+        this.blockUI.stop();
+      }
+      else{
+        if (res.errorSet.includes('RECORD_NOT_FOUND')) {
+          this.toastrService.error('No record');
+        }
+        this.blockUI.stop();
+      }
+    },
+    (err)=>{ 
+      console.log(err); // message d'erreur
+      this.blockUI.stop();
+    })
+    this.blockUI.stop();   
+  }
+
+  watchVideo(video: Video): void {
+    const videoUrl = video.videoId;
+    const url = "watch/" + videoUrl;
+    this.router.navigateByUrl(url, { state: { video: video } });
+  }
+
+  clearHistory(): void {
+    if (confirm("Are you sure you want to clear your history ? (this action is irreversible)")) {
+      const request = {
+        id_user: this.authService.userID,
+      };
+      this.blockUI.start('Loading...');
+      this.message.sendMessage('history/deleteByIdUser',request).subscribe((res:any) => {
+        if (res.success){
+          this.toastrService.success('Clear history successfully');
+          this.getVideoHistoryByUserId();
+          this.blockUI.stop();
+        }
+        else{
+          if (res.errorSet.includes('ERROR_DELETE_DATA')) {
+            this.toastrService.error('Cannot delete history');
+          }
+          this.blockUI.stop();
+        }
+      },
+      (err)=>{ 
+        console.log(err); // message d'erreur
+        this.blockUI.stop();
+      })
+      this.blockUI.stop(); 
+    }
+    
+  }
 }

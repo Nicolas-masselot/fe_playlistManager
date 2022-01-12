@@ -8,12 +8,11 @@
             <div style="display: flex; justify-content: space-between" >
                 <h3 class="header">{{ playlist.title }}</h3>
                 <div mat-button type="button" class="btn btn-outline-dark" (click)="modifyPlaylist()"><i class="fa fa-edit" aria-hidden="true"></i>Modify</div>
-                <div type="button" class="btn btn-outline-danger" (click)="deletePlaylist()"><i class="fa fa-trash" aria-hidden="true" (click)="deletePlaylist()"></i>Delete</div>
+                <div type="button" class="btn btn-outline-danger" (click)="deletePlaylist()"><i class="fa fa-trash" aria-hidden="true"></i>Delete</div>
             </div>
             
             <div class="meta" style="margin-top: 1rem; display: flex; justify-content: space-between">
                 <span class="date" style="font-weight: bolder;">
-                    <!-- <div>{{ playlist.channelTitle }}</div> -->
                     <div>{{ playlist.status }}</div>
                 </span>
                 <span class="ui right floated date" style="font-weight: bolder;">{{ playlist.publishedAt | date:'mediumDate' }}</span>
@@ -24,13 +23,12 @@
         </div>     
     </div>
     <div style="margin-left: 1rem; border-left: 1px solid;">
-        <!-- <div *ngIf="playlistVideo.length === 0">No video</div> -->
         <div class="" *ngFor="let video of playlistVideo" >
-            <div style="margin: 1rem; display: flex;">
-                <div class="image" (click)="watchVideo(video.videoId)">
+            <div style="margin: 1rem; display: flex; cursor: pointer;">
+                <div class="image" (click)="watchVideo(video)" >
                     <img [src]="video.thumbnail" style="height: 217.5px;width: 290px;">
                 </div>
-                <div class="content" style="margin-left: 1rem;" (click)="watchVideo(video.videoId)">
+                <div class="content" style="margin-left: 1rem;" >
                     <h3 class="header" style="margin: 1em 0 1em 0;">{{ video.title }}</h3>
                     <div class="meta" style="display: flex;">
                       <span class="date" style="font-weight: bolder;" >
@@ -43,7 +41,7 @@
                       {{ video.description?.slice(0,100) }}...
                     </div> 
                 </div>
-                <div type="button" style="height:50px; margin-top: 1rem;" class="btn btn-outline-danger" (click)="deleteVideo(video.videoId)"><i class="fa fa-trash" aria-hidden="true"></i>Delete</div>
+                <div type="button" style="height:50px; margin-top: 1rem;" class="btn btn-outline-danger" (click)="deleteVideo(video._id)"><i class="fa fa-trash" aria-hidden="true"></i>Delete</div>
             </div>
         </div>
     </div>

@@ -24,7 +24,6 @@ export class DeleteAccountComponent implements OnInit {
       this.blockUI.start('Loading...');
       this.message.sendMessage('user/deleteAccount',{_id: this.service.userID}).subscribe(
         (response) => {
-          console.log(response);
           this.service.logOut();
           this.router.navigate(['login']);
           this.blockUI.stop();

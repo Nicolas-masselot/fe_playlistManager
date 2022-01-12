@@ -17,7 +17,6 @@ export class SearchInputComponent implements OnInit {
   }
 
   onSearch(): void {
-    console.log("Search input: ", this.searchInput);
     this.search.emit(this.searchInput);
     const navigationExtras: NavigationExtras = {state: {searchInput: this.searchInput}};
     this.router.navigate(['/search'], navigationExtras)

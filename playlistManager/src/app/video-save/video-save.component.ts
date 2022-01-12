@@ -37,8 +37,6 @@ export class VideoSaveComponent implements OnInit {
 
   ngOnInit(): void {
     this.getAllPlaylist();
-    console.log(this.video);
-    console.log(this.AllPlaylists);
   }
 
   getAllPlaylist(): void {
@@ -49,8 +47,6 @@ export class VideoSaveComponent implements OnInit {
     this.message.sendMessage('playlist/getByUserId',request).subscribe(
       (res:any) => {
         if (res.success){
-          console.log(res.data);
-          // console.log(res.data[0].id_user)
           this.AllPlaylists = res.data.map((playlist: {date_add:Date | any, description: string, name: string, status:string, thumbnail:string, videos:[], _id: string }) => {
             return {
               title: playlist.name,
@@ -93,7 +89,6 @@ export class VideoSaveComponent implements OnInit {
         thumbnail: this.video?.thumbnail,
         playlists: this.playlistList.value,
       };
-      console.log(request);
       this.blockUI.start('Loading...');
       this.message.sendMessage('video/saveVideo',request).subscribe(
         (res:any) => {

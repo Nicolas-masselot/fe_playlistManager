@@ -46,7 +46,6 @@ export class UserSettingsComponent implements OnInit {
       };
       this.message.sendMessage('user/modifyPassword',request).subscribe(
         (response:any) => {
-          console.log(response);
           if (response.success){
             this.toastrService.success('Update password successfully');
           }
