@@ -12,23 +12,23 @@
         <ng-container matColumnDef="infosUser">
             <td mat-cell *matCellDef="let user">
                 <p class="UserInfo">{{ user.email }}</p>
-                <p class="UserInfo" *ngIf="user.role === env.ADVERTISER_ROLE">Advertiser</p>
-                <p class="UserInfo" *ngIf="user.role === env.USER_ROLE">User</p>
-                <p class="UserInfo" *ngIf="user.role === env.ADMIN_ROLE">Administrator</p>
+                <p class="UserInfo" *ngIf="user.id_creator === env.ADVERTISER_ROLE">Advertiser</p>
+                <p class="UserInfo" *ngIf="user.id_creator === env.USER_ROLE">User</p>
+                <p class="UserInfo" *ngIf="user.id_creator === env.ADMIN_ROLE">Administrator</p>
             </td>
         </ng-container>
 
         <ng-container matColumnDef="ItemsUser">
             <td mat-cell *matCellDef="let user">
-                <p *ngIf="user.nbplaylist != undefined" class="UserItems">{{ user.nbplaylist }} playlists</p>
+                <p *ngIf="user.nbPlaylists != undefined" class="UserItems">{{ user.nbPlaylists }} playlists</p>
                 <p *ngIf="user.nbads != undefined" class="UserItems">{{ user.nbads }} ads</p>
             </td>
         </ng-container>
 
         <ng-container matColumnDef="options">
             <td mat-cell *matCellDef="let user">
-                <button id="editButton" mat-button (click)="openDialogUser(user.idUser,1)"><mat-icon id="editIcon">edit</mat-icon></button>
-                <button id="deleteButton" mat-button (click)="openDialogUser(user.idUser,2)"><mat-icon id="deleteIcon">delete</mat-icon></button>
+                <button id="editButton" mat-button (click)="openDialogUser(user._id,1)" disabled hidden><mat-icon id="editIcon">edit</mat-icon></button>
+                <button id="deleteButton" mat-button (click)="openDialogUser(user._id,2)"><mat-icon id="deleteIcon">delete</mat-icon></button>
             </td>
         </ng-container>
 
