@@ -56,7 +56,6 @@ export class PlaylistDetailComponent implements OnInit {
             status: playlist.status.toUpperCase(),
           }
         })[0];
-        console.log("Playlist: ", this.playlist);
         this.blockUI.stop();
       }
       else{
@@ -170,7 +169,6 @@ export class PlaylistDetailComponent implements OnInit {
     };
     this.message.sendMessage('video/getAllByPlaylistId',request).subscribe((res:any) => {
       if (res.success){
-        console.log("Video:",res.data);
         this.playlistVideo = res.data.map((video: {channelId: string, channelTitle: string, channelUrl: string, description: string, publishedAt: Date | any, thumbnail: string, title: string, _id: string, videoId: string, videoUrl: string, }) => {
           return {
             // _id: video._id,
@@ -235,7 +233,6 @@ export class PlaylistDetailComponent implements OnInit {
       this.blockUI.start('Loading...');
       this.message.sendMessage('playlist/deletePlaylist',{_id: this.playlistId}).subscribe(
         (res:any) => {
-          console.log(res);
           if (res.success){
             this.toastrService.success('Playlist deleted');
             this.router.navigate(['dashboardUser']);

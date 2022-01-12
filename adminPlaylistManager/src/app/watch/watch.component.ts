@@ -1,8 +1,6 @@
 import { VideoSaveComponent } from './../video-save/video-save.component';
 import { Component, Input, OnInit, ViewChild } from '@angular/core';
-import { DomSanitizer } from '@angular/platform-browser';
 import { ActivatedRoute, Router } from '@angular/router';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { MatDialog } from '@angular/material/dialog';
 import { Video } from '../interface/video';
 import { AuthService } from '../services/auth.service';
@@ -23,7 +21,6 @@ export class WatchComponent implements OnInit {
   blockUI!: NgBlockUI;
 
   constructor(private route: ActivatedRoute, 
-    // private saveVideoModalService: NgbModal ,
     private dialog: MatDialog,
     private router: Router,
     private authService: AuthService, 
@@ -37,34 +34,33 @@ export class WatchComponent implements OnInit {
 
   ngOnInit(): void {
     this.videoId = this.route.snapshot.params["id"];
-    console.log(this.video)
     this.saveVideoToHistory();
   }
 
   saveVideo(): void {
-    // const modalRef = this.saveVideoModalService.open(VideoSaveComponent);
-    // // modalRef.componentInstance.id = user.id;
-		// // modalRef.componentInstance.role = this.role;
-		// modalRef.result.then((result) => {
-		// console.log(`Closed with: ${result}`);
-		// }, (reason) => {
-		// console.log(`Dismissed ${reason}`);
-		// });
     const dialogRef = this.dialog.open(VideoSaveComponent, {
       data: {video: this.video},
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      console.log('The dialog was closed');
+      // console.log('The dialog was closed');
     });
   }
 
   saveVideoToHistory():void {
     const request = {
-      id_video: this.videoId,
+      videoId: this.video.videoId,
+      videoUrl: this.video.videoUrl,
+      title: this.video.title,
+      channelId: this.video.channelId,
+      channelUrl: this.video.channelUrl,
+      channelTitle: this.video.channelTitle,
+      description: this.video.description,
+      publishedAt: this.video.publishedAt,
+      thumbnail: this.video.thumbnail,
+      playlists: this.video.playlists,
       id_user: this.authService.userID,
-    };
-    console.log(request);
+  };
     this.blockUI.start('Loading...');
     this.message.sendMessage('history/createLog',request).subscribe(
       (res:any) => {
@@ -77,7 +73,7 @@ export class WatchComponent implements OnInit {
       }
       this.blockUI.stop();
     },
-    (err)=>{ 
+    (err:any)=>{ 
       console.log(err); // message d'erreur
       this.blockUI.stop();
     })

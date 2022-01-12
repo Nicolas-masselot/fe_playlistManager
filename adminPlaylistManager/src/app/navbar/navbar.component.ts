@@ -20,7 +20,6 @@ export class NavbarComponent implements OnInit {
   ngOnInit(): void {
     this.userEmail = this.authService.userEmail;
     this.role = (this.authService.role === environment.ADMIN_ROLE) ? "admin" : (this.authService.role === environment.ADVERTISER_ROLE) ? "advertiser" : "user";
-    console.log( this.role);
   }
 
   LogOut(): void {

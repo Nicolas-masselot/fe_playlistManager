@@ -21,7 +21,6 @@ export class SearchListComponent implements OnInit {
 
   watchVideo(video: Video){
     const videoUrl = video.videoId;
-    console.log("video: ",videoUrl);
     const url = "watch/" + videoUrl;
     this.router.navigateByUrl(url, { state: { video: video } });
   }

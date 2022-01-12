@@ -12,7 +12,6 @@ export class SearchService {
 
   public getVideos(query: string): Observable <any> {
     const url = `${environment.YOUTUBE_URL}search?q=${query}&key=${environment.YOUTUBE_API_TOKEN}&part=snippet&type=video&maxResults=50`;
-    console.log("url: ", url)
     return this.httpClient.get(url)
       .pipe(
         map((response: any) => response.items)

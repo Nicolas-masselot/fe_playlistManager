@@ -38,7 +38,6 @@ export class SearchContainerComponent implements OnInit {
   }
 
   onSearch(searchInput: string): void {
-    console.log("Search container: ",searchInput);
     this.blockUI.start('Loading...');
     this.searchService.getVideos(searchInput)
       .subscribe((items: any) => {
@@ -55,7 +54,6 @@ export class SearchContainerComponent implements OnInit {
             thumbnail: item.snippet.thumbnails.high.url
           };
         });
-        // console.log(this.videos);
         this.blockUI.stop();
       });
     this.blockUI.stop();

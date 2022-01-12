@@ -143,7 +143,6 @@ export class UserDialogComponent implements OnInit {
     this.service.sendMessage('resetUserPass',{idUser: this.userID}).subscribe(
       (response)=> {
         this.toastr.success("User's password reset successful");
-        console.log(response);
         this.resetDisable = false ;
       },
       (error)=>{

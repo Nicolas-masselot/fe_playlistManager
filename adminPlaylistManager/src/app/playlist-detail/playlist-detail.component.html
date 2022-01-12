@@ -13,7 +13,7 @@
             
             <div class="meta" style="margin-top: 1rem; display: flex; justify-content: space-between">
                 <span class="date" style="font-weight: bolder;">
-                    <!-- <div>{{ playlist.channelTitle }}</div> -->
+                     <div>{{ playlist.channelTitle }}</div> -->
                     <div>{{ playlist.status }}</div>
                 </span>
                 <span class="ui right floated date" style="font-weight: bolder;">{{ playlist.publishedAt | date:'mediumDate' }}</span>
@@ -24,7 +24,6 @@
         </div>     
     </div>
     <div style="margin-left: 1rem; border-left: 1px solid;">
-        <!-- <div *ngIf="playlistVideo.length === 0">No video</div> -->
         <div class="" *ngFor="let video of playlistVideo" >
             <div style="margin: 1rem; display: flex;">
                 <div class="image" (click)="watchVideo(video.videoId)">

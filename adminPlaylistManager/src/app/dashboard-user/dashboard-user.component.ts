@@ -58,8 +58,6 @@ export class DashboardUserComponent implements OnInit {
     this.message.sendMessage('playlist/getByUserId',request).subscribe(
       (res:any) => {
         if (res.success){
-          console.log(res.data);
-          // console.log(res.data[0].id_user)
           this.AllPlaylists = res.data.map((playlist: {date_add:Date | any, description: string, name: string, status:string, thumbnail:string, videos:[], _id: string }) => {
             return {
               title: playlist.name,
@@ -89,7 +87,6 @@ export class DashboardUserComponent implements OnInit {
   }
 
   openPlaylist(playlistId: string){
-    console.log("playlist: ",playlistId);
     const url = "playlist/" + playlistId;
     this.router.navigateByUrl(url);
   }
