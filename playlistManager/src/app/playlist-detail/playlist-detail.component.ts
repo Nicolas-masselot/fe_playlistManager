@@ -166,30 +166,31 @@ export class PlaylistDetailComponent implements OnInit {
   // ];
     this.blockUI.start('Loading...');
     const request = {
-      _id: this.playlistId,
+      id_playlist: this.playlistId,
     };
-    this.message.sendMessage('playlist/getVideos',request).subscribe((res:any) => {
+    this.message.sendMessage('video/getAllByPlaylistId',request).subscribe((res:any) => {
       if (res.success){
         console.log("Video:",res.data);
-        // console.log(res.data[0].id_user)
-        // this.playlistVideo = res.data.map((video: {date_add:Date | any, description: string, name: string, status:string, thumbnail:string, videos:[], _id: string }) => {
-        //   return {
-        //     title: video.name,
-        //     description: video.description,
-        //     publishedAt: new Date(video.date_add),
-        //     thumbnail: (video.thumbnail !== "") ? video.thumbnail : "https://i.ytimg.com/vi/5qap5aO4i9A/hqdefault_live.jpg",
-        //     playlistId: video._id,
-        //     channelTitle: this.authService.userEmail,
-        //     status: video.status.toUpperCase(),
-        //   }
-        // })[0];
-        // console.log("Playlist: ", this.playlistVideo);
+        this.playlistVideo = res.data.map((video: {channelId: string, channelTitle: string, channelUrl: string, description: string, publishedAt: Date | any, thumbnail: string, title: string, _id: string, videoId: string, videoUrl: string, }) => {
+          return {
+            // _id: video._id,
+            title: video.title,
+            videoId: video.videoId,
+            videoUrl: video.videoUrl,
+            channelId: video.channelId,
+            channelUrl: video.channelUrl,
+            channelTitle: video.channelTitle,
+            description: video.description,
+            publishedAt: new Date(video.publishedAt),
+            thumbnail: video.thumbnail
+          };
+        });
         this.blockUI.stop();
       }
       else{
-        // if (res.errorSet.includes('PLAYLIST_NOT_FOUND')) {
-        //   this.toastrService.error('Playlist not found');
-        // }
+        if (res.errorSet.includes('PLAYLIST_NOT_FOUND')) {
+          this.toastrService.error('Playlist not found');
+        }
         this.blockUI.stop();
       }
     },
@@ -254,12 +255,13 @@ export class PlaylistDetailComponent implements OnInit {
   }
 
   watchVideo(videoUrl: string):void{
-    console.log("video: ",videoUrl);
+    // console.log("video: ",videoUrl);
     const url = "watch/" + videoUrl;
+    console.log("url: ",url);
     this.router.navigateByUrl(url);
   }
 
   deleteVideo(videoId: string):void {
-
+    console.log(videoId);
   }
 }

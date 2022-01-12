@@ -7,11 +7,28 @@
             
         </li>
         <!-- if role = admin -->
-        <li [routerLink]="['/']" routerLinkActive="active"><i class="fa fa-users" aria-hidden="true"></i>Manager</li>
+        <li ngbDropdown class="d-inline-block" *ngIf="this.role === 'admin'">
+            <div class="" id="dropdownBasic1" ngbDropdownToggle><i class="fa fa-users" aria-hidden="true"></i>Manager</div>
+            <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
+            <button ngbDropdownItem [routerLink]="['/dashboardUser']" >Manager user</button>
+            <button ngbDropdownItem [routerLink]="['/dashboardUser']" >Manager ads</button>  
+            </div>
+        </li>
+        <li ngbDropdown class="d-inline-block" *ngIf="this.role === 'advertiser'">
+        <div class="" id="dropdownBasic1" ngbDropdownToggle><i class="fa fa-users" aria-hidden="true"></i>Manager</div>
+        <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
+            <button ngbDropdownItem [routerLink]="['/dashboardUser']" >Manager ads</button>
+        </div>
+        </li>
         <li [routerLink]="['/dashboardUser']" routerLinkActive="active"><i class="fa fa-stream" aria-hidden="true"></i>Playlists</li>
         <li [routerLink]="['/history']" routerLinkActive="active"><i class="fa fa-history" aria-hidden="true"></i>History</li>
         <li [routerLink]="['/userSettings']" routerLinkActive="active"><i class="fa fa-cog" aria-hidden="true"></i>Settings</li>
-        <li>Username    <i class="fa fa-user-circle" aria-hidden="true"></i></li>
+        <li ngbDropdown class="d-inline-block">
+            <div class="" id="dropdownBasic1" ngbDropdownToggle>{{userEmail}}    <i class="fa fa-user-circle" aria-hidden="true"></i></div>
+            <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
+              <button ngbDropdownItem (click)="LogOut()">Log out</button>
+            </div>
+        </li>
     </ul>
     <div *ngIf="!videos.length" class="ui four wide column centered grid" style="margin: 3rem;">
         <div class="ui raised aligned segment red warning message">

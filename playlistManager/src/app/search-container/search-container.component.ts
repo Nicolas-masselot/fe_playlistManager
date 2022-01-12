@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { BlockUI, NgBlockUI } from 'ng-block-ui';
+import { environment } from 'src/environments/environment';
 import { Video } from '../interface/video';
+import { AuthService } from '../services/auth.service';
 import { SearchService } from '../services/search.service';
 
 @Component({
@@ -12,17 +14,27 @@ import { SearchService } from '../services/search.service';
 export class SearchContainerComponent implements OnInit {
   @BlockUI() blockUI!: NgBlockUI;
   
+  userEmail: string | undefined;
+  role: string | undefined;
+
   videos: Video[] = [];
   // inputTouched = false;
   // loading = false;
 
-  constructor(private router: Router, private searchService: SearchService) { 
+  constructor(private router: Router, private searchService: SearchService, private authService: AuthService) { 
     const navigation = this.router.getCurrentNavigation();
     const state = navigation!.extras.state as {searchInput: string};
     this.onSearch(state.searchInput);
  }
 
   ngOnInit(): void {
+    this.userEmail = this.authService.userEmail;
+    this.role = (this.authService.role === environment.ADMIN_ROLE) ? "admin" : (this.authService.role === environment.ADVERTISER_ROLE) ? "advertiser" : "user";
+  }
+
+  LogOut(): void {
+    this.authService.logOut();
+    this.router.navigate(['login']);
   }
 
   onSearch(searchInput: string): void {
