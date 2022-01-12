@@ -11,7 +11,8 @@ import { SearchService } from '../services/search.service';
 export class SearchListComponent implements OnInit {
 
   @Input() videos: Video[] = [];
-
+  pageOfItems: Array<any> | undefined;
+  
   constructor(private router: Router) { 
  }
 
@@ -23,4 +24,9 @@ export class SearchListComponent implements OnInit {
     const url = "watch/" + videoUrl;
     this.router.navigateByUrl(url);
   }
+
+  onChangePage(pageOfItems: Array<any>) {
+    // update current page of items
+    this.pageOfItems = pageOfItems;
+}
 }

@@ -15,16 +15,18 @@
 </div> -->
 
 <div class="ui four column grid" style="margin-left: 1rem;">
-    <div class="column" *ngFor="let playlist of AllPlaylistsTest" (click)="openPlaylist(playlist.playlistId)"> 
+  <h4 *ngIf="AllPlaylists.length === 0">Empty list</h4>
+    <div class="column" *ngFor="let playlist of AllPlaylists" (click)="openPlaylist(playlist.playlistId)"> 
       <div class="ui card">
         <div class="image">
           <img [src]="playlist.thumbnail">
         </div>
         <div class="content">
           <a class="header" style="margin: 1em 0 1em 0;">{{ playlist.title }}</a>
-          <div class="meta">
+          <div class="meta" style="display: flex;justify-content: space-between;">
             <span class="date" style="font-weight: bolder;">
-              <a [href]="playlist.channelUrl" target="_blank">{{ playlist.channelTitle }}</a>
+              <!-- <div>{{ playlist.channelTitle }}</div> -->
+              <div>{{ playlist.status }}</div>
             </span>
             <span class="ui right floated date" style="font-weight: bolder;">{{ playlist.publishedAt | date:'mediumDate' }}</span>
           </div>
@@ -32,12 +34,12 @@
             {{ playlist.description?.slice(0,50) }}...
           </div>
         </div>
-        <a [href]="playlist.playlistUrl" target="_blank" class="extra content">
+        <!-- <a [href]="playlist.playlistId" target="_blank" class="extra content">
           <button class="ui right floated tiny red right labeled icon button">
             <i class="external alternate icon"></i>
             Delete playlist
           </button>
-        </a>
+        </a> -->
       </div>
     </div> 
 </div>

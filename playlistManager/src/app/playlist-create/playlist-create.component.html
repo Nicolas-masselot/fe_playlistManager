@@ -14,15 +14,34 @@
             <!-- Fields -->
             <div class="row">
                 <div class="col">
-                    <label for="playlistName" class="form-label required">Playlist name</label>
+                    <label for="playlistName" class="form-label required">Title</label>
                     <input type="text" class="form-control" id="playlistName" [(ngModel)] = "this.playlistName">
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <label for="playlistDescription" class="form-label">Description</label>
+                    <input type="text" class="form-control" id="playlistDescription" [(ngModel)] = "this.playlistDescription">
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <label class="form-label required">Visible</label>
+                    <select class="form-select input" (change)="selectVisibility($event)">
+                        <option selected value="PUBLIC">Public</option>
+                        <option value="PRIVATE" >Private</option>
+                        <option value="UNLISTED">Unlisted</option>
+                    </select>
                 </div>
             </div>
         </div>
     </div>
-    <div class="col-sm-12 d-flex flex-column modify-block">
-        <button class="modify" (click) = "addPlaylist()">
-            Add playlist
+    <div class="col-sm-12 d-flex flex-row modify-block" style="justify-content: space-between;">
+        <button class="cancel" (click) = "activeModal.dismiss('Cross click')">
+            Cancel
+        </button>
+        <button class="modify" (click) = "addPlaylist()" >
+            Create
         </button>
     </div>
 </div>
