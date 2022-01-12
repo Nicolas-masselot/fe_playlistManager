@@ -111,7 +111,7 @@ export class ManageAdsComponent implements AfterViewInit {
             this.service.sendMessage('addAdvert', newAdvert).subscribe(
               (response)=>{
                 this.toastr.success('Advertisement added successfully');
-                let nouvelAnnonce = {idAd:response.data.id,emailAdvertiser:this.authserv.mailUser,adName:newAdvert.adName,fileName:newAdvert.FileAdvert?.name};
+                let nouvelAnnonce = {idAd:response.data.id,emailAdvertiser:this.authserv.mailUser,adName:newAdvert.adName,fileName:newAdvert.fileName};
                 this.annonces.push(nouvelAnnonce) ;
                 this.datasource.data = this.annonces ;
                 console.log(response);

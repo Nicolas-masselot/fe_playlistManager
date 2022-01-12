@@ -12,11 +12,11 @@ import { UserDialogComponent } from '../user-dialog/user-dialog.component';
 import { environment } from 'src/environments/environment';
 
 export interface Utilisateur{
-  idUser:string,
   email:string,
-  role:string,
-  nbplaylist:number | undefined,
-  nbads:number |undefined
+  id_creator:string,
+  nbPlaylists:number | undefined,
+  _id:string
+  //nbads:number |undefined
 }
 
 export interface NouvUser{
@@ -45,7 +45,7 @@ export class ManageUsersComponent implements AfterViewInit {
   @BlockUI() blockUI!: NgBlockUI;
   faSearch = faSearch ;
   colonnes: string[] = ["infosUser","ItemsUser","options"];
-  users : Utilisateur[] = DATA_TEST;
+  users : Utilisateur[] = [];
   datasource = new MatTableDataSource<Utilisateur>(this.users) ;
   env = environment ;
 
@@ -56,10 +56,21 @@ export class ManageUsersComponent implements AfterViewInit {
   ngAfterViewInit(): void {
     this.paginator._intl.itemsPerPageLabel = "Users per page :"
     this.datasource.paginator = this.paginator ;
-    this.service.sendMessage('user/getAll',{}).subscribe(
+    this.service.sendMessage('user/getSet',{}).subscribe(
       (response)=>{
-        //this.users = response.data ;
-        console.log(response);
+        
+        console.log(response.data);
+
+        for (let index = 0; index < response.data.length; index++) {
+          if (response.data[index].id_creator === undefined) {
+            response.data.splice(index,1);
+          }
+        }
+       
+        console.log(response.data);
+
+        this.users = response.data ;
+        this.datasource.data = response.data ;
       },
       (error) => {
         this.toastr.error("An error has occured");
@@ -75,7 +86,7 @@ export class ManageUsersComponent implements AfterViewInit {
 
   openDialogUser(idUser:string,typeDialog:number){
     if (typeDialog == 1) {
-      let indexUserTarget = this.datasource.data.findIndex(utilisateur => utilisateur.idUser === idUser);
+      let indexUserTarget = this.datasource.data.findIndex(utilisateur => utilisateur._id === idUser);
       const dialogRef = this.dialog.open(UserDialogComponent,{
         data: {
           dialogType : "editUser",
@@ -89,7 +100,7 @@ export class ManageUsersComponent implements AfterViewInit {
           this.service.sendMessage('user/modifyAccount',{_id: idUser , email: editedUser.email }).subscribe(
             (response)=>{
               this.toastr.success("User profile edited successfully");
-              let indexEdit = this.datasource.data.findIndex(utilisateur => utilisateur.idUser === idUser);
+              let indexEdit = this.datasource.data.findIndex(utilisateur => utilisateur._id === idUser);
               this.users[indexEdit].email = editedUser.email ;
               this.datasource.data = this.users ;
               console.log(response);
@@ -120,7 +131,7 @@ export class ManageUsersComponent implements AfterViewInit {
           this.service.sendMessage('user/deleteAccount',{_id: idUser}).subscribe(
             (response)=>{
               this.toastr.success("User deleted successfully");
-              let index_todel = this.datasource.data.findIndex(utilisateur => utilisateur.idUser === idUser);
+              let index_todel = this.datasource.data.findIndex(utilisateur => utilisateur._id === idUser);
               this.users.splice(index_todel,1);
               this.datasource.data = this.users ;
               console.log(response);
@@ -156,10 +167,10 @@ export class ManageUsersComponent implements AfterViewInit {
           (response)=>{
             this.toastr.success('User added successfully'); 
             if (newUser.role === environment.ADVERTISER_ROLE) {
-              let nouvelUtilisateur = {idUser: response.data._id, email: response.data.email,role: response.data.id_creator, nbplaylist:undefined, nbads:0} ;
+              let nouvelUtilisateur = {_id: response.data._id, email: response.data.email,id_creator: response.data.id_creator, nbPlaylists:undefined/*, nbads:0*/} ;
               this.users.push(nouvelUtilisateur) ;
             } else {
-              let nouvelUtilisateur = {idUser: response.data._id, email: response.data.email,role: response.data.id_creator, nbplaylist:0, nbads:undefined} ;
+              let nouvelUtilisateur = {_id: response.data._id, email: response.data.email,id_creator: response.data.id_creator, nbPlaylists:0/*, nbads:undefined*/} ;
               this.users.push(nouvelUtilisateur) ;
             }
             this.datasource.data = this.users ;
@@ -178,42 +189,42 @@ export class ManageUsersComponent implements AfterViewInit {
 }
 
 const DATA_TEST: Utilisateur[] = [
-  {idUser: '420', email: "mail@test.com",role: environment.USER_ROLE, nbplaylist:69, nbads:undefined},
-  {idUser: '421', email: "mail@test2.com",role: environment.ADVERTISER_ROLE, nbplaylist:undefined, nbads:69},
-  {idUser: '422', email: "mail@test.com",role: environment.USER_ROLE, nbplaylist:69, nbads:undefined},
-  {idUser: '423', email: "mail@test2.com",role: environment.ADVERTISER_ROLE, nbplaylist:undefined, nbads:69},
-  {idUser: '424', email: "mail@test3.com",role: environment.USER_ROLE, nbplaylist:69, nbads:undefined},
-  {idUser: '425', email: "mail@test2.com",role: environment.ADVERTISER_ROLE, nbplaylist:undefined, nbads:69},
-  {idUser: '426', email: "mail@test3.com",role: environment.USER_ROLE, nbplaylist:69, nbads:undefined},
-  {idUser: '427', email: "mail@test2.com",role: environment.ADVERTISER_ROLE, nbplaylist:undefined, nbads:69},
-  {idUser: '428', email: "mail@test.com",role: environment.USER_ROLE, nbplaylist:69, nbads:undefined},
-  {idUser: '429', email: "mail@test2.com",role: environment.ADVERTISER_ROLE, nbplaylist:undefined, nbads:69},
-  {idUser: '430', email: "mail@test4.com",role: environment.USER_ROLE, nbplaylist:69, nbads:undefined},
-  {idUser: '431', email: "mail@test4.com",role: environment.ADVERTISER_ROLE, nbplaylist:undefined, nbads:69},
-  {idUser: '432', email: "mail@test.com",role: environment.USER_ROLE, nbplaylist:69, nbads:undefined},
-  {idUser: '433', email: "mail@test2.com",role: environment.ADVERTISER_ROLE, nbplaylist:undefined, nbads:69},
-  {idUser: '434', email: "mail@test.com",role: environment.USER_ROLE, nbplaylist:69, nbads:undefined},
-  {idUser: '435', email: "mail@test2.com",role: environment.ADVERTISER_ROLE, nbplaylist:undefined, nbads:69},
-  {idUser: '436', email: "mail@test.com",role: environment.USER_ROLE, nbplaylist:69, nbads:undefined},
-  {idUser: '437', email: "mail@test2.com",role: environment.ADVERTISER_ROLE, nbplaylist:undefined, nbads:69},
-  {idUser: '438', email: "mail@test.com",role: environment.USER_ROLE, nbplaylist:69, nbads:undefined},
-  {idUser: '439', email: "mail@test2.com",role: environment.ADVERTISER_ROLE, nbplaylist:undefined, nbads:69},
-  {idUser: '440', email: "mail@test.com",role: environment.USER_ROLE, nbplaylist:69, nbads:undefined},
-  {idUser: '420', email: "mail@test2.com",role: environment.ADVERTISER_ROLE, nbplaylist:undefined, nbads:69},
-  {idUser: '441', email: "mail@test.com",role: environment.USER_ROLE, nbplaylist:69, nbads:undefined},
-  {idUser: '442', email: "mail@test2.com",role: environment.ADVERTISER_ROLE, nbplaylist:undefined, nbads:69},
-  {idUser: '443', email: "mail@test.com",role: environment.USER_ROLE, nbplaylist:69, nbads:undefined},
-  {idUser: '444', email: "mail@test2.com",role: environment.ADVERTISER_ROLE, nbplaylist:undefined, nbads:69},
-  {idUser: '445', email: "mail@test.com",role: environment.USER_ROLE, nbplaylist:69, nbads:undefined},
-  {idUser: '446', email: "mail@test2.com",role: environment.ADVERTISER_ROLE, nbplaylist:undefined, nbads:69},
-  {idUser: '447', email: "mail@test.com",role: environment.USER_ROLE, nbplaylist:69, nbads:undefined},
-  {idUser: '448', email: "mail@test2.com",role: environment.ADVERTISER_ROLE, nbplaylist:undefined, nbads:69},
-  {idUser: '449', email: "mail@test.com",role: environment.USER_ROLE, nbplaylist:69, nbads:undefined},
-  {idUser: '450', email: "mail@test2.com",role: environment.ADVERTISER_ROLE, nbplaylist:undefined, nbads:69},
-  {idUser: '451', email: "mail@test.com",role: environment.USER_ROLE, nbplaylist:69, nbads:undefined},
-  {idUser: '452', email: "mail@test2.com",role: environment.ADVERTISER_ROLE, nbplaylist:undefined, nbads:69},
-  {idUser: '453', email: "mail@test.com",role: environment.USER_ROLE, nbplaylist:69, nbads:undefined},
-  {idUser: '454', email: "mail@test2.com",role: environment.ADVERTISER_ROLE, nbplaylist:undefined, nbads:69},
-  {idUser: '455', email: "mail@test.com",role: environment.USER_ROLE, nbplaylist:69, nbads:undefined},
-  {idUser: '456', email: "mail@test2.com",role: environment.ADVERTISER_ROLE, nbplaylist:undefined, nbads:69}
+  {_id: '420', email: "mail@test.com",id_creator: environment.USER_ROLE, nbPlaylists:69/*, nbads:undefined*/},
+  {_id: '421', email: "mail@test2.com",id_creator: environment.ADVERTISER_ROLE, nbPlaylists:undefined/*, nbads:69*/},
+  {_id: '422', email: "mail@test.com",id_creator: environment.USER_ROLE, nbPlaylists:69/*, nbads:undefined*/},
+  {_id: '423', email: "mail@test2.com",id_creator: environment.ADVERTISER_ROLE, nbPlaylists:undefined/*, nbads:69*/},
+  {_id: '424', email: "mail@test3.com",id_creator: environment.USER_ROLE, nbPlaylists:69/*, nbads:undefined*/},
+  {_id: '425', email: "mail@test2.com",id_creator: environment.ADVERTISER_ROLE, nbPlaylists:undefined/*, nbads:69*/},
+  {_id: '426', email: "mail@test3.com",id_creator: environment.USER_ROLE, nbPlaylists:69/*,nbads:undefined*/},
+  {_id: '427', email: "mail@test2.com",id_creator: environment.ADVERTISER_ROLE, nbPlaylists:undefined/*, nbads:69*/},
+  {_id: '428', email: "mail@test.com",id_creator: environment.USER_ROLE, nbPlaylists:69/*,nbads:undefined*/},
+  {_id: '429', email: "mail@test2.com",id_creator: environment.ADVERTISER_ROLE, nbPlaylists:undefined/*, nbads:69*/},
+  {_id: '430', email: "mail@test4.com",id_creator: environment.USER_ROLE, nbPlaylists:69/*,nbads:undefined*/},
+  {_id: '431', email: "mail@test4.com",id_creator: environment.ADVERTISER_ROLE, nbPlaylists:undefined/*, nbads:69*/},
+  {_id: '432', email: "mail@test.com",id_creator: environment.USER_ROLE, nbPlaylists:69/*, nbads:undefined*/},
+  {_id: '433', email: "mail@test2.com",id_creator: environment.ADVERTISER_ROLE, nbPlaylists:undefined/*, nbads:69*/},
+  {_id: '434', email: "mail@test.com",id_creator: environment.USER_ROLE, nbPlaylists:69/*, nbads:undefined*/},
+  {_id: '435', email: "mail@test2.com",id_creator: environment.ADVERTISER_ROLE, nbPlaylists:undefined/*, nbads:69*/},
+  {_id: '436', email: "mail@test.com",id_creator: environment.USER_ROLE, nbPlaylists:69/*, nbads:undefined*/},
+  {_id: '437', email: "mail@test2.com",id_creator: environment.ADVERTISER_ROLE, nbPlaylists:undefined/*, nbads:69*/},
+  {_id: '438', email: "mail@test.com",id_creator: environment.USER_ROLE, nbPlaylists:69/*, nbads:undefined*/},
+  {_id: '439', email: "mail@test2.com",id_creator: environment.ADVERTISER_ROLE, nbPlaylists:undefined/*, nbads:69*/},
+  {_id: '440', email: "mail@test.com",id_creator: environment.USER_ROLE, nbPlaylists:69/*, nbads:undefined*/},
+  {_id: '420', email: "mail@test2.com",id_creator: environment.ADVERTISER_ROLE, nbPlaylists:undefined/*, nbads:69*/},
+  {_id: '441', email: "mail@test.com",id_creator: environment.USER_ROLE, nbPlaylists:69/*, nbads:undefined*/},
+  {_id: '442', email: "mail@test2.com",id_creator: environment.ADVERTISER_ROLE, nbPlaylists:undefined/*, nbads:69*/},
+  {_id: '443', email: "mail@test.com",id_creator: environment.USER_ROLE, nbPlaylists:69/*, nbads:undefined*/},
+  {_id: '444', email: "mail@test2.com",id_creator: environment.ADVERTISER_ROLE, nbPlaylists:undefined/*, nbads:69*/},
+  {_id: '445', email: "mail@test.com",id_creator: environment.USER_ROLE, nbPlaylists:69/*, nbads:undefined*/},
+  {_id: '446', email: "mail@test2.com",id_creator: environment.ADVERTISER_ROLE, nbPlaylists:undefined/*, nbads:69*/},
+  {_id: '447', email: "mail@test.com",id_creator: environment.USER_ROLE, nbPlaylists:69/*, nbads:undefined*/},
+  {_id: '448', email: "mail@test2.com",id_creator: environment.ADVERTISER_ROLE, nbPlaylists:undefined/*, nbads:69*/},
+  {_id: '449', email: "mail@test.com",id_creator: environment.USER_ROLE, nbPlaylists:69/*, nbads:undefined*/},
+  {_id: '450', email: "mail@test2.com",id_creator: environment.ADVERTISER_ROLE, nbPlaylists:undefined/*, nbads:69*/},
+  {_id: '451', email: "mail@test.com",id_creator: environment.USER_ROLE, nbPlaylists:69/*, nbads:undefined*/},
+  {_id: '452', email: "mail@test2.com",id_creator: environment.ADVERTISER_ROLE, nbPlaylists:undefined/*, nbads:69*/},
+  {_id: '453', email: "mail@test.com",id_creator: environment.USER_ROLE, nbPlaylists:69/*, nbads:undefined*/},
+  {_id: '454', email: "mail@test2.com",id_creator: environment.ADVERTISER_ROLE, nbPlaylists:undefined/*, nbads:69*/},
+  {_id: '455', email: "mail@test.com",id_creator: environment.USER_ROLE, nbPlaylists:69/*, nbads:undefined*/},
+  {_id: '456', email: "mail@test2.com",id_creator: environment.ADVERTISER_ROLE, nbPlaylists:undefined/*, nbads:69*/}
 ]
