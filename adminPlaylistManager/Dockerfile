@@ -3,7 +3,7 @@ FROM node:latest
 WORKDIR /adminPlaylistManager
 
 #installation angular et dépendences
-COPY package*.json /adminPlaylistManager
+COPY package*.json /adminPlaylistManager/
 RUN npm install
 RUN npm install -g @angular/cli
 
