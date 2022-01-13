@@ -1,0 +1,5 @@
+build:
+  docker:
+    frontendadmin: adminPlaylistManager/Dockerfile
+    frontenduser: playlistManager/Dockerfile
+               
