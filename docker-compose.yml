@@ -1,0 +1,9 @@
+services:
+     frontendadmin:
+            build: ./adminPlaylistManager
+            ports:
+               - "4200:4200"
+     frontenduser: 
+            build: ./playlistManager
+            ports:
+               - "4201:4200"
